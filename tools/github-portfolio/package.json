@@ -1,0 +1,17 @@
+{
+  "name": "github-portfolio-generator",
+  "version": "1.0.0",
+  "description": "Generate portfolio from GitHub repositories",
+  "main": "generate-portfolio.js",
+  "scripts": {
+    "start": "node generate-portfolio.js",
+    "update": "node generate-portfolio.js"
+  },
+  "dependencies": {
+    "@octokit/rest": "^19.0.13",
+    "axios": "^1.13.2",
+    "dotenv": "^16.6.1",
+    "openai": "^6.8.1"
+  },
+  "type": "module"
+}

@@ -1,5 +1,70 @@
+// Theme functionality
+function initTheme() {
+    // Check for saved user preference, if any, on load of the website
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const themeToggle = document.querySelector('.theme-toggle');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Set dark theme as default
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    // Function to update the theme
+    const toggleTheme = () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeToggle();
+    };
+
+    // Add click event listener to the theme toggle button
+    themeToggle.addEventListener('click', toggleTheme);
+
+    // Update the theme toggle button based on the current theme
+    const updateThemeToggle = () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        
+        if (currentTheme === 'dark') {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+            themeToggle.setAttribute('aria-label', 'Switch to light mode');
+        } else {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+            themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+        }
+    };
+
+    // Initial update of the theme toggle
+    updateThemeToggle();
+
+    // Add keyboard navigation support
+    themeToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleTheme();
+        }
+    });
+
+    // Listen for changes in the color scheme preference
+    prefersDarkScheme.addEventListener('change', (e) => {
+        // Only apply system preference if user hasn't explicitly set a preference
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            updateThemeToggle();
+        }
+    });
+}
+
 // Navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize theme
+    initTheme();
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('.section');
     
@@ -336,8 +401,8 @@ function updatePersonalInfo(info) {
 // updatePersonalInfo({
 //     name: "Your Name",
 //     title: "an AI engineer and technical writer.",
-//     description: "I help developers build intelligent AI solutions.",
-//     writingFocus: "My writing focuses on machine learning and AI engineering."
+//     bio: "I build AI systems and write about technology, design, and development.",
+//     email: "your.email@example.com"
 // });
 
 // updateSocialLinks({
@@ -346,3 +411,99 @@ function updatePersonalInfo(info) {
 //     github: "https://github.com/yourusername",
 //     medium: "https://medium.com/@yourusername"
 // });
+
+// No sample portfolio data - will show empty state message
+
+// Function to render portfolio items
+function renderPortfolioItems(items, container) {
+    if (!items || !items.length) {
+        container.innerHTML = `
+            <div class="empty-state" style="text-align: center; padding: 3rem;">
+                <h3 style="color: var(--text-color); margin-bottom: 1rem;">Govind is working on something amazing!</h3>
+                <p style="color: var(--nav-link); max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                    I'm currently focusing on cutting-edge Reinforcement Learning research and development.
+                    Check back soon to see my latest projects and contributions to the field of AI.
+                </p>
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = items.map(item => `
+        <div class="portfolio-item">
+            <div class="portfolio-image-container">
+                ${item.image ? `
+                <img src="${item.image.startsWith('http') ? item.image : 'images/portfolio/' + item.image}" 
+                     alt="${item.title}" 
+                     class="portfolio-image" 
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300/2d3748/ffffff?text=Project+Image';">
+                ` : `
+                <div class="portfolio-image-placeholder">
+                    <span>${item.title.charAt(0).toUpperCase()}</span>
+                </div>
+                `}
+            </div>
+            <div class="portfolio-content">
+                <h3 class="portfolio-title">${item.title}</h3>
+                <p class="portfolio-date">${item.date || ''}</p>
+                <p class="portfolio-description">${item.description}</p>
+                ${item.technologies ? `
+                <div class="portfolio-meta">
+                    ${item.technologies.split(',').map(tech => 
+                        `<span class="portfolio-tag">${tech.trim()}</span>`
+                    ).join('')}
+                </div>
+                ` : ''}
+                <div class="portfolio-links">
+                    ${item.url && item.url !== '#' ? `
+                    <a href="${item.url}" target="_blank" class="portfolio-link" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        View Project
+                    </a>
+                    ` : ''}
+                    ${item.github && item.github !== '#' ? `
+                    <a href="${item.github}" target="_blank" class="portfolio-link" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        GitHub
+                    </a>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Portfolio functionality
+async function loadPortfolio() {
+    const portfolioContainer = document.getElementById('portfolio-list');
+    if (!portfolioContainer) return;
+
+    try {
+        // Show loading state
+        portfolioContainer.innerHTML = '<div class="portfolio-loading">Loading projects...</div>';
+        
+        // Try to fetch portfolio items
+        const response = await fetch('data/portfolio.json');
+        const portfolioItems = await response.json();
+        
+        // Render the items (or empty state if no items)
+        renderPortfolioItems(portfolioItems, portfolioContainer);
+        
+    } catch (error) {
+        console.error('Error loading portfolio:', error);
+        // On error, show empty state
+        renderPortfolioItems([], portfolioContainer);
+    }
+}
+
+// Load portfolio when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('portfolio')) {
+        loadPortfolio();
+    }
+});
