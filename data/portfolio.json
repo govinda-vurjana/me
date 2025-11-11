@@ -1,0 +1,82 @@
+[
+  {
+    "title": "Ai Champ Data Drift",
+    "description": "Ai-Champ-Data-Drift is a project focused on detecting and responding to data drift in AI models deployed in production. It aims to accurately identify... <a href=\"https://github.com/govinda-vurjana/Ai-Champ-Data-Drift#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, Machine Learning, Data Analysis",
+    "category": "Data Science",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/Ai-Champ-Data-Drift",
+    "github": "https://github.com/govinda-vurjana/Ai-Champ-Data-Drift",
+    "date": "2025-11-05"
+  },
+  {
+    "title": "AiChamp RLTask",
+    "description": "This project provides a framework for developing and evaluating Reinforcement Learning tasks for Large Language Models using Anthropic's Claude API. T... <a href=\"https://github.com/govinda-vurjana/AiChamp-RLTask#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, Reinforcement Learning, Anthropic Claude API",
+    "category": "Machine Learning",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/AiChamp-RLTask",
+    "github": "https://github.com/govinda-vurjana/AiChamp-RLTask",
+    "date": "2025-11-04"
+  },
+  {
+    "title": "Algorithmic Trading Based On RL ",
+    "description": "This project involves implementing an algorithmic trading strategy using AI models to process tick-level price data, calculate technical indicators, a... <a href=\"https://github.com/govinda-vurjana/Algorithmic-Trading-based-on-RL-#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, pandas, numpy, TA-Lib",
+    "category": "Finance",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/Algorithmic-Trading-based-on-RL-",
+    "github": "https://github.com/govinda-vurjana/Algorithmic-Trading-based-on-RL-",
+    "date": "2025-11-04"
+  },
+  {
+    "title": "ZombieGame",
+    "description": "ZombieGame is a reinforcement learning project where an AI agent learns to play a zombie shooter game using Double Deep Q-Network (DDQN). The agent na... <a href=\"https://github.com/govinda-vurjana/ZombieGame#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, Deep Reinforcement Learning, Double Deep Q-Network, OpenAI Gym, CUDA",
+    "category": "Game Development",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/ZombieGame",
+    "github": "https://github.com/govinda-vurjana/ZombieGame",
+    "date": "2025-10-31"
+  },
+  {
+    "title": "Smart Trade",
+    "description": "SmartTrade is an advanced platform for developing and deploying reinforcement learning agents in algorithmic trading. It supports both live and histor... <a href=\"https://github.com/govinda-vurjana/smart-trade#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, PyTorch, Stable-Baselines3, LSTM, Git LFS, API, pyautogui",
+    "category": "Algorithmic Trading",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/smart-trade",
+    "github": "https://github.com/govinda-vurjana/smart-trade",
+    "date": "2025-10-31"
+  },
+  {
+    "title": "Linky",
+    "description": "Linky is a LinkedIn automation tool that leverages AI to generate, schedule, and post engaging content. It features AI-powered content generation, a s... <a href=\"https://github.com/govinda-vurjana/Linky#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, OpenAI, LinkedIn API, Uvicorn, Alembic",
+    "category": "Automation",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/Linky",
+    "github": "https://github.com/govinda-vurjana/Linky",
+    "date": "2025-10-29"
+  },
+  {
+    "title": "Tradie",
+    "description": "Tradie is an automated trading bot that utilizes computer vision, machine learning, and AI to execute trades on platforms without APIs. It analyzes tr... <a href=\"https://github.com/govinda-vurjana/Tradie#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, pyautogui, pytesseract, OpenAI API, machine learning, OCR, RAG",
+    "category": "Finance",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/Tradie",
+    "github": "https://github.com/govinda-vurjana/Tradie",
+    "date": "2025-10-29"
+  },
+  {
+    "title": "Smart Download Organizer",
+    "description": "Smart Download Organizer is a Chrome extension that automatically organizes your downloads into categorized subfolders like Movies, Music, and Documen... <a href=\"https://github.com/govinda-vurjana/smart-download-organizer#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Chrome Extension, JavaScript, Manifest V3",
+    "category": "Browser Extension",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/smart-download-organizer",
+    "github": "https://github.com/govinda-vurjana/smart-download-organizer",
+    "date": "2025-08-01"
+  }
+]

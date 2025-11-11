@@ -9,6 +9,7 @@ const root = process.cwd();
 const dataDir = path.join(root, 'data');
 const blogsFile = path.join(dataDir, 'blogs.json');
 const resourcesFile = path.join(dataDir, 'resources.json');
+const portfolioFile = path.join(dataDir, 'portfolio.json');
 
 function readJson(file) {
   try { return JSON.parse(fs.readFileSync(file, 'utf-8')); }
@@ -20,7 +21,12 @@ function writeJson(file, data) {
 }
 
 async function manage(type) {
-  const file = type === 'blogs' ? blogsFile : resourcesFile;
+  const fileMap = {
+    'blogs': blogsFile,
+    'resources': resourcesFile,
+    'portfolio': portfolioFile
+  };
+  const file = fileMap[type];
   let list = readJson(file);
   while (true) {
     console.log('\n' + kleur.bold().cyan(`${type.toUpperCase()} (${list.length})`));
@@ -42,6 +48,17 @@ async function manage(type) {
           { name: 'title', message: 'Title' },
           { name: 'url', message: 'URL (Medium link)' },
           { name: 'excerpt', message: 'Short excerpt' }
+        ]);
+        list.unshift(ans);
+      } else if (type === 'portfolio') {
+        const ans = await inquirer.prompt([
+          { name: 'title', message: 'Project Title' },
+          { name: 'description', message: 'Project Description' },
+          { name: 'image', message: 'Image filename (place in images/portfolio/)' },
+          { name: 'url', message: 'Project URL (deployment or GitHub)' },
+          { name: 'github', message: 'GitHub URL (optional)' },
+          { name: 'technologies', message: 'Technologies (comma-separated)' },
+          { name: 'date', message: 'Date (e.g., Oct 2023)' }
         ]);
         list.unshift(ans);
       } else {
@@ -91,8 +108,9 @@ async function main() {
     const { section } = await inquirer.prompt({
       type: 'list', name: 'section', message: 'Manage which section?',
       choices: [
-        { name: 'Blogs', value: 'blogs' },
-        { name: 'Resources', value: 'resources' },
+        { name: 'Manage Blogs', value: 'blogs' },
+        { name: 'Manage Portfolio', value: 'portfolio' },
+        { name: 'Manage Resources', value: 'resources' },
         { name: 'Deploy (commit & push)', value: 'deploy' },
         { name: 'Exit', value: 'exit' }
       ]
