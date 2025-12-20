@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waitlist Admin - View Collected Emails</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            opacity: 0.9;
+        }
+        .email-list {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+        .email-item {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .email-item:last-child {
+            margin-bottom: 0;
+        }
+        .email-address {
+            font-weight: 500;
+            color: #1f2937;
+        }
+        .email-date {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+        .empty-state h3 {
+            margin-bottom: 1rem;
+            color: #374151;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 Waitlist Admin Panel</h1>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalEmails">0</div>
+                <div class="stat-label">Total Signups</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="todayEmails">0</div>
+                <div class="stat-label">Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="emailStatus">❓</div>
+                <div class="stat-label">Email Notifications</div>
+            </div>
+        </div>
+        
+        <div class="email-list" id="emailList">
+            <div class="empty-state">
+                <h3>No signups yet</h3>
+                <p>Waitlist emails will appear here when users sign up on your website.</p>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button class="btn btn-primary" onclick="exportEmails()">📥 Export CSV</button>
+            <button class="btn btn-secondary" onclick="clearEmails()">🗑️ Clear All</button>
+            <button class="btn btn-secondary" onclick="refreshData()">🔄 Refresh</button>
+        </div>
+    </div>
+
+    <script>
+        function loadWaitlistData() {
+            const emails = JSON.parse(localStorage.getItem('waitlistEmails') || '[]');
+            const emailList = document.getElementById('emailList');
+            const totalEmails = document.getElementById('totalEmails');
+            const todayEmails = document.getElementById('todayEmails');
+            const emailStatus = document.getElementById('emailStatus');
+            
+            // Update stats
+            totalEmails.textContent = emails.length;
+            
+            // Count today's emails
+            const today = new Date().toDateString();
+            const todayCount = emails.filter(entry => 
+                new Date(entry.timestamp).toDateString() === today
+            ).length;
+            todayEmails.textContent = todayCount;
+            
+            // Check email notification status
+            // This is a simple check - in reality, you'd check your EmailJS config
+            const hasEmailSetup = localStorage.getItem('emailSetupComplete') === 'true';
+            emailStatus.textContent = hasEmailSetup ? '✅' : '❌';
+            emailStatus.parentElement.querySelector('.stat-label').textContent = 
+                hasEmailSetup ? 'Email Notifications ON' : 'Email Notifications OFF';
+            
+            // Display emails
+            if (emails.length === 0) {
+                emailList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No signups yet</h3>
+                        <p>Waitlist emails will appear here when users sign up on your website.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort by most recent first
+            emails.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            emailList.innerHTML = emails.map(entry => `
+                <div class="email-item">
+                    <div class="email-address">${entry.email}</div>
+                    <div class="email-date">${new Date(entry.timestamp).toLocaleString()}</div>
+                </div>
+            `).join('');
+        }
+        
+        function exportEmails() {
+            const emails = JSON.parse(localStorage.getItem('waitlistEmails') || '[]');
+            if (emails.length === 0) {
+                alert('No emails to export');
+                return;
+            }
+            
+            // Create CSV content
+            const csvContent = [
+                'Email,Timestamp,Source',
+                ...emails.map(entry => 
+                    `"${entry.email}","${entry.timestamp}","${entry.source}"`
+                )
+            ].join('\\n');
+            
+            // Download CSV
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `waitlist-emails-${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+        
+        function clearEmails() {
+            if (confirm('Are you sure you want to clear all waitlist emails? This cannot be undone.')) {
+                localStorage.removeItem('waitlistEmails');
+                loadWaitlistData();
+            }
+        }
+        
+        function refreshData() {
+            loadWaitlistData();
+        }
+        
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadWaitlistData);
+        
+        // Auto-refresh every 30 seconds
+        setInterval(loadWaitlistData, 30000);
+    </script>
+</body>
+</html>

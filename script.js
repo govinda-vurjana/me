@@ -1,26 +1,159 @@
+// EmailJS Configuration
+const EMAILJS_CONFIG = {
+    serviceId: 'YOUR_SERVICE_ID',     // Replace with your EmailJS service ID
+    templateId: 'YOUR_TEMPLATE_ID',   // Replace with your EmailJS template ID
+    publicKey: 'YOUR_PUBLIC_KEY'      // Replace with your EmailJS public key
+};
+
+// Initialize EmailJS
+function initEmailJS() {
+    if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+        console.log('EmailJS initialized');
+        return true;
+    }
+    console.log('EmailJS not configured or not loaded');
+    return false;
+}
+
+// Send email notification
+async function sendEmailNotification(email, timestamp) {
+    if (!initEmailJS()) {
+        console.log('EmailJS not available, skipping email notification');
+        return false;
+    }
+    
+    try {
+        const templateParams = {
+            user_email: email,
+            signup_time: new Date(timestamp).toLocaleString(),
+            source: 'Filmmaker Tools Waitlist',
+            website_url: window.location.origin
+        };
+        
+        console.log('Sending email notification...', templateParams);
+        
+        const response = await emailjs.send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.templateId,
+            templateParams
+        );
+        
+        console.log('Email sent successfully:', response);
+        return true;
+    } catch (error) {
+        console.error('Failed to send email:', error);
+        return false;
+    }
+}
+
+// Embedded data as fallback for CORS issues
+const FALLBACK_PORTFOLIO_DATA = [
+  {
+    "title": "AI-Powered Visual Storytelling System",
+    "description": "An intelligent system that combines computer vision and generative AI to create dynamic visual narratives. Merging filmmaking principles with AI to generate compelling visual stories... <a href=\"https://github.com/govinda-vurjana/Ai-Champ-Data-Drift#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, Computer Vision, Generative AI, Storytelling",
+    "category": "AI Art & Film",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/Ai-Champ-Data-Drift",
+    "github": "https://github.com/govinda-vurjana/Ai-Champ-Data-Drift",
+    "date": "2025-11-05"
+  },
+  {
+    "title": "Creative AI Reinforcement Learning",
+    "description": "A framework for training AI agents to make creative decisions using reinforcement learning. Bridging technical AI capabilities with artistic expression and creative problem-solving... <a href=\"https://github.com/govinda-vurjana/AiChamp-RLTask#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, Reinforcement Learning, Creative AI, Anthropic Claude API",
+    "category": "Creative AI Systems",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/AiChamp-RLTask",
+    "github": "https://github.com/govinda-vurjana/AiChamp-RLTask",
+    "date": "2025-11-04"
+  },
+  {
+    "title": "Intelligent Trading Cinematography",
+    "description": "An algorithmic trading system that visualizes market movements like a film director captures scenes. Using AI to process financial data with cinematic storytelling principles... <a href=\"https://github.com/govinda-vurjana/Algorithmic-Trading-based-on-RL-#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, pandas, numpy, TA-Lib, Visual Analytics",
+    "category": "AI Finance + Visual",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/Algorithmic-Trading-based-on-RL-",
+    "github": "https://github.com/govinda-vurjana/Algorithmic-Trading-based-on-RL-",
+    "date": "2025-11-04"
+  },
+  {
+    "title": "AI Game Director",
+    "description": "A reinforcement learning project where AI learns to direct gameplay like a film director. The agent navigates complex scenarios using cinematic principles and intelligent decision-making... <a href=\"https://github.com/govinda-vurjana/ZombieGame#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, Deep Reinforcement Learning, Game AI, Cinematic AI, CUDA",
+    "category": "AI Game Direction",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/ZombieGame",
+    "github": "https://github.com/govinda-vurjana/ZombieGame",
+    "date": "2025-10-31"
+  },
+  {
+    "title": "Smart Creative Trading Platform",
+    "description": "An advanced platform that combines AI trading algorithms with visual storytelling. Features creative data visualization and AI-powered market narrative generation... <a href=\"https://github.com/govinda-vurjana/smart-trade#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, PyTorch, Creative Visualization, LSTM, API Integration",
+    "category": "Creative FinTech",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/smart-trade",
+    "github": "https://github.com/govinda-vurjana/smart-trade",
+    "date": "2025-10-31"
+  },
+  {
+    "title": "AI Content Creator & Storyteller",
+    "description": "An AI-powered content creation tool that generates engaging stories and posts with filmmaker's eye for narrative. Combines technical AI capabilities with creative storytelling... <a href=\"https://github.com/govinda-vurjana/Linky#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, OpenAI, Creative Writing AI, Content Strategy",
+    "category": "AI Content Creation",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/Linky",
+    "github": "https://github.com/govinda-vurjana/Linky",
+    "date": "2025-10-29"
+  },
+  {
+    "title": "Visual AI Trading Assistant",
+    "description": "An automated trading system that uses computer vision and AI to interpret visual market data like a cinematographer reads scenes. Combines technical analysis with visual intelligence... <a href=\"https://github.com/govinda-vurjana/Tradie#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Python, Computer Vision, OCR, AI Vision, Creative Analytics",
+    "category": "Visual AI Finance",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/Tradie",
+    "github": "https://github.com/govinda-vurjana/Tradie",
+    "date": "2025-10-29"
+  },
+  {
+    "title": "Intelligent Creative Organizer",
+    "description": "A smart browser extension that organizes creative assets using AI. Applies filmmaker's organizational principles to digital content management with intelligent categorization... <a href=\"https://github.com/govinda-vurjana/smart-download-organizer#readme\" style=\"color: #4CAF50; text-decoration: underline;\">Read more</a>",
+    "technologies": "Chrome Extension, JavaScript, AI Classification, Creative Workflow",
+    "category": "Creative Tools",
+    "image": null,
+    "url": "https://github.com/govinda-vurjana/smart-download-organizer",
+    "github": "https://github.com/govinda-vurjana/smart-download-organizer",
+    "date": "2025-08-01"
+  }
+];
+
+const FALLBACK_BLOG_DATA = [
+  {
+    "date": "Oct 7,2025",
+    "title": "The Creative Ingredients of LLMs",
+    "url": "https://govinda-vurjana.medium.com/ingredients-of-llms-30b141a5fce0",
+    "excerpt": "Exploring how LLMs can be the creative ingredients for building world-class AI art and intelligent systems."
+  },
+  {
+    "date": "Sep 27, 2025",
+    "title": "From Filmmaker to AI Engineer: My $700 Upwork Journey",
+    "url": "https://medium.com/@govinda-vurjana/how-i-made-my-first-700-on-upwork-ad20de98f803",
+    "excerpt": "How my filmmaking background gave me a unique edge in landing AI engineering clients and building creative technical solutions."
+  }
+];
+
 // Theme functionality
 function initTheme() {
-    // Check for saved user preference, if any, on load of the website
-    const savedTheme = localStorage.getItem('theme') || 'light';
     const themeToggle = document.querySelector('.theme-toggle');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
     // Set dark theme as default
     const currentTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', currentTheme);
-
-    // Function to update the theme
-    const toggleTheme = () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeToggle();
-    };
-
-    // Add click event listener to the theme toggle button
-    themeToggle.addEventListener('click', toggleTheme);
 
     // Update the theme toggle button based on the current theme
     const updateThemeToggle = () => {
@@ -39,16 +172,31 @@ function initTheme() {
         }
     };
 
+    // Function to update the theme
+    const toggleTheme = () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeToggle();
+    };
+
+    // Add click event listener to the theme toggle button
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        // Add keyboard navigation support
+        themeToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+    }
+
     // Initial update of the theme toggle
     updateThemeToggle();
-
-    // Add keyboard navigation support
-    themeToggle.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            toggleTheme();
-        }
-    });
 
     // Listen for changes in the color scheme preference
     prefersDarkScheme.addEventListener('change', (e) => {
@@ -61,10 +209,174 @@ function initTheme() {
     });
 }
 
-// Navigation functionality
-document.addEventListener('DOMContentLoaded', function() {
+// Test data loading with simple fetch
+async function testDataAccess() {
+    console.log('Testing data file access...');
+    
+    try {
+        // Test blogs.json
+        const blogResponse = await fetch('data/blogs.json');
+        console.log('Blogs response status:', blogResponse.status);
+        if (blogResponse.ok) {
+            const blogData = await blogResponse.json();
+            console.log('Blogs data:', blogData);
+        }
+        
+        // Test portfolio.json
+        const portfolioResponse = await fetch('data/portfolio.json');
+        console.log('Portfolio response status:', portfolioResponse.status);
+        if (portfolioResponse.ok) {
+            const portfolioData = await portfolioResponse.json();
+            console.log('Portfolio data length:', portfolioData.length);
+        }
+        
+    } catch (error) {
+        console.error('Data access test failed:', error);
+    }
+}
+
+// Test email functionality (for debugging)
+function testEmailSetup() {
+    console.log('Testing email setup...');
+    console.log('EmailJS Config:', EMAILJS_CONFIG);
+    
+    if (EMAILJS_CONFIG.publicKey === 'YOUR_PUBLIC_KEY') {
+        console.log('❌ EmailJS not configured yet. Please update EMAILJS_CONFIG in script.js');
+        return false;
+    }
+    
+    if (typeof emailjs === 'undefined') {
+        console.log('❌ EmailJS library not loaded');
+        return false;
+    }
+    
+    console.log('✅ EmailJS setup looks good!');
+    return true;
+}
+
+// Initialize all functionality when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded - Starting initialization');
+    
+    // Test data access first
+    testDataAccess();
+    
+    // Check if key elements exist
+    console.log('Theme toggle found:', !!document.querySelector('.theme-toggle'));
+    console.log('Blog posts container found:', !!document.querySelector('.blog-posts'));
+    console.log('Portfolio list found:', !!document.getElementById('portfolio-list'));
+    
     // Initialize theme
+    console.log('Initializing theme...');
     initTheme();
+    
+    // Initialize waitlist
+    console.log('Initializing waitlist...');
+    initWaitlist();
+    
+    // Load portfolio data
+    console.log('Loading portfolio...');
+    loadPortfolio();
+    
+    // Load blogs and resources data
+    console.log('Loading blogs and resources...');
+    loadBlogsAndResources();
+    
+    // Initialize navigation and other UI functionality
+    console.log('Initializing navigation...');
+    initNavigation();
+    
+    // Initialize animations and effects
+    console.log('Initializing animations...');
+    initAnimations();
+    
+    // Initialize video handling
+    console.log('Initializing video...');
+    initVideoHandling();
+    
+    // Test email setup
+    console.log('Testing email setup...');
+    testEmailSetup();
+    
+    console.log('All initialization complete');
+});
+
+// Video handling for filmmaker tool
+function initVideoHandling() {
+    const toolVideo = document.querySelector('.tool-video');
+    if (toolVideo) {
+        console.log('Tool video found, setting up handlers');
+        
+        // Set video dimensions and attributes
+        toolVideo.style.minHeight = '300px';
+        toolVideo.style.objectFit = 'cover';
+        
+        // Handle video load events
+        toolVideo.addEventListener('loadedmetadata', () => {
+            console.log('Video metadata loaded');
+            toolVideo.style.minHeight = 'auto';
+        });
+        
+        toolVideo.addEventListener('error', (e) => {
+            console.error('Video loading error:', e);
+            // Create a fallback poster-like element
+            const container = toolVideo.parentElement;
+            container.innerHTML = `
+                <div style="
+                    width: 100%;
+                    max-width: 800px;
+                    height: 300px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    text-align: center;
+                    border-radius: 8px;
+                    margin: 0 auto;
+                ">
+                    <div style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">AI Tools for Filmmakers</div>
+                    <div style="font-size: 3rem; margin: 1rem 0; opacity: 0.8;">🎬</div>
+                    <div style="font-size: 1.1rem; opacity: 0.9;">Video preview coming soon</div>
+                </div>
+            `;
+        });
+        
+        // Handle poster image error
+        toolVideo.addEventListener('error', () => {
+            // Remove poster attribute if it fails to load
+            toolVideo.removeAttribute('poster');
+        });
+        
+        // Ensure video shows something even without poster
+        if (!toolVideo.poster || toolVideo.poster === '') {
+            toolVideo.style.backgroundColor = 'rgba(102, 126, 234, 0.1)';
+        }
+    }
+}
+
+// Consolidated data loading function
+async function loadBlogsAndResources() {
+    console.log('Loading blogs and resources...');
+    try {
+        const [blogs, resources] = await Promise.all([
+            fetchJSON('data/blogs.json'),
+            fetchJSON('data/resources.json')
+        ]);
+        
+        console.log('Blogs loaded:', blogs);
+        console.log('Resources loaded:', resources);
+        
+        if (blogs) renderBlogs(blogs);
+        if (resources) renderResources(resources);
+    } catch (error) {
+        console.error('Error loading blogs and resources:', error);
+    }
+}
+
+// Navigation and UI initialization
+function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('.section');
     
@@ -147,7 +459,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+}
+
+// Animation and effects initialization
+function initAnimations() {
     // Add loading animation for profile image
     const profileImg = document.querySelector('.profile-img');
     if (profileImg) {
@@ -176,18 +491,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Add hover effects for blog posts
-    const blogPosts = document.querySelectorAll('.blog-post');
-    blogPosts.forEach(post => {
-        post.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(10px)';
-        });
-        
-        post.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateX(0)';
-        });
-    });
-    
     // Add intersection observer for animations
     const observerOptions = {
         threshold: 0.1,
@@ -204,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     
     // Observe elements for animation
-    const animatedElements = document.querySelectorAll('.resource-card, .blog-post');
+    const animatedElements = document.querySelectorAll('.resource-card, .blog-post, .portfolio-item');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
@@ -212,74 +515,15 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
-    // -------- Data-driven rendering for Blogs and Resources --------
-    async function fetchJSON(path) {
-        try {
-            const res = await fetch(path, { cache: 'no-store' });
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            return await res.json();
-        } catch (e) {
-            console.warn('Failed to load', path, e);
-            return null;
-        }
-    }
+    // Initialize canvas animation
+    initCanvasAnimation();
+    
+    // Initialize figure media
+    initFigureMedia();
+}
 
-    function renderBlogs(blogs) {
-        const container = document.querySelector('.blog-posts');
-        if (!container || !Array.isArray(blogs)) return;
-        container.innerHTML = blogs.map(b => `
-            <div class="blog-post">
-                <div class="blog-date">${b.date || ''}</div>
-                <div class="blog-content">
-                    <h3 class="blog-title">
-                        <a href="${b.url}" target="_blank" rel="noopener">${b.title}</a>
-                    </h3>
-                    <p class="blog-excerpt">${b.excerpt || ''}</p>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function renderResources(resources) {
-        const grid = document.querySelector('.resources-grid');
-        if (!grid || !Array.isArray(resources)) return;
-        grid.innerHTML = resources.map(r => `
-            <div class="resource-card">
-                <div class="resource-icon">${r.icon || '📘'}</div>
-                <h3 class="resource-title">${r.title}</h3>
-                <p class="resource-description">${r.description || ''}</p>
-                ${r.link ? `<a href="${r.link}" target="_blank" class="resource-link">${r.cta || 'Open'}</a>` : ''}
-            </div>
-        `).join('');
-    }
-
-    (async () => {
-        const [blogs, resources] = await Promise.all([
-            fetchJSON('data/blogs.json'),
-            fetchJSON('data/resources.json')
-        ]);
-        if (blogs) renderBlogs(blogs);
-        if (resources) renderResources(resources);
-    })();
-
-    // Figure media: prefer MP4 video, fallback to GIF, else keep dots
-    const figureVideo = document.getElementById('homeFigureVideo');
-    const figureGif = document.getElementById('homeFigureGif');
-    if (figureVideo) {
-        figureVideo.addEventListener('canplay', () => {
-            figureVideo.style.display = 'block';
-            if (figureGif) figureGif.style.display = 'none';
-        });
-        figureVideo.addEventListener('error', () => {
-            if (figureGif) figureGif.style.display = 'block';
-        });
-        // If the video source is missing, show GIF if available
-        if (!figureVideo.getAttribute('src')) {
-            if (figureGif) figureGif.style.display = 'block';
-        }
-    }
-
-    // Animated colorful orbiting dots on transparent canvas
+// Canvas animation for orbiting dots
+function initCanvasAnimation() {
     const orbitCanvas = document.getElementById('orbitCanvas');
     if (orbitCanvas) {
         const ctx = orbitCanvas.getContext('2d');
@@ -347,88 +591,149 @@ document.addEventListener('DOMContentLoaded', function() {
 
         requestAnimationFrame(tick);
     }
-});
-
-// Utility function to update social links
-function updateSocialLinks(links) {
-    const socialLinks = document.querySelectorAll('.social-link');
-    const platforms = ['twitter', 'linkedin', 'github', 'medium'];
-    
-    platforms.forEach((platform, index) => {
-        if (socialLinks[index] && links[platform]) {
-            socialLinks[index].href = links[platform];
-        }
-    });
 }
 
-// Utility function to update personal information
-function updatePersonalInfo(info) {
-    const nameElements = document.querySelectorAll('.logo, .highlight');
-    const titleElement = document.querySelector('title');
-    
-    if (info.name) {
-        nameElements.forEach(el => {
-            el.textContent = info.name;
+// Figure media initialization
+function initFigureMedia() {
+    const figureVideo = document.getElementById('homeFigureVideo');
+    const figureGif = document.getElementById('homeFigureGif');
+    if (figureVideo) {
+        figureVideo.addEventListener('canplay', () => {
+            figureVideo.style.display = 'block';
+            if (figureGif) figureGif.style.display = 'none';
         });
-        if (titleElement) {
-            titleElement.textContent = `${info.name} - AI Engineer`;
-        }
-    }
-    
-    if (info.title) {
-        const introText = document.querySelector('.intro-text p:first-child');
-        if (introText) {
-            introText.textContent = info.title;
-        }
-    }
-    
-    if (info.description) {
-        const descriptionElements = document.querySelectorAll('.intro-text p:not(:first-child)');
-        if (descriptionElements.length >= 2) {
-            descriptionElements[0].textContent = info.description;
-        }
-    }
-    
-    if (info.writingFocus) {
-        const descriptionElements = document.querySelectorAll('.intro-text p:not(:first-child)');
-        if (descriptionElements.length >= 2) {
-            descriptionElements[1].textContent = info.writingFocus;
+        figureVideo.addEventListener('error', () => {
+            if (figureGif) figureGif.style.display = 'block';
+        });
+        // If the video source is missing, show GIF if available
+        if (!figureVideo.getAttribute('src')) {
+            if (figureGif) figureGif.style.display = 'block';
         }
     }
 }
 
-// Example usage (you can customize these values):
-// updatePersonalInfo({
-//     name: "Your Name",
-//     title: "an AI engineer and technical writer.",
-//     bio: "I build AI systems and write about technology, design, and development.",
-//     email: "your.email@example.com"
-// });
+// Data loading functions
+async function fetchJSON(path) {
+    console.log('Fetching:', path);
+    try {
+        const res = await fetch(path, { cache: 'no-store' });
+        console.log('Response status:', res.status, 'for', path);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        console.log('Data loaded from', path, ':', data);
+        return data;
+    } catch (e) {
+        console.warn('Failed to load', path, e);
+        console.log('Using fallback data for', path);
+        
+        // Return fallback data based on the path
+        if (path.includes('portfolio.json')) {
+            return FALLBACK_PORTFOLIO_DATA;
+        } else if (path.includes('blogs.json')) {
+            return FALLBACK_BLOG_DATA;
+        }
+        
+        return null;
+    }
+}
 
-// updateSocialLinks({
-//     twitter: "https://twitter.com/yourusername",
-//     linkedin: "https://linkedin.com/in/yourusername",
-//     github: "https://github.com/yourusername",
-//     medium: "https://medium.com/@yourusername"
-// });
+function renderBlogs(blogs) {
+    console.log('renderBlogs called with:', blogs);
+    const container = document.querySelector('.blog-posts');
+    console.log('Blog container found:', container);
+    
+    if (!container) {
+        console.error('Blog container (.blog-posts) not found in DOM');
+        return;
+    }
+    
+    if (!Array.isArray(blogs)) {
+        console.error('Blogs is not an array:', blogs);
+        return;
+    }
+    
+    if (blogs.length === 0) {
+        console.log('No blogs to render');
+        container.innerHTML = '<p>No blog posts available.</p>';
+        return;
+    }
+    
+    console.log('Rendering', blogs.length, 'blog posts');
+    const blogHTML = blogs.map(b => `
+        <div class="blog-post">
+            <div class="blog-date">${b.date || ''}</div>
+            <div class="blog-content">
+                <h3 class="blog-title">
+                    <a href="${b.url}" target="_blank" rel="noopener">${b.title}</a>
+                </h3>
+                <p class="blog-excerpt">${b.excerpt || ''}</p>
+            </div>
+        </div>
+    `).join('');
+    
+    console.log('Generated blog HTML:', blogHTML);
+    container.innerHTML = blogHTML;
+    console.log('Blog posts rendered successfully');
+}
 
-// No sample portfolio data - will show empty state message
+function renderResources(resources) {
+    const grid = document.querySelector('.resources-grid');
+    if (!grid || !Array.isArray(resources)) return;
+    grid.innerHTML = resources.map(r => `
+        <div class="resource-card">
+            <div class="resource-icon">${r.icon || '📘'}</div>
+            <h3 class="resource-title">${r.title}</h3>
+            <p class="resource-description">${r.description || ''}</p>
+            ${r.link ? `<a href="${r.link}" target="_blank" class="resource-link">${r.cta || 'Open'}</a>` : ''}
+        </div>
+    `).join('');
+}
 
 // Function to render portfolio items
 function renderPortfolioItems(items, container) {
-    if (!items || !items.length) {
+    console.log('renderPortfolioItems called with:', items);
+    console.log('Items type:', typeof items);
+    console.log('Items is array:', Array.isArray(items));
+    console.log('Items length:', items ? items.length : 'items is null/undefined');
+    
+    if (!items) {
+        console.log('Items is null or undefined, showing empty state');
         container.innerHTML = `
             <div class="empty-state" style="text-align: center; padding: 3rem;">
-                <h3 style="color: var(--text-color); margin-bottom: 1rem;">Govind is working on something amazing!</h3>
+                <h3 style="color: var(--text-color); margin-bottom: 1rem;">Loading portfolio...</h3>
                 <p style="color: var(--nav-link); max-width: 600px; margin: 0 auto; line-height: 1.6;">
-                    I'm currently focusing on cutting-edge Reinforcement Learning research and development.
-                    Check back soon to see my latest projects and contributions to the field of AI.
+                    Please wait while we load the projects.
+                </p>
+            </div>`;
+        return;
+    }
+    
+    if (!Array.isArray(items)) {
+        console.log('Items is not an array:', items);
+        container.innerHTML = `
+            <div class="empty-state" style="text-align: center; padding: 3rem;">
+                <h3 style="color: var(--text-color); margin-bottom: 1rem;">Error loading portfolio</h3>
+                <p style="color: var(--nav-link); max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                    There was an issue loading the portfolio data.
+                </p>
+            </div>`;
+        return;
+    }
+    
+    if (items.length === 0) {
+        console.log('Items array is empty');
+        container.innerHTML = `
+            <div class="empty-state" style="text-align: center; padding: 3rem;">
+                <h3 style="color: var(--text-color); margin-bottom: 1rem;">No projects found</h3>
+                <p style="color: var(--nav-link); max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                    Portfolio projects will appear here soon.
                 </p>
             </div>`;
         return;
     }
 
-    container.innerHTML = items.map(item => `
+    console.log('Rendering', items.length, 'portfolio items');
+    const portfolioHTML = items.map(item => `
         <div class="portfolio-item">
             <div class="portfolio-image-container">
                 ${item.image ? `
@@ -476,34 +781,123 @@ function renderPortfolioItems(items, container) {
             </div>
         </div>
     `).join('');
+    
+    console.log('Generated portfolio HTML length:', portfolioHTML.length);
+    container.innerHTML = portfolioHTML;
+    console.log('Portfolio items rendered successfully');
 }
 
 // Portfolio functionality
 async function loadPortfolio() {
+    console.log('loadPortfolio function called');
     const portfolioContainer = document.getElementById('portfolio-list');
-    if (!portfolioContainer) return;
+    if (!portfolioContainer) {
+        console.error('Portfolio container not found');
+        return;
+    }
+
+    console.log('Portfolio container found:', portfolioContainer);
 
     try {
         // Show loading state
         portfolioContainer.innerHTML = '<div class="portfolio-loading">Loading projects...</div>';
         
+        console.log('Fetching portfolio from data/portfolio.json');
+        
         // Try to fetch portfolio items
-        const response = await fetch('data/portfolio.json');
+        const response = await fetch('data/portfolio.json', { cache: 'no-store' });
+        console.log('Portfolio fetch response:', response.status, response.statusText);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
         const portfolioItems = await response.json();
+        console.log('Portfolio items loaded from file:', portfolioItems);
+        console.log('Portfolio items type:', typeof portfolioItems);
+        console.log('Portfolio items is array:', Array.isArray(portfolioItems));
+        console.log('Portfolio items length:', portfolioItems ? portfolioItems.length : 'null');
         
         // Render the items (or empty state if no items)
         renderPortfolioItems(portfolioItems, portfolioContainer);
         
     } catch (error) {
-        console.error('Error loading portfolio:', error);
-        // On error, show empty state
-        renderPortfolioItems([], portfolioContainer);
+        console.error('Error loading portfolio from file:', error);
+        console.log('Using fallback portfolio data');
+        
+        // Use fallback data
+        const portfolioItems = FALLBACK_PORTFOLIO_DATA;
+        console.log('Using fallback portfolio data:', portfolioItems.length, 'items');
+        renderPortfolioItems(portfolioItems, portfolioContainer);
     }
 }
 
-// Load portfolio when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('portfolio')) {
-        loadPortfolio();
+// Waitlist functionality
+function initWaitlist() {
+    const waitlistForm = document.getElementById('waitlistForm');
+    const waitlistSuccess = document.getElementById('waitlistSuccess');
+    
+    if (waitlistForm) {
+        waitlistForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const submitBtn = waitlistForm.querySelector('.waitlist-btn');
+            const originalText = submitBtn.textContent;
+            
+            // Show loading state
+            submitBtn.textContent = 'Joining...';
+            submitBtn.disabled = true;
+            
+            try {
+                const timestamp = new Date().toISOString();
+                
+                // Store locally as backup
+                const waitlistEmails = JSON.parse(localStorage.getItem('waitlistEmails') || '[]');
+                const newEntry = {
+                    email: email,
+                    timestamp: timestamp,
+                    source: 'filmmaker-tools'
+                };
+                
+                // Check if email already exists
+                if (waitlistEmails.find(entry => entry.email === email)) {
+                    alert('This email is already on the waitlist!');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+                
+                // Add to local storage
+                waitlistEmails.push(newEntry);
+                localStorage.setItem('waitlistEmails', JSON.stringify(waitlistEmails));
+                
+                // Send email notification to you
+                submitBtn.textContent = 'Sending notification...';
+                const emailSent = await sendEmailNotification(email, timestamp);
+                
+                if (emailSent) {
+                    console.log('✅ Email notification sent successfully');
+                } else {
+                    console.log('⚠️ Email notification failed, but signup saved locally');
+                }
+                
+                // Show success message
+                waitlistForm.style.display = 'none';
+                waitlistSuccess.style.display = 'flex';
+                
+                // Log for debugging
+                console.log('New waitlist signup:', newEntry);
+                console.log('Total signups:', waitlistEmails.length);
+                
+            } catch (error) {
+                console.error('Error joining waitlist:', error);
+                alert('Something went wrong. Please try again.');
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
     }
-});
+}
