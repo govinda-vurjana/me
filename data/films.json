@@ -1,0 +1,23 @@
+[
+  {
+    "title": "AI-Generated Visual Story",
+    "description": "A creative exploration using cutting-edge AI video generation models. This piece showcases the power of combining multiple AI tools to create compelling visual narratives.",
+    "videoUrl": "data/Film1.mp4",
+    "tools": "Kling AI, Runway ML Gen 4.5, Nano Banana",
+    "technologies": "AI Video Generation, Text-to-Video, Video Synthesis, Creative AI",
+    "date": "2025-03",
+    "duration": "0:30",
+    "category": "AI Film"
+  },
+  {
+    "title": "Multi-AI Creative Showcase",
+    "description": "A stunning visual piece created by combining multiple AI generation platforms. This project demonstrates the creative potential when blending different AI tools with traditional editing techniques.",
+    "videoUrl": "https://youtu.be/XA-vjRN_8yk",
+    "youtubeId": "XA-vjRN_8yk",
+    "tools": "Artflow, Kling AI, Leonardo AI, Pika, Luma Dream Labs, Adobe Premiere Pro",
+    "technologies": "AI Video Generation, Image-to-Video, Video Editing, Creative Compositing",
+    "date": "2025-03",
+    "duration": "1:30",
+    "category": "AI Film"
+  }
+]

@@ -146,6 +146,31 @@ const FALLBACK_BLOG_DATA = [
   }
 ];
 
+const FALLBACK_FILMS_DATA = [
+  {
+    "title": "Your First Film/Ad Title",
+    "description": "A compelling description of your film or advertisement. Explain the creative vision, story, and impact.",
+    "videoUrl": "data/film1.mp4",
+    "thumbnail": "data/film1-thumbnail.jpg",
+    "tools": "Adobe Premiere Pro, DaVinci Resolve, After Effects",
+    "technologies": "Color Grading, Motion Graphics, Sound Design",
+    "date": "2025-01",
+    "duration": "2:30",
+    "category": "Advertisement"
+  },
+  {
+    "title": "Your Second Film/Ad Title",
+    "description": "Another creative project showcasing your filmmaking skills. Describe the concept and execution.",
+    "videoUrl": "data/film2.mp4",
+    "thumbnail": "data/film2-thumbnail.jpg",
+    "tools": "Final Cut Pro, Adobe Audition, Cinema 4D",
+    "technologies": "3D Animation, Visual Effects, Cinematography",
+    "date": "2024-12",
+    "duration": "1:45",
+    "category": "Short Film"
+  }
+];
+
 // Theme functionality
 function initTheme() {
     const themeToggle = document.querySelector('.theme-toggle');
@@ -282,6 +307,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Loading blogs and resources...');
     loadBlogsAndResources();
     
+    // Load films data
+    console.log('Loading films...');
+    loadFilms();
+    
     // Initialize navigation and other UI functionality
     console.log('Initializing navigation...');
     initNavigation();
@@ -373,6 +402,136 @@ async function loadBlogsAndResources() {
     } catch (error) {
         console.error('Error loading blogs and resources:', error);
     }
+}
+
+// Films data loading function
+async function loadFilms() {
+    console.log('loadFilms function called');
+    const filmsContainer = document.getElementById('films-list');
+    if (!filmsContainer) {
+        console.error('Films container not found');
+        return;
+    }
+
+    console.log('Films container found:', filmsContainer);
+
+    try {
+        // Show loading state
+        filmsContainer.innerHTML = '<div class="films-loading">Loading films...</div>';
+        
+        console.log('Fetching films from data/films.json');
+        
+        // Try to fetch films
+        const response = await fetch('data/films.json', { cache: 'no-store' });
+        console.log('Films fetch response:', response.status, response.statusText);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const filmsData = await response.json();
+        console.log('Films data loaded from file:', filmsData);
+        
+        // Render the films
+        renderFilms(filmsData, filmsContainer);
+        
+    } catch (error) {
+        console.error('Error loading films from file:', error);
+        console.log('Using fallback films data');
+        
+        // Use fallback data
+        const filmsData = FALLBACK_FILMS_DATA;
+        console.log('Using fallback films data:', filmsData.length, 'items');
+        renderFilms(filmsData, filmsContainer);
+    }
+}
+
+// Function to render films
+function renderFilms(films, container) {
+    console.log('renderFilms called with:', films);
+    
+    if (!films || !Array.isArray(films)) {
+        console.log('Films is not an array or is null');
+        container.innerHTML = `
+            <div class="empty-state" style="text-align: center; padding: 3rem;">
+                <h3 style="color: var(--text-color); margin-bottom: 1rem;">No films available</h3>
+                <p style="color: var(--nav-link); max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                    Films and scripts will appear here soon.
+                </p>
+            </div>`;
+        return;
+    }
+    
+    if (films.length === 0) {
+        console.log('Films array is empty');
+        container.innerHTML = `
+            <div class="empty-state" style="text-align: center; padding: 3rem;">
+                <h3 style="color: var(--text-color); margin-bottom: 1rem;">No films yet</h3>
+                <p style="color: var(--nav-link); max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                    Check back soon for creative film and advertising work.
+                </p>
+            </div>`;
+        return;
+    }
+
+    console.log('Rendering', films.length, 'films');
+    const filmsHTML = films.map(film => `
+        <div class="film-item">
+            <div class="film-video-container">
+                ${film.youtubeId ? `
+                <iframe 
+                    class="film-video youtube-embed" 
+                    src="https://www.youtube.com/embed/${film.youtubeId}" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+                ` : `
+                <video class="film-video" controls preload="metadata" ${film.thumbnail ? `poster="${film.thumbnail}"` : ''}>
+                    <source src="${film.videoUrl}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                `}
+            </div>
+            <div class="film-content">
+                <div class="film-header">
+                    <h3 class="film-title">${film.title}</h3>
+                    <div class="film-meta-top">
+                        ${film.duration ? `<span class="film-duration">⏱️ ${film.duration}</span>` : ''}
+                        ${film.category ? `<span class="film-category">${film.category}</span>` : ''}
+                    </div>
+                </div>
+                ${film.date ? `<p class="film-date">${film.date}</p>` : ''}
+                <p class="film-description">${film.description}</p>
+                
+                ${film.tools ? `
+                <div class="film-tools-section">
+                    <div class="film-tools-title">🛠️ Tools Used</div>
+                    <div class="film-tools-tags">
+                        ${film.tools.split(',').map(tool => 
+                            `<span class="film-tool-tag">${tool.trim()}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+                ` : ''}
+                
+                ${film.technologies ? `
+                <div class="film-tools-section">
+                    <div class="film-tools-title">⚡ Technologies & Techniques</div>
+                    <div class="film-tech-tags">
+                        ${film.technologies.split(',').map(tech => 
+                            `<span class="film-tech-tag">${tech.trim()}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+        </div>
+    `).join('');
+    
+    console.log('Generated films HTML length:', filmsHTML.length);
+    container.innerHTML = filmsHTML;
+    console.log('Films rendered successfully');
 }
 
 // Navigation and UI initialization
@@ -631,6 +790,8 @@ async function fetchJSON(path) {
             return FALLBACK_PORTFOLIO_DATA;
         } else if (path.includes('blogs.json')) {
             return FALLBACK_BLOG_DATA;
+        } else if (path.includes('films.json')) {
+            return FALLBACK_FILMS_DATA;
         }
         
         return null;
