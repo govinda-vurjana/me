@@ -148,26 +148,25 @@ const FALLBACK_BLOG_DATA = [
 
 const FALLBACK_FILMS_DATA = [
   {
-    "title": "Your First Film/Ad Title",
-    "description": "A compelling description of your film or advertisement. Explain the creative vision, story, and impact.",
-    "videoUrl": "data/film1.mp4",
-    "thumbnail": "data/film1-thumbnail.jpg",
-    "tools": "Adobe Premiere Pro, DaVinci Resolve, After Effects",
-    "technologies": "Color Grading, Motion Graphics, Sound Design",
-    "date": "2025-01",
-    "duration": "2:30",
-    "category": "Advertisement"
+    "title": "AI-Generated Visual Story",
+    "description": "A creative exploration using cutting-edge AI video generation models. This piece showcases the power of combining multiple AI tools to create compelling visual narratives.",
+    "videoUrl": "data/Film1.mp4",
+    "tools": "Kling AI, Runway ML Gen 4.5, Nano Banana",
+    "technologies": "AI Video Generation, Text-to-Video, Video Synthesis, Creative AI",
+    "date": "2025-03",
+    "duration": "0:30",
+    "category": "AI Film"
   },
   {
-    "title": "Your Second Film/Ad Title",
-    "description": "Another creative project showcasing your filmmaking skills. Describe the concept and execution.",
-    "videoUrl": "data/film2.mp4",
-    "thumbnail": "data/film2-thumbnail.jpg",
-    "tools": "Final Cut Pro, Adobe Audition, Cinema 4D",
-    "technologies": "3D Animation, Visual Effects, Cinematography",
-    "date": "2024-12",
-    "duration": "1:45",
-    "category": "Short Film"
+    "title": "Multi-AI Creative Showcase",
+    "description": "A stunning visual piece created by combining multiple AI generation platforms. This project demonstrates the creative potential when blending different AI tools with traditional editing techniques.",
+    "videoUrl": "https://youtu.be/XA-vjRN_8yk",
+    "youtubeId": "XA-vjRN_8yk",
+    "tools": "Artflow, Kling AI, Leonardo AI, Pika, Luma Dream Labs, Adobe Premiere Pro",
+    "technologies": "AI Video Generation, Image-to-Video, Video Editing, Creative Compositing",
+    "date": "2025-03",
+    "duration": "1:30",
+    "category": "AI Film"
   }
 ];
 
