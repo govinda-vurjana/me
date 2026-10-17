@@ -269,6 +269,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("inStatus", (inquiries, ...statuses) =>
     (inquiries ?? []).filter((i) => statuses.includes(i.data.status))
   );
+  eleventyConfig.addFilter("tagged", (items, tag) => (items ?? []).filter((i) => [].concat(i.data.tags ?? []).includes(tag)));
   eleventyConfig.addFilter("forInquiry", (entries, slug) => (entries ?? []).filter((e) => e.data.inquiry === slug));
   eleventyConfig.addFilter("findInquiry", (inquiries, slug) => (inquiries ?? []).find((i) => i.fileSlug === slug));
   eleventyConfig.addFilter("groupByYear", (entries) => {

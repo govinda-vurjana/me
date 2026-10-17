@@ -3,6 +3,7 @@
 //
 //   npm run new thought    "Is memory a place or a process?"   [inquiry-slug]
 //   npm run new note       "Backpropagation through time"       [inquiry-slug]
+//   npm run new math       "The Hopfield energy never increases" [inquiry-slug]
 //   npm run new experiment "Copy task on an LSTM"               [inquiry-slug]
 //   npm run new paper      "A note on gated memory"             [inquiry-slug]
 //   npm run new inquiry    "Associative memory"
@@ -14,14 +15,16 @@ import fs from "node:fs";
 import path from "node:path";
 
 const [kind, title, inquiry] = process.argv.slice(2);
-const KINDS = ["thought", "note", "experiment", "paper", "inquiry"];
+const KINDS = ["thought", "note", "math", "experiment", "paper", "inquiry"];
 
 if (!KINDS.includes(kind) || !title) {
   console.log(`Usage: npm run new <${KINDS.join("|")}> "Title" [inquiry-slug]`);
   process.exit(1);
 }
 
-const today = new Date().toISOString().slice(0, 10);
+// Local date, not UTC, so an entry written in the morning gets today's date.
+const now = new Date();
+const today = [now.getFullYear(), now.getMonth() + 1, now.getDate()].map((n) => String(n).padStart(2, "0")).join("-");
 const slug = title
   .toLowerCase()
   .normalize("NFKD")
@@ -59,6 +62,25 @@ ${inquiryLine}summary: One sentence on what this note explains.
 ## The idea
 
 ## Why it matters here
+
+## References
+`,
+
+  // A note tagged mathematics: listed on the Mathematics page as well.
+  math: `---
+title: ${q(title)}
+date: ${today}
+kind: note
+tags: mathematics
+${inquiryLine}summary: One sentence on what this shows.
+# Math: $x_t$ inline; put $$ on its own line before and after a display equation.
+---
+
+## Statement
+
+## Derivation
+
+## Why it matters
 
 ## References
 `,

@@ -1,0 +1,39 @@
+---
+layout: layouts/base.njk
+title: Mathematics
+description: Derivations, proofs, and worked notes, newest first.
+permalink: /mathematics/
+---
+{% import "macros.njk" as ui %}
+{%- set mathInquiries = collections.inquiries | tagged("mathematics") %}
+{%- set mathEntries = collections.entries | tagged("mathematics") %}
+<header class="page-head">
+  <h1>Mathematics</h1>
+  <p class="dek">Derivations, proofs, and worked notes: the mathematics behind the work on memory, and mathematics in its own right.</p>
+</header>
+
+{%- if mathInquiries.length %}
+<section class="section section--tight">
+  <header class="section-head"><h2 class="section-label">Inquiries</h2></header>
+  <div class="inquiry-list">
+    {%- for inq in mathInquiries %}
+    {{ ui.inquiryCard(inq, collections.entries) }}
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if mathEntries.length %}
+<section class="section{% if not mathInquiries.length %} section--tight{% endif %}">
+  <header class="section-head"><h2 class="section-label">Writing</h2></header>
+  <ol class="entry-list">
+    {%- for entry in mathEntries %}
+    {{ ui.entryRow(entry, collections.inquiries, true) }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}
+
+{%- if not mathInquiries.length and not mathEntries.length %}
+<p class="empty">Nothing here yet. Derivations, proofs, and worked notes will be listed here.</p>
+{%- endif %}

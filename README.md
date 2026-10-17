@@ -13,6 +13,7 @@ Inquiry  ──►  Notebook entries: thought · note · experiment · paper
 
 - **Inquiries** (`src/inquiries/*.md`) are lines of research. Each has a start date, an optional end date, a status, and a `log` of short dated thoughts. Its page shows a timeline that merges the log with every notebook entry linked to it. The Inquiries page charts all of them over time.
 - **Notebook entries** (`src/notebook/*.md`) are dated writing. Each has a `kind` (`thought`, `note`, `experiment`, or `paper`) and usually an `inquiry`.
+- **Mathematics** (`/mathematics/`) lists every entry and inquiry with `tags: mathematics`. They still appear in the notebook and on their inquiry's timeline.
 - **Projects** (`src/_data/projects.yaml`) are code on GitHub.
 
 ## Everyday use
@@ -27,6 +28,7 @@ Create things with `npm run new`:
 ```sh
 npm run new thought    "Is memory a place or a process?"   memory-systems
 npm run new note       "Backpropagation through time"       memory-systems
+npm run new math       "The Hopfield energy never increases" memory-systems
 npm run new experiment "Copy task on an LSTM"               memory-systems
 npm run new paper      "Forgetting as memory"               memory-systems
 npm run new inquiry    "Associative memory"
@@ -59,6 +61,7 @@ Set `status` to `exploring`, `paused`, `planned`, or `concluded`. To finish one,
 | `kind` | entries | `thought`, `note`, `experiment`, or `paper` |
 | `inquiry` | entries | Inquiry this belongs to (its file name) |
 | `summary` | all | One sentence shown in lists and link previews |
+| `tags: mathematics` | entries, inquiries | Also list it on the Mathematics page (`npm run new math` adds it) |
 | `status` | experiments, inquiries | Experiments: `running`, `complete`, or `abandoned`. Inquiries: see above |
 | `result` | experiments | The one-line finding, shown at the top and on the timeline |
 | `repo`, `notebook`, `dataset`, `demo` | entries | Links shown as buttons |

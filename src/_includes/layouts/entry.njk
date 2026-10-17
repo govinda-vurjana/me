@@ -5,7 +5,7 @@ layout: layouts/base.njk
 {%- set inq = collections.inquiries | findInquiry(inquiry) %}
 <article class="entry entry--{{ kind }}">
   <header class="page-head">
-    <p class="eyebrow"><a href="/notebook/">Notebook</a><span class="sep">/</span>{{ ui.mark(kind) }}{{ kind | kindLabel }}{% if draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
+    <p class="eyebrow">{% if "mathematics" in (tags or []) %}<a href="/mathematics/">Mathematics</a>{% else %}<a href="/notebook/">Notebook</a>{% endif %}<span class="sep">/</span>{{ ui.mark(kind) }}{{ kind | kindLabel }}{% if draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
     <h1>{{ title }}</h1>
     {%- if kind == "paper" and authors %}
     <p class="authors">{{ authors | join(", ") }}</p>
