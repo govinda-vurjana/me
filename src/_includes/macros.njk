@@ -1,0 +1,103 @@
+{#- Shared building blocks. Import with:  {% import "macros.njk" as ui %} -#}
+
+{% macro mark(kind) -%}
+<span class="mark mark--{{ kind }}" aria-hidden="true"></span>
+{%- endmacro %}
+
+{% macro draftTag(item) -%}
+{%- if item.data.draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif -%}
+{%- endmacro %}
+
+{# One row in a list of notebook entries. #}
+{% macro entryRow(entry, inquiries, fullDate=false, showInquiry=true) %}
+{%- set inq = inquiries | findInquiry(entry.data.inquiry) %}
+<li class="entry-row" data-kind="{{ entry.data.kind }}">
+  <time class="entry-date" datetime="{{ entry.date | iso }}">{{ (entry.date | day) if fullDate else (entry.date | shortDay) }}</time>
+  <div class="entry-main">
+    <p class="kind-line">{{ mark(entry.data.kind) }}<span>{{ entry.data.kind | kindLabel }}</span>
+      {%- if inq and showInquiry %}<span class="sep">·</span><a href="{{ inq.url }}">{{ inq.data.title }}</a>{% endif %}{{ draftTag(entry) }}</p>
+    <h3 class="entry-title"><a href="{{ entry.url }}">{{ entry.data.title }}</a></h3>
+    {%- if entry.data.summary %}
+    <p class="entry-summary">{{ entry.data.summary }}</p>
+    {%- endif %}
+    {%- if entry.data.result %}
+    <p class="entry-result"><span class="label">Result</span> {{ entry.data.result }}</p>
+    {%- endif %}
+  </div>
+</li>
+{% endmacro %}
+
+{# A line of inquiry: status, period, question. #}
+{% macro inquiryCard(inq, entries) %}
+{%- set count = (entries | forInquiry(inq.fileSlug)).length %}
+<article class="inquiry-card">
+  <p class="meta-line">
+    <span class="status status--{{ inq.data.status }}">{{ inq.data.status | statusLabel }}</span>
+    {%- if inq.data.started %}<span class="sep">·</span>{{ inq.data.started | span(inq.data.ended) }}<span class="sep">·</span>{{ inq.data.started | duration(inq.data.ended) }}{% endif %}
+    {%- if count %}<span class="sep">·</span>{{ count }} {{ "entry" if count == 1 else "entries" }}{% endif %}{{ draftTag(inq) }}
+  </p>
+  <h3 class="inquiry-title"><a href="{{ inq.url }}">{{ inq.data.title }}</a></h3>
+  {%- if inq.data.question %}
+  <p class="inquiry-question">{{ inq.data.question }}</p>
+  {%- endif %}
+</article>
+{% endmacro %}
+
+{# Open questions from _data/questions.yaml. #}
+{% macro questionList(questions, inquiries) %}
+<ol class="questions">
+  {%- for q in questions %}
+  {%- set inq = inquiries | findInquiry(q.inquiry) %}
+  <li class="question">
+    {{ mark("question") }}
+    <div>
+      <p class="question-text">{{ q.q }}</p>
+      {%- if q.note %}
+      <p class="question-note">{{ q.note }}</p>
+      {%- endif %}
+      <p class="meta-line">Asked {{ q.asked | month }}<span class="sep">·</span>{% if inq %}became <a href="{{ inq.url }}">{{ inq.data.title }}</a>{% else %}open{% endif %}</p>
+    </div>
+  </li>
+  {%- endfor %}
+</ol>
+{% endmacro %}
+
+{# Horizontal research timeline: one track per inquiry, entries as marks. #}
+{% macro timeline(chart) %}
+{%- if chart %}
+<figure class="tl">
+  <div class="tl-row tl-row--axis" aria-hidden="true">
+    <div class="tl-label"></div>
+    <div class="tl-track tl-axis">
+      {%- for t in chart.ticks %}
+      <span class="tl-tick" style="left: {{ t.left }}%"><span>{{ t.label }}</span></span>
+      {%- endfor %}
+      <span class="tl-now-label" style="left: {{ chart.now }}%">now</span>
+    </div>
+  </div>
+  {%- for row in chart.rows %}
+  {%- set d = row.inquiry.data %}
+  <div class="tl-row">
+    <div class="tl-label">
+      <a href="{{ row.inquiry.url }}">{{ d.title }}</a>
+      <span class="tl-dates">{{ d.started | span(d.ended) }} · {{ d.started | duration(d.ended) }}</span>
+    </div>
+    <div class="tl-track">
+      {%- for t in chart.ticks %}<span class="tl-grid" style="left: {{ t.left }}%"></span>{% endfor %}
+      <span class="tl-now" style="left: {{ chart.now }}%"></span>
+      <span class="tl-bar tl-bar--{{ d.status }}{% if row.ongoing %} is-ongoing{% endif %}" style="left: {{ row.left }}%; width: {{ row.width }}%"></span>
+      {%- for m in row.marks %}
+      <a class="tl-mark" href="{{ m.entry.url }}" style="left: {{ m.left }}%" title="{{ m.entry.date | day }} · {{ m.entry.data.kind | kindLabel }}: {{ m.entry.data.title }}" aria-label="{{ m.entry.data.kind | kindLabel }}: {{ m.entry.data.title }}">{{ mark(m.entry.data.kind) }}</a>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- endfor %}
+  <figcaption class="legend">
+    <span>{{ mark("thought") }}Thought</span>
+    <span>{{ mark("note") }}Note</span>
+    <span>{{ mark("experiment") }}Experiment</span>
+    <span>{{ mark("paper") }}Paper</span>
+  </figcaption>
+</figure>
+{%- endif %}
+{% endmacro %}

@@ -1,0 +1,35 @@
+---
+layout: layouts/base.njk
+title: About
+description: Govinda Vurjana works on memory in artificial intelligence, starting from questions.
+permalink: /about/
+---
+<header class="page-head about-head">
+  <img class="portrait" src="/assets/img/portrait.jpg" alt="Portrait of Govinda Vurjana" width="1170" height="1170">
+  <div>
+    <p class="eyebrow">About</p>
+    <h1>Govinda Vurjana</h1>
+    <p class="dek">AI engineer, working on how machines remember, retrieve, and think.</p>
+  </div>
+</header>
+
+<div class="prose">
+  <p>The question I keep returning to is how a machine remembers, how it finds what it remembered, and how the two turn into thinking. This site is where I work on it in the open.</p>
+
+  <h2>How I work</h2>
+  <p>I start from a plain question, often a vague one and usually a “what if”. Then I stay with it: I read around it, write down what I think, work through the mathematics, and build the smallest experiment that could tell me something. Everything goes into the <a href="/notebook/">notebook</a> with a date, so the path from question to result stays visible.</p>
+
+  <h2>Interests</h2>
+  <ul>
+    <li>Memory in neural systems: storage, retrieval, and association</li>
+    <li>Recurrent and associative memory</li>
+    <li>Dynamical systems and the mathematics of learning</li>
+    <li>The architecture of agents: what an agent is made of, and whether there is anything like System 1 and System 2 inside one</li>
+  </ul>
+
+  <h2>Background</h2>
+  <p>I build agentic systems, reinforcement-learning environments, and 3D and generative pipelines; some of that work is under <a href="/projects/">projects</a>. I came to AI from filmmaking.</p>
+
+  <h2>Contact</h2>
+  <p>Email is best: <a href="mailto:{{ site.email }}">{{ site.email }}</a>. I'm also on {% for link in site.links %}<a href="{{ link.url }}" rel="me">{{ link.label }}</a>{% if loop.revindex == 2 %} and {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
+</div>

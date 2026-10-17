@@ -1,0 +1,39 @@
+# Things built along the way. Newest first.
+# Fields: title, year, summary, repo, tags, and optionally
+#   inquiry: <slug>      to show the project on that inquiry's page
+#   also:                extra links, each with label + url
+
+- title: CAD drawings to editable 3D models
+  year: 2026
+  repo: https://github.com/govinda-vurjana/ai-3d-modelling
+  summary: Turns client CAD drawings (.dxf) into editable Blender models, driven from the terminal in natural language. Claude Code acts as the agent, working through Blender over MCP and a from-scratch ingestion library that compiles each drawing into an intermediate build plan.
+  tags: [3D, agents, Blender]
+
+- title: Local image and text to video
+  year: 2026
+  repo: https://github.com/govinda-vurjana/OpenSourceModels_Experiments
+  summary: A small FastAPI service over ComfyUI for running open video-generation models locally (Wan 2.2, HunyuanVideo 1.5, LTX) behind one plain HTTP interface.
+  tags: [generative video, diffusion]
+
+- title: Reinforcement-learning tasks for LLM agents
+  year: 2025
+  repo: https://github.com/govinda-vurjana/AiChamp-RLTask
+  summary: Graded environments for training language-model agents with reinforcement learning, such as repairing a broken data-preprocessing pipeline. Each task is calibrated to a 10–40% pass rate so it stays learnable.
+  tags: [RL, LLM agents, evaluation]
+  also:
+    - label: Data-drift task
+      url: https://github.com/govinda-vurjana/Ai-Champ-Data-Drift
+    - label: Trading-strategy task
+      url: https://github.com/govinda-vurjana/Algorithmic-Trading-based-on-RL-
+
+- title: Double DQN agent for a survival game
+  year: 2025
+  repo: https://github.com/govinda-vurjana/ZombieGame
+  summary: A zombie-shooter environment in which an agent learns to move, aim, and survive using Double Deep Q-Networks.
+  tags: [deep RL, DQN]
+
+- title: SmartTrade
+  year: 2025
+  repo: https://github.com/govinda-vurjana/smart-trade
+  summary: A modular platform for training and evaluating trading agents. PPO, DQN and actor-critic methods are implemented from scratch in PyTorch, with LSTM layers for temporal structure and custom reward shaping.
+  tags: [RL, PyTorch, LSTM]

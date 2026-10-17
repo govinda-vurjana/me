@@ -1,2 +1,6 @@
 # Dependencies
 node_modules/
+# Built site (GitHub Actions builds it on every push)
+_site/
+# Python virtual environment
+.venv/

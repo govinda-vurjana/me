@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+title: Notebook
+description: Thoughts, notes, experiments, and papers, newest first.
+permalink: /notebook/
+---
+{% import "macros.njk" as ui %}
+<header class="page-head">
+  <h1>Notebook</h1>
+  <p class="dek">Thoughts, notes, experiments, and papers, newest first. Most entries belong to an inquiry; follow its link to see where the entry sits on that inquiry's timeline.</p>
+</header>
+
+{%- if collections.entries.length %}
+{%- set kinds = [["thought", "Thoughts"], ["note", "Notes"], ["experiment", "Experiments"], ["paper", "Papers"]] %}
+<div class="filter" data-filter hidden>
+  <button type="button" data-kind="all" aria-pressed="true">All <span>{{ collections.entries.length }}</span></button>
+  {%- for k in kinds %}
+  {%- set n = (collections.entries | where("data.kind", k[0])).length %}
+  {%- if n %}
+  <button type="button" data-kind="{{ k[0] }}" aria-pressed="false">{{ ui.mark(k[0]) }}{{ k[1] }} <span>{{ n }}</span></button>
+  {%- endif %}
+  {%- endfor %}
+</div>
+
+{%- for group in collections.entries | groupByYear %}
+<section class="year-group">
+  <h2 class="year">{{ group.year }}</h2>
+  <ol class="entry-list">
+    {%- for entry in group.items %}
+    {{ ui.entryRow(entry, collections.inquiries) }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endfor %}
+{%- else %}
+<p class="empty">Nothing here yet. The first entries are on their way.</p>
+{%- endif %}

@@ -1,0 +1,19 @@
+# Site-wide settings.
+# `url` is the published address. If you move the site (for example to a
+# custom domain or to govinda-vurjana.github.io), change it here; the path
+# prefix used for every link is derived from it.
+title: Govinda Vurjana
+author: Govinda Vurjana
+url: https://govinda-vurjana.github.io/me/
+tagline: Research notebook
+description: A research notebook on how machines remember, retrieve, and think, kept as questions, inquiries, experiments, and papers.
+email: govinda.vurjana@gmail.com
+links:
+  - label: GitHub
+    url: https://github.com/govinda-vurjana
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/govinda-vurjana/
+  - label: X
+    url: https://x.com/im__govind
+  - label: Medium
+    url: https://medium.com/@govinda-vurjana

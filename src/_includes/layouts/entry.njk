@@ -1,0 +1,89 @@
+---
+layout: layouts/base.njk
+---
+{% import "macros.njk" as ui %}
+{%- set inq = collections.inquiries | findInquiry(inquiry) %}
+<article class="entry entry--{{ kind }}">
+  <header class="page-head">
+    <p class="eyebrow"><a href="/notebook/">Notebook</a><span class="sep">/</span>{{ ui.mark(kind) }}{{ kind | kindLabel }}{% if draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
+    <h1>{{ title }}</h1>
+    {%- if kind == "paper" and authors %}
+    <p class="authors">{{ authors | join(", ") }}</p>
+    {%- endif %}
+    {%- if summary %}
+    <p class="dek">{{ summary }}</p>
+    {%- endif %}
+    <p class="meta-line">
+      <time datetime="{{ page.date | iso }}">{{ page.date | day }}</time><span class="sep">·</span>{{ content | readingTime }}
+      {%- if venue %}<span class="sep">·</span>{{ venue }}{% endif %}
+      {%- if status %}<span class="sep">·</span><span class="status status--{{ status }}">{{ status }}</span>{% endif %}
+      {%- if inq %}<span class="sep">·</span>Part of <a href="{{ inq.url }}">{{ inq.data.title }}</a>{% endif %}
+    </p>
+    {%- if pdf or arxiv or repo or notebook or dataset or demo %}
+    <p class="resource-links">
+      {%- if pdf %}<a class="pill" href="{{ pdf }}">PDF</a>{% endif %}
+      {%- if arxiv %}<a class="pill" href="{{ arxiv }}">arXiv ↗</a>{% endif %}
+      {%- if repo %}<a class="pill" href="{{ repo }}">Code ↗</a>{% endif %}
+      {%- if notebook %}<a class="pill" href="{{ notebook }}">Jupyter ↗</a>{% endif %}
+      {%- if dataset %}<a class="pill" href="{{ dataset }}">Data ↗</a>{% endif %}
+      {%- if demo %}<a class="pill" href="{{ demo }}">Demo ↗</a>{% endif %}
+    </p>
+    {%- endif %}
+  </header>
+
+  {%- if kind == "paper" and abstract %}
+  <section class="abstract">
+    <h2 class="section-label">Abstract</h2>
+    <p>{{ abstract }}</p>
+  </section>
+  {%- endif %}
+
+  {%- if result %}
+  <aside class="callout callout--result">
+    <p class="callout-label">Result</p>
+    <p>{{ result }}</p>
+  </aside>
+  {%- endif %}
+
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+
+  {%- if kind == "paper" %}
+  {%- set authorList = authors or [site.author] %}
+  <section class="cite">
+    <header class="section-head">
+      <h2 class="section-label">Cite</h2>
+      <button type="button" class="more copy" data-copy="bibtex" hidden>Copy BibTeX</button>
+    </header>
+<pre id="bibtex"><code>@misc{ {{- title | bibtexKey(page.date, authorList[0]) }},
+  title  = { {{- title }}},
+  author = { {{- authorList | join(" and ") }}},
+  year   = { {{- page.date | year }}},
+  {%- if venue %}
+  note   = { {{- venue }}},
+  {%- endif %}
+  url    = { {{- (arxiv or page.url | absUrl) }}}
+}</code></pre>
+  </section>
+  {%- endif %}
+
+  <footer class="entry-foot">
+    {%- if inq %}
+    {%- set around = collections.entries | forInquiry(inquiry) | neighbours(page.url) %}
+    {%- if around.older or around.newer %}
+    <nav class="pager" aria-label="Elsewhere in this inquiry">
+      {%- if around.older %}
+      <a class="pager-link" href="{{ around.older.url }}"><span class="label">← Earlier in this inquiry</span>{{ around.older.data.title }}</a>
+      {%- endif %}
+      {%- if around.newer %}
+      <a class="pager-link pager-link--next" href="{{ around.newer.url }}"><span class="label">Later in this inquiry →</span>{{ around.newer.data.title }}</a>
+      {%- endif %}
+    </nav>
+    {%- endif %}
+    <p><a href="{{ inq.url }}">See where this sits on the timeline of “{{ inq.data.title }}” →</a></p>
+    {%- else %}
+    <p><a href="/notebook/">← All notebook entries</a></p>
+    {%- endif %}
+  </footer>
+</article>

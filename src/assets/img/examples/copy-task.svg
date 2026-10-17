@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11">
+  <style>
+    .axis { stroke: #8a8478; stroke-width: 1; }
+    .grid { stroke: #8a8478; stroke-width: 1; opacity: 0.25; }
+    .label { fill: #8a8478; }
+    .rnn { stroke: #8a8478; }
+    .lstm { stroke: #b4502f; }
+    .line { fill: none; stroke-width: 2; }
+  </style>
+  <!-- y grid: accuracy 0, 0.5, 1 -->
+  <line class="grid" x1="60" y1="30" x2="620" y2="30"/>
+  <line class="grid" x1="60" y1="140" x2="620" y2="140"/>
+  <line class="axis" x1="60" y1="250" x2="620" y2="250"/>
+  <text class="label" x="50" y="34" text-anchor="end">1.0</text>
+  <text class="label" x="50" y="144" text-anchor="end">0.5</text>
+  <text class="label" x="50" y="254" text-anchor="end">0</text>
+  <!-- chance = 1/8 -->
+  <line class="axis" x1="60" y1="222.5" x2="620" y2="222.5" stroke-dasharray="3 4" opacity="0.7"/>
+  <text class="label" x="616" y="216" text-anchor="end">chance</text>
+  <!-- x ticks: delay (log scale) -->
+  <g class="label" text-anchor="middle">
+    <text x="60" y="270">10</text>
+    <text x="165" y="270">20</text>
+    <text x="304" y="270">50</text>
+    <text x="410" y="270">100</text>
+    <text x="515" y="270">200</text>
+    <text x="620" y="270">400</text>
+    <text x="340" y="292">delay T (steps, log scale)</text>
+  </g>
+  <!-- series -->
+  <polyline class="line rnn" points="60,30 165,45.4 304,153.2 410,214.8 515,221.4 620,221.4"/>
+  <polyline class="line lstm" points="60,30 165,30 304,32.2 410,36.6 515,56.4 620,115.8"/>
+  <g>
+    <circle cx="60" cy="30" r="3" fill="#b4502f"/><circle cx="165" cy="30" r="3" fill="#b4502f"/><circle cx="304" cy="32.2" r="3" fill="#b4502f"/>
+    <circle cx="410" cy="36.6" r="3" fill="#b4502f"/><circle cx="515" cy="56.4" r="3" fill="#b4502f"/><circle cx="620" cy="115.8" r="3" fill="#b4502f"/>
+    <circle cx="165" cy="45.4" r="3" fill="#8a8478"/><circle cx="304" cy="153.2" r="3" fill="#8a8478"/>
+    <circle cx="410" cy="214.8" r="3" fill="#8a8478"/><circle cx="515" cy="221.4" r="3" fill="#8a8478"/><circle cx="620" cy="221.4" r="3" fill="#8a8478"/>
+  </g>
+  <!-- direct labels -->
+  <text x="530" y="108" fill="#b4502f">LSTM</text>
+  <text x="318" y="168" class="label">plain RNN</text>
+</svg>

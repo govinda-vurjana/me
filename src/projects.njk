@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+title: Projects
+description: Things built along the way, with code on GitHub.
+permalink: /projects/
+---
+{% import "macros.njk" as ui %}
+<header class="page-head">
+  <h1>Projects</h1>
+  <p class="dek">Things I have built along the way: agents, reinforcement-learning environments, and generative pipelines. The code is on <a href="https://github.com/govinda-vurjana">GitHub</a>.</p>
+</header>
+
+<div class="project-list">
+  {%- for p in projects %}
+  {%- set inq = collections.inquiries | findInquiry(p.inquiry) %}
+  <article class="project">
+    <p class="meta-line">{{ p.year }}{% for tag in p.tags %}<span class="sep">·</span>{{ tag }}{% endfor %}</p>
+    <h2 class="project-title"><a href="{{ p.repo }}">{{ p.title }}</a></h2>
+    <p>{{ p.summary }}</p>
+    <p class="resource-links">
+      <a class="pill" href="{{ p.repo }}">Code ↗</a>
+      {%- for link in p.also %}<a class="pill" href="{{ link.url }}">{{ link.label }} ↗</a>{% endfor %}
+      {%- if inq %}<a class="pill" href="{{ inq.url }}">Inquiry: {{ inq.data.title }}</a>{% endif %}
+    </p>
+  </article>
+  {%- endfor %}
+</div>

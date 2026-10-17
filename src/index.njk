@@ -1,0 +1,75 @@
+---
+layout: layouts/base.njk
+---
+{% import "macros.njk" as ui %}
+{%- set exploring = collections.inquiries | inStatus("exploring") %}
+
+<section class="hero">
+  <p class="eyebrow">{{ site.tagline }}</p>
+  <h1 class="thesis">How do machines <em>remember</em>, <em>retrieve</em>, and <em>think</em>?</h1>
+  <div class="hero-text">
+    <p>I'm Govinda Vurjana. I work on memory in artificial intelligence: how a system keeps what it has seen, finds it again when it matters, and how remembering turns into thinking.</p>
+    <p>Most of my work starts as one plain question. Some questions grow into inquiries: weeks or months of reading, mathematics, and small experiments. This notebook keeps the whole trail, in the order it happened.</p>
+  </div>
+  {%- if exploring.length %}
+  <p class="now-line">
+    <span class="status status--exploring">Now</span>
+    {%- for inq in exploring %}
+    <a href="{{ inq.url }}">{{ inq.data.title }}</a><span class="meta"> since {{ inq.data.started | month }}</span>{% if not loop.last %}<span class="sep">·</span>{% endif %}
+    {%- endfor %}
+  </p>
+  {%- endif %}
+</section>
+
+{%- if questions.length %}
+<section class="section">
+  <header class="section-head">
+    <h2 class="section-label">Open questions</h2>
+    <a class="more" href="/questions/">All questions →</a>
+  </header>
+  {{ ui.questionList(questions | limit(5), collections.inquiries) }}
+</section>
+{%- endif %}
+
+{%- if collections.inquiries.length %}
+<section class="section section--wide">
+  <header class="section-head">
+    <h2 class="section-label">Inquiries over time</h2>
+    <a class="more" href="/inquiries/">All inquiries →</a>
+  </header>
+  {{ ui.timeline(collections.inquiries | timelineChart(collections.entries)) }}
+  <div class="inquiry-list">
+    {%- for inq in collections.inquiries | inStatus("exploring", "paused") %}
+    {{ ui.inquiryCard(inq, collections.entries) }}
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if collections.papers.length %}
+<section class="section">
+  <header class="section-head">
+    <h2 class="section-label">Papers</h2>
+    <a class="more" href="/papers/">All papers →</a>
+  </header>
+  <ol class="entry-list">
+    {%- for entry in collections.papers | limit(3) %}
+    {{ ui.entryRow(entry, collections.inquiries, true) }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}
+
+{%- if collections.entries.length %}
+<section class="section">
+  <header class="section-head">
+    <h2 class="section-label">Recently in the notebook</h2>
+    <a class="more" href="/notebook/">Everything →</a>
+  </header>
+  <ol class="entry-list">
+    {%- for entry in collections.entries | limit(6) %}
+    {{ ui.entryRow(entry, collections.inquiries, true) }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}

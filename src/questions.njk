@@ -1,0 +1,45 @@
+---
+layout: layouts/base.njk
+title: Questions
+description: The plain questions this research starts from. Some have grown into inquiries; most are still open.
+permalink: /questions/
+---
+{% import "macros.njk" as ui %}
+<header class="page-head">
+  <h1>Questions</h1>
+  <p class="dek">Most of my work starts as a sentence I can't put down, usually a “what if”. These are those sentences. Some have grown into inquiries. Most are still open.</p>
+</header>
+
+{%- if questions.length %}
+<section class="section section--tight">
+  <header class="section-head"><h2 class="section-label">Open</h2></header>
+  {{ ui.questionList(questions, collections.inquiries) }}
+</section>
+{%- endif %}
+
+{%- set groups = [
+  ["Being pursued", collections.inquiries | inStatus("exploring", "paused")],
+  ["Up next", collections.inquiries | inStatus("planned")],
+  ["Worked through", collections.inquiries | inStatus("concluded")]
+] %}
+{%- for group in groups %}
+{%- if group[1].length %}
+<section class="section">
+  <header class="section-head"><h2 class="section-label">{{ group[0] }}</h2></header>
+  <ol class="questions">
+    {%- for inq in group[1] %}
+    <li class="question">
+      {{ ui.mark("question") }}
+      <div>
+        <p class="question-text">{{ inq.data.question or inq.data.title }}</p>
+        {%- if inq.data.status == "concluded" and inq.data.conclusion %}
+        <p class="question-note">{{ inq.data.conclusion }}</p>
+        {%- endif %}
+        <p class="meta-line"><a href="{{ inq.url }}">{{ inq.data.title }}</a>{% if inq.data.started %}<span class="sep">·</span>{{ inq.data.started | span(inq.data.ended) }}{% endif %}{{ ui.draftTag(inq) }}</p>
+      </div>
+    </li>
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}
+{%- endfor %}

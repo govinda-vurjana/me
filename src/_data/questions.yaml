@@ -1,0 +1,20 @@
+# Open questions: the plain sentences research starts from.
+#
+# Add new ones at the top. A question only needs `q` and `asked` (YYYY-MM).
+# Optional: `note` (a line or two of thinking), `inquiry` (the slug of an
+# inquiry it has turned into).
+#
+# When a question becomes real work, run:  npm run new inquiry "Title"
+# and move the question into that inquiry's `question:` field.
+
+- q: Can an AI use System 1 and System 2? Is there anything like them inside it at all?
+  asked: 2026-10
+
+- q: What if every agent were itself a neural network?
+  asked: 2026-10
+
+- q: What if the agentic harness were surrounded by a neural network?
+  asked: 2026-10
+
+- q: What if an LLM were surrounded by neural networks?
+  asked: 2026-10

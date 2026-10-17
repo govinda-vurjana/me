@@ -1,150 +1,105 @@
-# AI Artist & AI Engineer Personal Website
+# Research notebook
 
-A creative, professional website showcasing the unique combination of filmmaking vision and AI engineering expertise.
+Source for <https://govinda-vurjana.github.io/me/>: questions, inquiries, experiments, and papers on how machines remember, retrieve, and think.
 
-## 🎯 **Features**
+The site is built with [Eleventy](https://www.11ty.dev/) from Markdown files. Every push to `main` rebuilds and publishes it through GitHub Actions.
 
-- **AI Artist & AI Engineer Branding**: Showcases the unique blend of creative vision and technical excellence
-- **Filmmaker Tool Showcase**: Video demonstration with waitlist signup
-- **Portfolio**: 8 AI-powered creative projects with technical depth
-- **Blog Integration**: Creative AI insights and technical articles
-- **Email Notifications**: Instant notifications when users join waitlist
-- **Responsive Design**: Works perfectly on all devices
-- **Dark/Light Theme**: Toggle between themes
-
-## 🚀 **Quick Start**
-
-1. **Open `index.html`** in your browser - it works immediately!
-2. **Set up email notifications** (optional): Follow `EMAIL_SETUP_GUIDE.md`
-3. **View waitlist signups**: Open `admin.html` in your browser
-
-## 📧 **Email Notifications Setup**
-
-To receive email notifications when users join your waitlist:
-
-1. Follow the guide in `EMAIL_SETUP_GUIDE.md`
-2. Takes 5 minutes to set up with EmailJS
-3. Get instant notifications to your inbox
-
-## 📁 **File Structure**
+## How the content fits together
 
 ```
-├── index.html              # Main website
-├── styles.css              # All styling
-├── script.js               # All functionality
-├── admin.html              # View waitlist signups
-├── EMAIL_SETUP_GUIDE.md    # Email notification setup
-├── README.md               # This file
-├── data/
-│   ├── portfolio.json      # Your AI projects
-│   ├── blogs.json          # Your blog posts
-│   └── 2025-12-05...mp4    # Your filmmaker tool video
-└── tools/
-    └── cms.js              # Content management
+Question  ──►  Inquiry  ──►  Notebook entries: thought · note · experiment · paper
+(one line)     (a dated line of research with its own timeline)
 ```
 
-## 🎨 **Customization**
+- **Questions** (`src/_data/questions.yaml`) are one-line “what if”s, kept in a single list.
+- **Inquiries** (`src/inquiries/*.md`) are questions you decide to pursue. Each has a start date, an optional end date, a status, and a `log` of short dated thoughts. Its page shows a timeline that merges the log with every notebook entry linked to it. The Inquiries page charts all of them over time.
+- **Notebook entries** (`src/notebook/*.md`) are dated writing. Each has a `kind` (`thought`, `note`, `experiment`, or `paper`) and usually an `inquiry`.
+- **Projects** (`src/_data/projects.yaml`) are code on GitHub.
 
-### **Update Your Content**
-- **Portfolio**: Edit `data/portfolio.json`
-- **Blog Posts**: Edit `data/blogs.json`
-- **Personal Info**: Edit the intro section in `index.html`
+## Everyday use
 
-### **Styling**
-- **Colors**: Modify CSS variables in `styles.css`
-- **Fonts**: Update Google Fonts link in `index.html`
-- **Layout**: Adjust grid and flexbox properties
-
-## 🔧 **Technical Features**
-
-- **Fallback Data**: Works even if JSON files can't be loaded
-- **CORS-Free**: No server required for basic functionality
-- **Progressive Enhancement**: Graceful degradation for all features
-- **Performance Optimized**: Lazy loading and efficient animations
-
-## 📊 **Analytics & Management**
-
-- **Admin Panel**: `admin.html` - view all waitlist signups
-- **Export Data**: Download waitlist emails as CSV
-- **Local Backup**: All data stored in browser as backup
-
-## 🌟 **Unique Positioning**
-
-This website showcases the rare combination of:
-- **Creative Vision**: Filmmaker's eye for storytelling and user experience
-- **Technical Excellence**: AI engineering expertise and intelligent systems
-- **Bridge Builder**: Ability to translate creative concepts into technical implementations
-
-## 🚀 **Deployment**
-
-The website works immediately when opened in any browser. For production:
-
-1. **GitHub Pages**: Upload files to repository, enable Pages
-2. **Netlify**: Drag and drop the folder
-3. **Vercel**: Connect your repository
-4. **Any web host**: Upload all files to public folder
-
-## 📞 **Support**
-
-- Check `EMAIL_SETUP_GUIDE.md` for email notification setup
-- Open `admin.html` to manage waitlist signups
-- All features work offline with fallback data
-
----
-
-**Built for AI Artists & AI Engineers who bridge creativity and technology.**
-
-## Deployment to GitHub Pages
-
-1. **Create a GitHub Repository**:
-   - Create a new repository on GitHub
-   - Name it `yourusername.github.io` (replace with your GitHub username)
-
-2. **Upload Files**:
-   - Upload all files (`index.html`, `styles.css`, `script.js`) to the repository
-   - Add your profile image as `profile-image.jpg`
-
-3. **Enable GitHub Pages**:
-   - Go to your repository settings
-   - Scroll down to "Pages" section
-   - Select "Deploy from a branch"
-   - Choose "main" branch and "/ (root)" folder
-   - Click "Save"
-
-4. **Access Your Website**:
-   - Your website will be available at `https://yourusername.github.io`
-   - It may take a few minutes to deploy
-
-## File Structure
-
-```
-├── index.html          # Main HTML file
-├── styles.css          # CSS styles
-├── script.js           # JavaScript functionality
-├── profile-image.jpg   # Your profile image (add this)
-└── README.md          # This file
+```sh
+npm install                 # once
+npm run dev                 # live preview at http://localhost:8080/me/
 ```
 
-## Browser Support
+Create things with `npm run new`:
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers
+```sh
+npm run new thought    "Is memory a place or a process?"   memory-systems
+npm run new note       "Backpropagation through time"       memory-systems
+npm run new experiment "Copy task on an LSTM"               memory-systems
+npm run new paper      "Forgetting as memory"               memory-systems
+npm run new inquiry    "Associative memory"
+```
 
-## Customization Tips
+The last argument is the inquiry the entry belongs to: the inquiry's file name without `.md`. It can be left out.
 
-1. **Profile Image**: Use a high-quality square image (at least 300x300px) for best results
-2. **Colors**: The current color scheme uses professional blues and grays. You can modify colors in `styles.css`
-3. **Content**: Update all placeholder text with your actual information
-4. **Blog Posts**: Add real blog post titles and links to your Medium articles
-5. **Resources**: Replace placeholder ebooks with your actual downloadable resources
+Publish by committing and pushing to `main`. The site updates about a minute later.
 
-## License
+### A quick dated thought, without a new file
 
-This project is open source and available under the [MIT License](LICENSE).
+Add a line to the inquiry's `log`:
 
-## Support
+```yaml
+log:
+  - date: 2026-10-20
+    text: Read Hopfield (1982). The energy view is the clearest picture of recall I have seen.
+```
 
-If you have any questions or need help customizing the website, feel free to open an issue in this repository.
+### Starting, pausing, and finishing an inquiry
+
+Set `status` to `exploring`, `paused`, `planned`, or `concluded`. To finish one, add `ended: YYYY-MM-DD` and a one-line `conclusion:`. The duration (“2 months”) and its bar on the timeline follow automatically.
+
+## Front matter reference
+
+| Field | Used on | Meaning |
+|---|---|---|
+| `title` | all | Title |
+| `date` | entries | Date of the entry (`YYYY-MM-DD`) |
+| `kind` | entries | `thought`, `note`, `experiment`, or `paper` |
+| `inquiry` | entries | Inquiry this belongs to (its file name) |
+| `summary` | all | One sentence shown in lists and link previews |
+| `status` | experiments, inquiries | Experiments: `running`, `complete`, or `abandoned`. Inquiries: see above |
+| `result` | experiments | The one-line finding, shown at the top and on the timeline |
+| `repo`, `notebook`, `dataset`, `demo` | entries | Links shown as buttons |
+| `authors`, `venue`, `abstract`, `pdf`, `arxiv` | papers | Paper details; a BibTeX entry is generated |
+| `question`, `started`, `ended`, `conclusion`, `log` | inquiries | See above |
+| `draft: true` | anything | Visible in `npm run dev`, never published |
+
+## Writing
+
+Entries are plain Markdown, plus:
+
+- **Math**, rendered at build time with KaTeX: `$x_t$` inline, `$$ ... $$` for display.
+- **Figures**: put images in `src/assets/img/` and write `![Alt text](/assets/img/plot.png "Figure 1. Caption.")`. An image on its own line becomes a figure, and its quoted title becomes the caption.
+- **Callouts**:
+  ```
+  ::: callout Finding
+  The plain RNN collapses suddenly; the LSTM degrades slowly.
+  :::
+  ```
+- **Footnotes**: `text[^1]` and, at the end, `[^1]: The note.`
+- **Code**: fenced blocks with a language (```` ```python ````) are highlighted.
+- **Papers**: put the PDF in `src/assets/papers/` and set `pdf: /assets/papers/name.pdf`.
+
+## Examples
+
+`src/inquiries/examples/` and `src/notebook/examples/` hold example drafts: a finished two-month inquiry, an overlapping ongoing one, a note with math, an experiment with a table and figure, and a paper. They appear only in `npm run dev`. Delete both folders, and `src/assets/img/examples/`, when you no longer need them.
+
+## Setup and structure
+
+GitHub Pages must publish from Actions: **Settings → Pages → Source: GitHub Actions**. The workflow is `.github/workflows/publish.yml`.
+
+```
+src/
+  _data/          site.yaml (name, links, URL), questions.yaml, projects.yaml
+  _includes/      layouts and shared template pieces
+  inquiries/      one Markdown file per inquiry
+  notebook/       one Markdown file per entry
+  assets/         css, js, images, papers
+eleventy.config.js   Markdown setup, collections, timeline logic
+scripts/new.js       the `npm run new` command
+```
+
+To publish somewhere else, such as a custom domain, change `url` in `src/_data/site.yaml`; every link follows it.

@@ -1,0 +1,97 @@
+---
+layout: layouts/base.njk
+---
+{% import "macros.njk" as ui %}
+{%- set self = collections.inquiries | findInquiry(page.fileSlug) %}
+{%- set entries = collections.entries | forInquiry(page.fileSlug) %}
+<article class="inquiry">
+  <header class="page-head">
+    <p class="eyebrow"><a href="/inquiries/">Inquiry</a><span class="sep">/</span><span class="status status--{{ status }}">{{ status | statusLabel }}</span>{% if draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
+    <h1>{{ title }}</h1>
+    {%- if question %}
+    <p class="seed-question">{{ question }}</p>
+    {%- endif %}
+    <dl class="facts">
+      <div><dt>Period</dt><dd>{{ started | span(ended) }}</dd></div>
+      {%- if started %}
+      <div><dt>Duration</dt><dd>{{ started | duration(ended) }}{% if not ended %} so far{% endif %}</dd></div>
+      {%- endif %}
+      <div><dt>Entries</dt><dd>{{ entries.length }}</dd></div>
+    </dl>
+  </header>
+
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+
+  {%- if ended and conclusion %}
+  <aside class="callout">
+    <p class="callout-label">Where it landed</p>
+    <p>{{ conclusion }}</p>
+  </aside>
+  {%- endif %}
+
+  {%- set events = self | inquiryEvents(collections.entries) if self else [] %}
+  <section class="section">
+    <header class="section-head"><h2 class="section-label">Timeline</h2></header>
+    {%- if events.length %}
+    <ol class="trail">
+      {%- for ev in events %}
+      {%- if loop.first or (ev.date | year) != (events[loop.index0 - 1].date | year) %}
+      <li class="trail-year"><span>{{ ev.date | year }}</span></li>
+      {%- endif %}
+      {%- if ev.gap %}
+      <li class="trail-gap"><span>{{ ev.gap }}</span></li>
+      {%- endif %}
+      <li class="trail-item trail-item--{{ ev.type }}">
+        <time datetime="{{ ev.date | iso }}">{{ "now" if ev.type == "now" else ((ev.date | month) if ev.monthOnly else (ev.date | shortDay)) }}</time>
+        <span class="trail-rail">{{ ui.mark(ev.type) }}</span>
+        <div class="trail-body">
+          {%- if ev.entry %}
+          <p class="kind-line">{{ ev.entry.data.kind | kindLabel }}{{ ui.draftTag(ev.entry) }}</p>
+          <p class="trail-title"><a href="{{ ev.entry.url }}">{{ ev.entry.data.title }}</a></p>
+          {%- if ev.entry.data.summary %}
+          <p class="trail-text">{{ ev.entry.data.summary }}</p>
+          {%- endif %}
+          {%- if ev.entry.data.result %}
+          <p class="entry-result"><span class="label">Result</span> {{ ev.entry.data.result }}</p>
+          {%- endif %}
+          {%- elif ev.type == "question" %}
+          <p class="kind-line">The question</p>
+          <p class="trail-question">{{ ev.text }}</p>
+          {%- elif ev.type == "end" %}
+          <p class="kind-line">Concluded</p>
+          <p class="trail-text">{{ ev.text }}</p>
+          {%- elif ev.type == "now" %}
+          <p class="kind-line">Still going</p>
+          {%- else %}
+          <p class="trail-text">{{ ev.text }}</p>
+          {%- endif %}
+        </div>
+      </li>
+      {%- endfor %}
+    </ol>
+    {%- else %}
+    <p class="empty">The timeline starts on the day this inquiry does.</p>
+    {%- endif %}
+  </section>
+
+  {%- set related = projects | where("inquiry", page.fileSlug) %}
+  {%- if related.length %}
+  <section class="section">
+    <header class="section-head"><h2 class="section-label">Code</h2></header>
+    <div class="project-list">
+      {%- for p in related %}
+      <article class="project">
+        <h3 class="project-title"><a href="{{ p.repo }}">{{ p.title }}</a></h3>
+        <p>{{ p.summary }}</p>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  <footer class="entry-foot">
+    <p><a href="/inquiries/">← All inquiries</a></p>
+  </footer>
+</article>

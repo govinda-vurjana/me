@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+title: Papers
+description: Research papers and preprints.
+permalink: /papers/
+---
+{% import "macros.njk" as ui %}
+<header class="page-head">
+  <h1>Papers</h1>
+  <p class="dek">Papers and preprints. Each one links back to the inquiry it came out of.</p>
+</header>
+
+{%- if collections.papers.length %}
+<ol class="paper-list">
+  {%- for p in collections.papers %}
+  {%- set inq = collections.inquiries | findInquiry(p.data.inquiry) %}
+  <li class="paper">
+    <p class="meta-line">{{ p.date | month }}{% if p.data.venue %}<span class="sep">·</span>{{ p.data.venue }}{% endif %}{% if inq %}<span class="sep">·</span><a href="{{ inq.url }}">{{ inq.data.title }}</a>{% endif %}{{ ui.draftTag(p) }}</p>
+    <h2 class="paper-title"><a href="{{ p.url }}">{{ p.data.title }}</a></h2>
+    {%- if p.data.authors %}
+    <p class="authors">{{ p.data.authors | join(", ") }}</p>
+    {%- endif %}
+    {%- if p.data.summary %}
+    <p class="entry-summary">{{ p.data.summary }}</p>
+    {%- endif %}
+    <p class="resource-links">
+      <a class="pill" href="{{ p.url }}">Abstract</a>
+      {%- if p.data.pdf %}<a class="pill" href="{{ p.data.pdf }}">PDF</a>{% endif %}
+      {%- if p.data.arxiv %}<a class="pill" href="{{ p.data.arxiv }}">arXiv ↗</a>{% endif %}
+      {%- if p.data.repo %}<a class="pill" href="{{ p.data.repo }}">Code ↗</a>{% endif %}
+    </p>
+  </li>
+  {%- endfor %}
+</ol>
+{%- else %}
+<p class="empty">No papers yet. They will be listed here as they are released.</p>
+{%- endif %}
