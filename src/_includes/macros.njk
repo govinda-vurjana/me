@@ -43,25 +43,6 @@
 </article>
 {% endmacro %}
 
-{# Open questions from _data/questions.yaml. #}
-{% macro questionList(questions, inquiries) %}
-<ol class="questions">
-  {%- for q in questions %}
-  {%- set inq = inquiries | findInquiry(q.inquiry) %}
-  <li class="question">
-    {{ mark("question") }}
-    <div>
-      <p class="question-text">{{ q.q }}</p>
-      {%- if q.note %}
-      <p class="question-note">{{ q.note }}</p>
-      {%- endif %}
-      <p class="meta-line">Asked {{ q.asked | month }}<span class="sep">·</span>{% if inq %}became <a href="{{ inq.url }}">{{ inq.data.title }}</a>{% else %}open{% endif %}</p>
-    </div>
-  </li>
-  {%- endfor %}
-</ol>
-{% endmacro %}
-
 {# Horizontal research timeline: one track per inquiry, entries as marks. #}
 {% macro timeline(chart) %}
 {%- if chart %}

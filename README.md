@@ -1,18 +1,17 @@
 # Research notebook
 
-Source for <https://govinda-vurjana.github.io/me/>: questions, inquiries, experiments, and papers on how machines remember, retrieve, and think.
+Source for <https://govinda-vurjana.github.io/me/>: inquiries, experiments, and papers on how machines remember, retrieve, and think.
 
 The site is built with [Eleventy](https://www.11ty.dev/) from Markdown files. Every push to `main` rebuilds and publishes it through GitHub Actions.
 
 ## How the content fits together
 
 ```
-Question  ──►  Inquiry  ──►  Notebook entries: thought · note · experiment · paper
-(one line)     (a dated line of research with its own timeline)
+Inquiry  ──►  Notebook entries: thought · note · experiment · paper
+(a dated line of research with its own timeline)
 ```
 
-- **Questions** (`src/_data/questions.yaml`) are one-line “what if”s, kept in a single list.
-- **Inquiries** (`src/inquiries/*.md`) are questions you decide to pursue. Each has a start date, an optional end date, a status, and a `log` of short dated thoughts. Its page shows a timeline that merges the log with every notebook entry linked to it. The Inquiries page charts all of them over time.
+- **Inquiries** (`src/inquiries/*.md`) are lines of research. Each has a start date, an optional end date, a status, and a `log` of short dated thoughts. Its page shows a timeline that merges the log with every notebook entry linked to it. The Inquiries page charts all of them over time.
 - **Notebook entries** (`src/notebook/*.md`) are dated writing. Each has a `kind` (`thought`, `note`, `experiment`, or `paper`) and usually an `inquiry`.
 - **Projects** (`src/_data/projects.yaml`) are code on GitHub.
 
@@ -93,7 +92,7 @@ GitHub Pages must publish from Actions: **Settings → Pages → Source: GitHub 
 
 ```
 src/
-  _data/          site.yaml (name, links, URL), questions.yaml, projects.yaml
+  _data/          site.yaml (name, links, URL), projects.yaml
   _includes/      layouts and shared template pieces
   inquiries/      one Markdown file per inquiry
   notebook/       one Markdown file per entry

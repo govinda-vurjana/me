@@ -41,7 +41,7 @@
     <header class="site-header">
       <a class="site-name" href="/">{{ site.title }}</a>
       <nav class="site-nav" aria-label="Main">
-        {%- set nav = [["Questions", "/questions/"], ["Inquiries", "/inquiries/"], ["Notebook", "/notebook/"]] %}
+        {%- set nav = [["Inquiries", "/inquiries/"], ["Notebook", "/notebook/"]] %}
         {%- if collections.papers.length %}{% set nav = nav.concat([["Papers", "/papers/"]]) %}{% endif %}
         {%- set nav = nav.concat([["Projects", "/projects/"], ["About", "/about/"]]) %}
         {%- for item in nav %}
@@ -63,7 +63,7 @@
         {%- for link in site.links %} · <a href="{{ link.url }}" rel="me">{{ link.label }}</a>{% endfor %}
         · <a href="/feed.xml">Feed</a>
       </p>
-      <p>Questions first. Last updated {{ builtAt | day }}.</p>
+      <p>Last updated {{ builtAt | day }}.</p>
     </footer>
   </div>
   <script src="/assets/js/site.js" defer></script>
