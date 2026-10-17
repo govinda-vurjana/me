@@ -1,13 +1,13 @@
 ---
 layout: layouts/base.njk
 title: Notebook
-description: Thoughts, notes, experiments, and papers, newest first.
+description: "Everything, newest first: thoughts, notes, experiments, and papers."
 permalink: /notebook/
 ---
 {% import "macros.njk" as ui %}
 <header class="page-head">
   <h1>Notebook</h1>
-  <p class="dek">Thoughts, notes, experiments, and papers, newest first. Most entries belong to an inquiry; follow its link to see where the entry sits on that inquiry's timeline.</p>
+  <p class="dek">Everything, newest first: thoughts, notes, experiments, and papers from every section. Most entries belong to a topic; follow its link to see where the entry sits on that topic's timeline.</p>
 </header>
 
 {%- if collections.entries.length %}
@@ -27,7 +27,7 @@ permalink: /notebook/
   <h2 class="year">{{ group.year }}</h2>
   <ol class="entry-list">
     {%- for entry in group.items %}
-    {{ ui.entryRow(entry, collections.inquiries) }}
+    {{ ui.entryRow(entry, collections.topics) }}
     {%- endfor %}
   </ol>
 </section>

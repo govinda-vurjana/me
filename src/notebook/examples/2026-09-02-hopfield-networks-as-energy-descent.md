@@ -2,8 +2,8 @@
 title: Hopfield networks as energy descent
 date: 2026-09-02
 kind: note
-tags: mathematics
-inquiry: example-associative-memory
+section: math
+topic: example-associative-memory
 summary: Stored patterns are minima of an energy function; recall is rolling downhill from a fragment.
 ---
 

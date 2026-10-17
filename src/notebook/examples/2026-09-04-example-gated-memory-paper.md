@@ -2,7 +2,7 @@
 title: "Example paper: Forgetting as the mechanism of recurrent memory"
 date: 2026-09-04
 kind: paper
-inquiry: example-recurrent-memory
+topic: example-recurrent-memory
 authors: [Govinda Vurjana]
 venue: Preprint (example)
 summary: An example of how a paper is listed, with its abstract, links, and a ready-made citation.

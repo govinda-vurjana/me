@@ -1,0 +1,44 @@
+---
+layout: layouts/base.njk
+title: Experiments
+description: Small experiments with results, and the code behind them on GitHub.
+permalink: /experiments/
+---
+{% import "macros.njk" as ui %}
+{%- set experiments = collections.entries | where("data.kind", "experiment") %}
+<header class="page-head">
+  <h1>Experiments</h1>
+  <p class="dek">Small experiments, each with a setup and a result, and the things I have built along the way. The code is on <a href="https://github.com/govinda-vurjana">GitHub</a>.</p>
+</header>
+
+{%- if experiments.length %}
+<section class="section section--tight">
+  <header class="section-head"><h2 class="section-label">Write-ups</h2></header>
+  <ol class="entry-list">
+    {%- for entry in experiments %}
+    {{ ui.entryRow(entry, collections.topics, true) }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}
+
+{%- if projects.length %}
+<section class="section{% if not experiments.length %} section--tight{% endif %}">
+  <header class="section-head"><h2 class="section-label">Code</h2></header>
+  <div class="project-list">
+    {%- for p in projects %}
+    {%- set topic = collections.topics | findTopic(p.topic) %}
+    <article class="project">
+      <p class="meta-line">{{ p.year }}{% for tag in p.tags %}<span class="sep">·</span>{{ tag }}{% endfor %}</p>
+      <h3 class="project-title"><a href="{{ p.repo }}">{{ p.title }}</a></h3>
+      <p>{{ p.summary }}</p>
+      <p class="resource-links">
+        <a class="pill" href="{{ p.repo }}">Code ↗</a>
+        {%- for link in p.also %}<a class="pill" href="{{ link.url }}">{{ link.label }} ↗</a>{% endfor %}
+        {%- if topic %}<a class="pill" href="{{ topic.url }}">{{ topic.data.title }}</a>{% endif %}
+      </p>
+    </article>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}

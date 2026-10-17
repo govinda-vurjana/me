@@ -1,20 +1,24 @@
 # Research notebook
 
-Source for <https://govinda-vurjana.github.io/me/>: inquiries, experiments, and papers on how machines remember, retrieve, and think.
+Source for <https://govinda-vurjana.github.io/me/>: experiments, AI memory, mathematics, and books, on how machines remember, retrieve, and think.
 
 The site is built with [Eleventy](https://www.11ty.dev/) from Markdown files. Every push to `main` rebuilds and publishes it through GitHub Actions.
 
-## How the content fits together
+## Sections
 
-```
-Inquiry  ──►  Notebook entries: thought · note · experiment · paper
-(a dated line of research with its own timeline)
-```
+The site has five sections: **Experiments · AI Memory · Math · About · Books**.
 
-- **Inquiries** (`src/inquiries/*.md`) are lines of research. Each has a start date, an optional end date, a status, and a `log` of short dated thoughts. Its page shows a timeline that merges the log with every notebook entry linked to it. The Inquiries page charts all of them over time.
-- **Notebook entries** (`src/notebook/*.md`) are dated writing. Each has a `kind` (`thought`, `note`, `experiment`, or `paper`) and usually an `inquiry`.
-- **Mathematics** (`/mathematics/`) lists every entry and inquiry with `tags: mathematics`. They still appear in the notebook and on their inquiry's timeline.
-- **Projects** (`src/_data/projects.yaml`) are code on GitHub.
+| Section | What appears there | Where it comes from |
+|---|---|---|
+| Experiments | Every entry with `kind: experiment`, then the GitHub projects | `src/notebook/*.md`, `src/_data/projects.yaml` |
+| AI Memory | Intro, timeline of topics, papers, and writing in `memory` | `src/memory.md`, `src/topics/*.md`, `src/notebook/*.md` |
+| Math | The same, for `math` | `src/math.md`, `src/topics/*.md`, `src/notebook/*.md` |
+| About | About page | `src/about.njk` |
+| Books | Books being read and read, by year | `src/_data/books.yaml` |
+
+- **Entries** (`src/notebook/*.md`) are dated writing. Each has a `kind` (`thought`, `note`, `experiment`, or `paper`).
+- **Topics** (`src/topics/*.md`) are lines of research inside a section, such as two months on recurrent networks. Each has a `section`, a start date, an optional end date, a status, and a `log` of short dated notes. Its page shows a timeline that merges the log with every entry in the topic, and the section page draws every topic on one chart.
+- An entry appears in its topic's section. Add `section: math` (or `memory`) to show it in a section without a topic, or in a second one as well. Experiments always appear under Experiments. `/notebook/` lists everything.
 
 ## Everyday use
 
@@ -23,24 +27,35 @@ npm install                 # once
 npm run dev                 # live preview at http://localhost:8080/me/
 ```
 
-Create things with `npm run new`:
+Create things with `npm run new`. The last argument is a section (`memory` or `math`) or a topic (its file name without `.md`):
 
 ```sh
-npm run new thought    "Is memory a place or a process?"   memory-systems
-npm run new note       "Backpropagation through time"       memory-systems
-npm run new math       "The Hopfield energy never increases" memory-systems
-npm run new experiment "Copy task on an LSTM"               memory-systems
-npm run new paper      "Forgetting as memory"               memory-systems
-npm run new inquiry    "Associative memory"
+npm run new topic      "Recurrent networks"                    memory
+npm run new note       "Backpropagation through time"          recurrent-networks
+npm run new experiment "Copy task on an LSTM"                  recurrent-networks
+npm run new note       "The Hopfield energy never increases"   math
+npm run new thought    "Is attention retrieval?"               memory
+npm run new paper      "Forgetting as memory"                  memory
 ```
-
-The last argument is the inquiry the entry belongs to: the inquiry's file name without `.md`. It can be left out.
 
 Publish by committing and pushing to `main`. The site updates about a minute later.
 
-### A quick dated thought, without a new file
+### Books
 
-Add a line to the inquiry's `log`:
+Add a book to `src/_data/books.yaml`:
+
+```yaml
+- title: Thinking, Fast and Slow
+  author: Daniel Kahneman
+  status: read          # reading | read
+  started: 2026-09
+  finished: 2026-10
+  note: One or two lines on what stayed with me.
+```
+
+### A quick dated line, without a new file
+
+Add a line to the topic's `log`:
 
 ```yaml
 log:
@@ -48,9 +63,9 @@ log:
     text: Read Hopfield (1982). The energy view is the clearest picture of recall I have seen.
 ```
 
-### Starting, pausing, and finishing an inquiry
+### Starting, pausing, and finishing a topic
 
-Set `status` to `exploring`, `paused`, `planned`, or `concluded`. To finish one, add `ended: YYYY-MM-DD` and a one-line `conclusion:`. The duration (“2 months”) and its bar on the timeline follow automatically.
+Set `status` to `exploring`, `paused`, or `concluded`. To finish one, add `ended: YYYY-MM-DD` and a one-line `conclusion:`. The duration (“2 months”) and its bar on the timeline follow automatically. A topic with `status: planned` stays out of the published site until you start it.
 
 ## Front matter reference
 
@@ -59,15 +74,15 @@ Set `status` to `exploring`, `paused`, `planned`, or `concluded`. To finish one,
 | `title` | all | Title |
 | `date` | entries | Date of the entry (`YYYY-MM-DD`) |
 | `kind` | entries | `thought`, `note`, `experiment`, or `paper` |
-| `inquiry` | entries | Inquiry this belongs to (its file name) |
+| `topic` | entries | Topic this belongs to (its file name) |
+| `section` | entries, topics | `memory` or `math`. Topics default to `memory` |
 | `summary` | all | One sentence shown in lists and link previews |
-| `tags: mathematics` | entries, inquiries | Also list it on the Mathematics page (`npm run new math` adds it) |
-| `status` | experiments, inquiries | Experiments: `running`, `complete`, or `abandoned`. Inquiries: see above |
+| `status` | experiments, topics | Experiments: `running`, `complete`, or `abandoned`. Topics: see above |
 | `result` | experiments | The one-line finding, shown at the top and on the timeline |
 | `repo`, `notebook`, `dataset`, `demo` | entries | Links shown as buttons |
 | `authors`, `venue`, `abstract`, `pdf`, `arxiv` | papers | Paper details; a BibTeX entry is generated |
-| `started`, `ended`, `conclusion`, `log` | inquiries | See above |
-| `draft: true` | anything | Visible in `npm run dev`, never published |
+| `started`, `ended`, `conclusion`, `log` | topics | See above |
+| `draft: true` | anything, books too | Visible in `npm run dev`, never published |
 
 ## Writing
 
@@ -87,7 +102,7 @@ Entries are plain Markdown, plus:
 
 ## Examples
 
-`src/inquiries/examples/` and `src/notebook/examples/` hold example drafts: a finished two-month inquiry, an overlapping ongoing one, a note with math, an experiment with a table and figure, and a paper. They appear only in `npm run dev`. Delete both folders, and `src/assets/img/examples/`, when you no longer need them.
+`src/topics/examples/`, `src/notebook/examples/`, and the books marked `draft: true` are examples: a finished two-month topic, an overlapping ongoing one, a math topic, notes with math, an experiment with a table and figure, a paper, and two books. They appear only in `npm run dev`. Delete the two folders, `src/assets/img/examples/`, and the example books when you no longer need them.
 
 ## Setup and structure
 
@@ -95,12 +110,14 @@ GitHub Pages must publish from Actions: **Settings → Pages → Source: GitHub 
 
 ```
 src/
-  _data/          site.yaml (name, links, URL), projects.yaml
+  _data/          site.yaml (name, links, URL), projects.yaml, books.yaml
   _includes/      layouts and shared template pieces
-  inquiries/      one Markdown file per inquiry
+  topics/         one Markdown file per topic
   notebook/       one Markdown file per entry
+  memory.md       the AI Memory page's intro
+  math.md         the Math page's intro
   assets/         css, js, images, papers
-eleventy.config.js   Markdown setup, collections, timeline logic
+eleventy.config.js   Markdown setup, sections, collections, timeline logic
 scripts/new.js       the `npm run new` command
 ```
 

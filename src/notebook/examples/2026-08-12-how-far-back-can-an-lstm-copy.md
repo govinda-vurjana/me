@@ -2,7 +2,7 @@
 title: How far back can an LSTM copy?
 date: 2026-08-12
 kind: experiment
-inquiry: example-recurrent-memory
+topic: example-recurrent-memory
 status: complete
 summary: A copy task with a growing delay, comparing a plain RNN with an LSTM of the same size.
 result: (Illustrative) The LSTM holds a 10-symbol sequence across 200 steps; the plain RNN falls to chance after about 50.

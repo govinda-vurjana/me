@@ -1,0 +1,50 @@
+---
+layout: layouts/base.njk
+title: Books
+description: Books I am reading and have read, with a line on each.
+permalink: /books/
+---
+{%- set shelf = books | published | readingList %}
+<header class="page-head">
+  <h1>Books</h1>
+  <p class="dek">What I am reading and have read, with a line on what stayed with me.</p>
+</header>
+
+{%- macro book(b, when) %}
+<li class="entry-row book">
+  <span class="entry-date">{{ when }}</span>
+  <div class="entry-main">
+    <h3 class="entry-title book-title">{% if b.link %}<a href="{{ b.link }}">{{ b.title }}</a>{% else %}{{ b.title }}{% endif %}</h3>
+    <p class="kind-line"><span>{{ b.author }}</span>{% if b.draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
+    {%- if b.note %}
+    <p class="entry-summary">{{ b.note }}</p>
+    {%- endif %}
+  </div>
+</li>
+{%- endmacro %}
+
+{%- if shelf.reading.length %}
+<section class="section section--tight">
+  <header class="section-head"><h2 class="section-label">Reading now</h2></header>
+  <ol class="entry-list">
+    {%- for b in shelf.reading %}
+    {{ book(b, "since " + (b.started | month) if b.started else "") }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}
+
+{%- for group in shelf.read %}
+<section class="year-group">
+  <h2 class="year">{{ group.year }}</h2>
+  <ol class="entry-list">
+    {%- for b in group.items %}
+    {{ book(b, b.finished | month) }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endfor %}
+
+{%- if not shelf.reading.length and not shelf.read.length %}
+<p class="empty">No books listed yet.</p>
+{%- endif %}

@@ -2,11 +2,12 @@
 layout: layouts/base.njk
 ---
 {% import "macros.njk" as ui %}
-{%- set self = collections.inquiries | findInquiry(page.fileSlug) %}
-{%- set entries = collections.entries | forInquiry(page.fileSlug) %}
-<article class="inquiry">
+{%- set self = collections.topics | findTopic(page.fileSlug) %}
+{%- set entries = collections.entries | forTopic(page.fileSlug) %}
+{%- set home = sections[section] %}
+<article class="topic">
   <header class="page-head">
-    <p class="eyebrow"><a href="/inquiries/">Inquiry</a><span class="sep">/</span><span class="status status--{{ status }}">{{ status | statusLabel }}</span>{% if draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
+    <p class="eyebrow"><a href="{{ home.url }}">{{ home.label }}</a><span class="sep">/</span><span class="status status--{{ status }}">{{ status | statusLabel }}</span>{% if draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
     <h1>{{ title }}</h1>
     <dl class="facts">
       <div><dt>Period</dt><dd>{{ started | span(ended) }}</dd></div>
@@ -28,7 +29,7 @@ layout: layouts/base.njk
   </aside>
   {%- endif %}
 
-  {%- set events = self | inquiryEvents(collections.entries) if self else [] %}
+  {%- set events = self | topicEvents(collections.entries) if self else [] %}
   <section class="section">
     <header class="section-head"><h2 class="section-label">Timeline</h2></header>
     {%- if events.length %}
@@ -68,11 +69,11 @@ layout: layouts/base.njk
       {%- endfor %}
     </ol>
     {%- else %}
-    <p class="empty">The timeline starts on the day this inquiry does.</p>
+    <p class="empty">The timeline starts on the day this topic does.</p>
     {%- endif %}
   </section>
 
-  {%- set related = projects | where("inquiry", page.fileSlug) %}
+  {%- set related = projects | where("topic", page.fileSlug) %}
   {%- if related.length %}
   <section class="section">
     <header class="section-head"><h2 class="section-label">Code</h2></header>
@@ -88,6 +89,6 @@ layout: layouts/base.njk
   {%- endif %}
 
   <footer class="entry-foot">
-    <p><a href="/inquiries/">← All inquiries</a></p>
+    <p><a href="{{ home.url }}">← {{ home.label }}</a></p>
   </footer>
 </article>

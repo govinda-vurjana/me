@@ -66,21 +66,35 @@ function span(start, end) {
 }
 
 const KIND_LABELS = { thought: "Thought", note: "Note", experiment: "Experiment", paper: "Paper" };
+
+// The site's sections. Topics belong to one; entries appear in their topic's
+// section, in any they list under `section:`, and experiments in Experiments.
+const SECTIONS = {
+  experiments: { label: "Experiments", url: "/experiments/" },
+  memory: { label: "AI Memory", url: "/memory/" },
+  math: { label: "Math", url: "/math/" },
+};
+
+function entrySections(entry, topics = []) {
+  const topic = topics.find((t) => t.fileSlug === entry.data.topic);
+  const own = [].concat(entry.data.section ?? []);
+  return [...new Set([...(topic ? [topic.data.section] : []), ...own])];
+}
 const STATUS_LABELS = { exploring: "Exploring", paused: "Paused", planned: "Planned", concluded: "Concluded" };
 
 // ---------------------------------------------------------------------------
-// Research timeline: one horizontal track per inquiry, positioned by date.
+// Research timeline: one horizontal track per topic, positioned by date.
 // ---------------------------------------------------------------------------
 const MIN_MONTHS = 6;
 const startOfMonth = (d) => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1));
 const addMonths = (d, n) => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + n, 1));
 
-function timelineChart(inquiries, entries = []) {
-  const dated = inquiries.filter((i) => i.data.started);
+function timelineChart(topics, entries = []) {
+  const dated = topics.filter((t) => t.data.started);
   if (!dated.length) return null;
 
-  const starts = dated.map((i) => toDate(i.data.started));
-  const ends = dated.map((i) => toDate(i.data.ended) ?? BUILT_AT);
+  const starts = dated.map((t) => toDate(t.data.started));
+  const ends = dated.map((t) => toDate(t.data.ended) ?? BUILT_AT);
   const last = new Date(Math.max(BUILT_AT, ...ends));
   const axisEnd = addMonths(startOfMonth(last), 1);
   let axisStart = startOfMonth(new Date(Math.min(...starts)));
@@ -101,16 +115,16 @@ function timelineChart(inquiries, entries = []) {
 
   const rows = dated
     .sort((a, b) => toDate(a.data.started) - toDate(b.data.started))
-    .map((inq) => {
-      const left = pct(inq.data.started);
-      const right = pct(inq.data.ended ?? BUILT_AT);
+    .map((topic) => {
+      const left = pct(topic.data.started);
+      const right = pct(topic.data.ended ?? BUILT_AT);
       return {
-        inquiry: inq,
+        topic,
         left,
         width: Math.max(right - left, 0.8),
-        ongoing: !inq.data.ended,
+        ongoing: !topic.data.ended,
         marks: entries
-          .filter((e) => e.data.inquiry === inq.fileSlug)
+          .filter((e) => e.data.topic === topic.fileSlug)
           .map((e) => ({ left: pct(e.date), entry: e })),
       };
     });
@@ -118,18 +132,18 @@ function timelineChart(inquiries, entries = []) {
   return { ticks, rows, now: pct(BUILT_AT) };
 }
 
-// Everything that happened inside one inquiry, oldest first.
-function inquiryEvents(inquiry, entries = []) {
-  const d = inquiry.data;
+// Everything that happened inside one topic, oldest first.
+function topicEvents(topic, entries = []) {
+  const d = topic.data;
   const events = [];
   if (d.started) events.push({ date: toDate(d.started), type: "start" });
   for (const item of d.log ?? []) {
     events.push({ date: toDate(item.date), type: "log", text: item.text, monthOnly: isMonthOnly(item.date) });
   }
-  for (const entry of entries.filter((e) => e.data.inquiry === inquiry.fileSlug)) {
+  for (const entry of entries.filter((e) => e.data.topic === topic.fileSlug)) {
     events.push({ date: entry.date, type: entry.data.kind ?? "note", entry });
   }
-  if (d.ended) events.push({ date: toDate(d.ended), type: "end", text: d.conclusion ?? "Inquiry closed." });
+  if (d.ended) events.push({ date: toDate(d.ended), type: "end", text: d.conclusion ?? "Topic closed." });
   else if (d.started) events.push({ date: BUILT_AT, type: "now" });
   events.sort((a, b) => a.date - b.date);
 
@@ -188,11 +202,14 @@ function callout(md) {
 export default function (eleventyConfig) {
   eleventyConfig.addDataExtension("yaml,yml", (contents) => loadYaml(contents));
 
-  // Drafts render in `npm run dev` and are left out of the published site.
+  // Drafts, and topics only planned so far, render in `npm run dev` and are
+  // left out of the published site.
   eleventyConfig.addPreprocessor("drafts", "*", (data) => {
-    if (data.draft && process.env.ELEVENTY_RUN_MODE === "build") return false;
+    if ((data.draft || data.status === "planned") && process.env.ELEVENTY_RUN_MODE === "build") return false;
   });
-  eleventyConfig.addGlobalData("isDev", () => process.env.ELEVENTY_RUN_MODE !== "build");
+  const isDev = () => process.env.ELEVENTY_RUN_MODE !== "build";
+  eleventyConfig.addGlobalData("isDev", isDev);
+  eleventyConfig.addGlobalData("sections", SECTIONS);
   eleventyConfig.addGlobalData("builtAt", BUILT_AT);
 
   eleventyConfig.addPlugin(HtmlBasePlugin);
@@ -229,16 +246,10 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("entries", (api) =>
     api.getFilteredByGlob("src/notebook/**/*.md").sort((a, b) => b.date - a.date)
   );
-  eleventyConfig.addCollection("papers", (api) =>
-    api
-      .getFilteredByGlob("src/notebook/**/*.md")
-      .filter((e) => e.data.kind === "paper")
-      .sort((a, b) => b.date - a.date)
-  );
   const STATUS_ORDER = { exploring: 0, paused: 1, planned: 2, concluded: 3 };
-  eleventyConfig.addCollection("inquiries", (api) =>
+  eleventyConfig.addCollection("topics", (api) =>
     api
-      .getFilteredByGlob("src/inquiries/**/*.md")
+      .getFilteredByGlob("src/topics/**/*.md")
       .sort(
         (a, b) =>
           (STATUS_ORDER[a.data.status] ?? 9) - (STATUS_ORDER[b.data.status] ?? 9) ||
@@ -256,7 +267,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("duration", duration);
   eleventyConfig.addFilter("span", span);
   eleventyConfig.addFilter("timelineChart", timelineChart);
-  eleventyConfig.addFilter("inquiryEvents", inquiryEvents);
+  eleventyConfig.addFilter("topicEvents", topicEvents);
   eleventyConfig.addFilter("absUrl", (url) => new URL(String(url).replace(/^\//, ""), site.url).href);
   eleventyConfig.addFilter("readingTime", (html) => {
     const words = String(html ?? "").replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
@@ -266,12 +277,35 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("where", (arr, key, value) =>
     (arr ?? []).filter((item) => key.split(".").reduce((o, k) => o?.[k], item) === value)
   );
-  eleventyConfig.addFilter("inStatus", (inquiries, ...statuses) =>
-    (inquiries ?? []).filter((i) => statuses.includes(i.data.status))
+  eleventyConfig.addFilter("inStatus", (topics, ...statuses) =>
+    (topics ?? []).filter((t) => statuses.includes(t.data.status))
   );
-  eleventyConfig.addFilter("tagged", (items, tag) => (items ?? []).filter((i) => [].concat(i.data.tags ?? []).includes(tag)));
-  eleventyConfig.addFilter("forInquiry", (entries, slug) => (entries ?? []).filter((e) => e.data.inquiry === slug));
-  eleventyConfig.addFilter("findInquiry", (inquiries, slug) => (inquiries ?? []).find((i) => i.fileSlug === slug));
+  eleventyConfig.addFilter("forTopic", (entries, slug) => (entries ?? []).filter((e) => e.data.topic === slug));
+  eleventyConfig.addFilter("findTopic", (topics, slug) => (topics ?? []).find((t) => t.fileSlug === slug));
+  eleventyConfig.addFilter("findByUrl", (items, url) => (items ?? []).find((i) => i.url === url));
+  eleventyConfig.addFilter("inSection", (entries, section, topics) =>
+    (entries ?? []).filter((e) => entrySections(e, topics).includes(section))
+  );
+  // The section an entry's page belongs under: Experiments for experiments,
+  // otherwise its first section. Undefined when it has none.
+  eleventyConfig.addFilter("homeSection", (entry, topics) =>
+    entry.data.kind === "experiment" ? "experiments" : entrySections(entry, topics)[0]
+  );
+  eleventyConfig.addFilter("rejectKind", (entries, kind) => (entries ?? []).filter((e) => e.data.kind !== kind));
+  // Books: those being read (latest started first), then finished ones by year.
+  eleventyConfig.addFilter("readingList", (books) => {
+    const byDate = (key) => (a, b) => (toDate(b[key]) ?? 0) - (toDate(a[key]) ?? 0);
+    const reading = (books ?? []).filter((b) => b.status !== "read").sort(byDate("started"));
+    const read = [];
+    for (const b of (books ?? []).filter((b) => b.status === "read").sort(byDate("finished"))) {
+      const year = toDate(b.finished)?.getUTCFullYear() ?? "Undated";
+      if (read.at(-1)?.year !== year) read.push({ year, items: [] });
+      read.at(-1).items.push(b);
+    }
+    return { reading, read };
+  });
+  // Hand-written data (books) can mark items `draft: true` as well.
+  eleventyConfig.addFilter("published", (items) => (isDev() ? items ?? [] : (items ?? []).filter((i) => !i.draft)));
   eleventyConfig.addFilter("groupByYear", (entries) => {
     const groups = [];
     for (const e of entries ?? []) {

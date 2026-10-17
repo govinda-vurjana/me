@@ -1,6 +1,6 @@
 # Things built along the way. Newest first.
 # Fields: title, year, summary, repo, tags, and optionally
-#   inquiry: <slug>      to show the project on that inquiry's page
+#   topic: <slug>        to show the project on that topic's page
 #   also:                extra links, each with label + url
 
 - title: CAD drawings to editable 3D models

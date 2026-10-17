@@ -1,24 +1,26 @@
 #!/usr/bin/env node
-// Create a new notebook entry or inquiry from a template.
+// Create a new notebook entry or topic from a template.
 //
-//   npm run new thought    "Is memory a place or a process?"   [inquiry-slug]
-//   npm run new note       "Backpropagation through time"       [inquiry-slug]
-//   npm run new math       "The Hopfield energy never increases" [inquiry-slug]
-//   npm run new experiment "Copy task on an LSTM"               [inquiry-slug]
-//   npm run new paper      "A note on gated memory"             [inquiry-slug]
-//   npm run new inquiry    "Associative memory"
+//   npm run new thought    "Is memory a place or a process?"     [where]
+//   npm run new note       "Backpropagation through time"         [where]
+//   npm run new experiment "Copy task on an LSTM"                 [where]
+//   npm run new paper      "A note on gated memory"               [where]
+//   npm run new topic      "Associative memory"                   [memory|math]
 //
-// The optional last argument links the entry to an inquiry (its file name in
-// src/inquiries/, without .md).
+// `where` is a section (memory or math) or a topic (its file name in
+// src/topics/, without .md). An entry in a topic appears in that topic's
+// section and on its timeline. A new topic goes in AI Memory unless told math.
 
 import fs from "node:fs";
 import path from "node:path";
 
-const [kind, title, inquiry] = process.argv.slice(2);
-const KINDS = ["thought", "note", "math", "experiment", "paper", "inquiry"];
+const [kind, title, where] = process.argv.slice(2);
+const KINDS = ["thought", "note", "experiment", "paper", "topic"];
+const SECTIONS = ["memory", "math"];
+const TOPICS_DIR = path.join("src", "topics");
 
 if (!KINDS.includes(kind) || !title) {
-  console.log(`Usage: npm run new <${KINDS.join("|")}> "Title" [inquiry-slug]`);
+  console.log(`Usage: npm run new <${KINDS.join("|")}> "Title" [memory|math|topic-name]`);
   process.exit(1);
 }
 
@@ -35,19 +37,32 @@ const slug = title
   .replace(/-+$/, "");
 const q = (s) => JSON.stringify(s);
 
-if (inquiry && !fs.existsSync(path.join("src", "inquiries", `${inquiry}.md`))) {
-  const known = fs.readdirSync(path.join("src", "inquiries")).filter((f) => f.endsWith(".md")).map((f) => f.slice(0, -3));
-  console.log(`No inquiry called "${inquiry}". Known inquiries: ${known.join(", ") || "(none yet)"}`);
-  process.exit(1);
+const knownTopics = () =>
+  fs.readdirSync(TOPICS_DIR).filter((f) => f.endsWith(".md")).map((f) => f.slice(0, -3));
+
+let placeLine = `# topic: topic-name   # or section: memory | math\n`;
+if (kind === "topic") {
+  if (where && !SECTIONS.includes(where)) {
+    console.log(`A topic goes in a section: ${SECTIONS.join(" or ")}.`);
+    process.exit(1);
+  }
+} else if (SECTIONS.includes(where)) {
+  placeLine = `section: ${where}\n`;
+} else if (where) {
+  if (!fs.existsSync(path.join(TOPICS_DIR, `${where}.md`))) {
+    console.log(`"${where}" is neither a section (${SECTIONS.join(", ")}) nor a topic. Topics: ${knownTopics().join(", ") || "(none yet)"}`);
+    process.exit(1);
+  }
+  placeLine = `topic: ${where}\n`;
 }
-const inquiryLine = inquiry ? `inquiry: ${inquiry}\n` : `# inquiry: memory-systems   # link this entry to an inquiry\n`;
+const mathHint = placeLine === "section: math\n" ? "# Math: $x_t$ inline; put $$ on its own line before and after a display equation.\n" : "";
 
 const templates = {
   thought: `---
 title: ${q(title)}
 date: ${today}
 kind: thought
-${inquiryLine}---
+${placeLine}---
 
 Write the thought as it is. It doesn't need to be finished.
 `,
@@ -56,8 +71,8 @@ Write the thought as it is. It doesn't need to be finished.
 title: ${q(title)}
 date: ${today}
 kind: note
-${inquiryLine}summary: One sentence on what this note explains.
----
+${placeLine}summary: One sentence on what this note explains.
+${mathHint}---
 
 ## The idea
 
@@ -66,30 +81,11 @@ ${inquiryLine}summary: One sentence on what this note explains.
 ## References
 `,
 
-  // A note tagged mathematics: listed on the Mathematics page as well.
-  math: `---
-title: ${q(title)}
-date: ${today}
-kind: note
-tags: mathematics
-${inquiryLine}summary: One sentence on what this shows.
-# Math: $x_t$ inline; put $$ on its own line before and after a display equation.
----
-
-## Statement
-
-## Derivation
-
-## Why it matters
-
-## References
-`,
-
   experiment: `---
 title: ${q(title)}
 date: ${today}
 kind: experiment
-${inquiryLine}status: running          # running | complete | abandoned
+${placeLine}status: running          # running | complete | abandoned
 summary: One sentence on what you are testing.
 # result: The one-line finding, once you have it. Shown at the top and on the timeline.
 # repo: https://github.com/govinda-vurjana/...
@@ -111,7 +107,7 @@ summary: One sentence on what you are testing.
 title: ${q(title)}
 date: ${today}
 kind: paper
-${inquiryLine}authors: [Govinda Vurjana]
+${placeLine}authors: [Govinda Vurjana]
 venue: Preprint
 summary: One sentence for lists and link previews.
 abstract: >
@@ -124,25 +120,26 @@ abstract: >
 Notes on the paper: how it came about, what changed between drafts, what is still open.
 `,
 
-  inquiry: `---
+  topic: `---
 title: ${q(title)}
+section: ${where ?? "memory"}           # memory | math
 status: exploring        # exploring | paused | planned | concluded
 started: ${today}
 # ended: YYYY-MM-DD
 # conclusion: One or two sentences on where it landed. Shown when it ends.
-summary: One sentence for link previews.
+summary: One sentence on what this topic covers.
 log:
   - date: ${today}
     text: Started.
 ---
 
-What this inquiry is about and why it matters.
+What this topic is about and why it matters.
 `,
 };
 
 const file =
-  kind === "inquiry"
-    ? path.join("src", "inquiries", `${slug}.md`)
+  kind === "topic"
+    ? path.join(TOPICS_DIR, `${slug}.md`)
     : path.join("src", "notebook", `${today}-${slug}.md`);
 
 if (fs.existsSync(file)) {
@@ -152,4 +149,4 @@ if (fs.existsSync(file)) {
 
 fs.writeFileSync(file, templates[kind]);
 console.log(`Created ${file}`);
-if (kind === "inquiry") console.log(`Link entries to it with:  inquiry: ${slug}`);
+if (kind === "topic") console.log(`Add entries to it with:  npm run new note "Title" ${slug}`);

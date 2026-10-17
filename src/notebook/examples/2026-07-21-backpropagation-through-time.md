@@ -2,8 +2,8 @@
 title: Backpropagation through time, written out
 date: 2026-07-21
 kind: note
-tags: mathematics
-inquiry: example-recurrent-memory
+section: math
+topic: example-recurrent-memory
 summary: Why gradients in a plain RNN shrink or explode with distance, and what the LSTM cell changes.
 ---
 

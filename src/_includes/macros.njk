@@ -9,13 +9,13 @@
 {%- endmacro %}
 
 {# One row in a list of notebook entries. #}
-{% macro entryRow(entry, inquiries, fullDate=false, showInquiry=true) %}
-{%- set inq = inquiries | findInquiry(entry.data.inquiry) %}
+{% macro entryRow(entry, topics, fullDate=false, showTopic=true) %}
+{%- set topic = topics | findTopic(entry.data.topic) %}
 <li class="entry-row" data-kind="{{ entry.data.kind }}">
   <time class="entry-date" datetime="{{ entry.date | iso }}">{{ (entry.date | day) if fullDate else (entry.date | shortDay) }}</time>
   <div class="entry-main">
     <p class="kind-line">{{ mark(entry.data.kind) }}<span>{{ entry.data.kind | kindLabel }}</span>
-      {%- if inq and showInquiry %}<span class="sep">·</span><a href="{{ inq.url }}">{{ inq.data.title }}</a>{% endif %}{{ draftTag(entry) }}</p>
+      {%- if topic and showTopic %}<span class="sep">·</span><a href="{{ topic.url }}">{{ topic.data.title }}</a>{% endif %}{{ draftTag(entry) }}</p>
     <h3 class="entry-title"><a href="{{ entry.url }}">{{ entry.data.title }}</a></h3>
     {%- if entry.data.summary %}
     <p class="entry-summary">{{ entry.data.summary }}</p>
@@ -27,23 +27,23 @@
 </li>
 {% endmacro %}
 
-{# A line of inquiry: status, period, summary. #}
-{% macro inquiryCard(inq, entries) %}
-{%- set count = (entries | forInquiry(inq.fileSlug)).length %}
-<article class="inquiry-card">
+{# A research topic: status, period, summary. #}
+{% macro topicCard(topic, entries) %}
+{%- set count = (entries | forTopic(topic.fileSlug)).length %}
+<article class="topic-card">
   <p class="meta-line">
-    <span class="status status--{{ inq.data.status }}">{{ inq.data.status | statusLabel }}</span>
-    {%- if inq.data.started %}<span class="sep">·</span>{{ inq.data.started | span(inq.data.ended) }}<span class="sep">·</span>{{ inq.data.started | duration(inq.data.ended) }}{% endif %}
-    {%- if count %}<span class="sep">·</span>{{ count }} {{ "entry" if count == 1 else "entries" }}{% endif %}{{ draftTag(inq) }}
+    <span class="status status--{{ topic.data.status }}">{{ topic.data.status | statusLabel }}</span>
+    {%- if topic.data.started %}<span class="sep">·</span>{{ topic.data.started | span(topic.data.ended) }}<span class="sep">·</span>{{ topic.data.started | duration(topic.data.ended) }}{% endif %}
+    {%- if count %}<span class="sep">·</span>{{ count }} {{ "entry" if count == 1 else "entries" }}{% endif %}{{ draftTag(topic) }}
   </p>
-  <h3 class="inquiry-title"><a href="{{ inq.url }}">{{ inq.data.title }}</a></h3>
-  {%- if inq.data.summary %}
-  <p class="inquiry-summary">{{ inq.data.summary }}</p>
+  <h3 class="topic-title"><a href="{{ topic.url }}">{{ topic.data.title }}</a></h3>
+  {%- if topic.data.summary %}
+  <p class="topic-summary">{{ topic.data.summary }}</p>
   {%- endif %}
 </article>
 {% endmacro %}
 
-{# Horizontal research timeline: one track per inquiry, entries as marks. #}
+{# Horizontal research timeline: one track per topic, entries as marks. #}
 {% macro timeline(chart) %}
 {%- if chart %}
 <figure class="tl">
@@ -57,10 +57,10 @@
     </div>
   </div>
   {%- for row in chart.rows %}
-  {%- set d = row.inquiry.data %}
+  {%- set d = row.topic.data %}
   <div class="tl-row">
     <div class="tl-label">
-      <a href="{{ row.inquiry.url }}">{{ d.title }}</a>
+      <a href="{{ row.topic.url }}">{{ d.title }}</a>
       <span class="tl-dates">{{ d.started | span(d.ended) }} · {{ d.started | duration(d.ended) }}</span>
     </div>
     <div class="tl-track">

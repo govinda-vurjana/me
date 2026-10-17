@@ -1,0 +1,59 @@
+---
+layout: layouts/base.njk
+---
+{#- A research section (AI Memory, Math): intro, topic timeline, papers, writing. -#}
+{% import "macros.njk" as ui %}
+{%- set topics = collections.topics | where("data.section", section) | inStatus("exploring", "paused", "concluded") %}
+{%- set writing = collections.entries | inSection(section, collections.topics) %}
+{%- set papers = writing | where("data.kind", "paper") %}
+<header class="page-head">
+  <h1>{{ title }}</h1>
+  {%- if summary %}
+  <p class="dek">{{ summary }}</p>
+  {%- endif %}
+</header>
+
+{%- if content | trim %}
+<div class="prose">
+  {{ content | safe }}
+</div>
+{%- endif %}
+
+{%- if topics.length %}
+<section class="section section--wide">
+  <header class="section-head"><h2 class="section-label">Timeline</h2></header>
+  {{ ui.timeline(topics | timelineChart(collections.entries)) }}
+  <div class="topic-list">
+    {%- for t in topics %}
+    {{ ui.topicCard(t, collections.entries) }}
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if papers.length %}
+<section class="section">
+  <header class="section-head"><h2 class="section-label">Papers</h2></header>
+  <ol class="entry-list">
+    {%- for entry in papers %}
+    {{ ui.entryRow(entry, collections.topics, true) }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}
+
+{%- set rest = writing | rejectKind("paper") %}
+{%- if rest.length %}
+<section class="section">
+  <header class="section-head"><h2 class="section-label">Writing</h2></header>
+  <ol class="entry-list">
+    {%- for entry in rest %}
+    {{ ui.entryRow(entry, collections.topics, true) }}
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}
+
+{%- if not topics.length and not writing.length %}
+<p class="empty">Nothing published here yet.</p>
+{%- endif %}

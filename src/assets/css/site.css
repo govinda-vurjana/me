@@ -273,6 +273,33 @@ img { max-width: 100%; height: auto; }
 
 .now-line .meta { font: 0.75rem var(--mono); color: var(--ink-3); }
 
+/* ---- Home: the sections ------------------------------------------------- */
+
+.section-index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+
+.section-index li {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 0.25rem 1.5rem;
+  align-items: baseline;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--rule-2);
+}
+
+.section-index a {
+  font: 500 0.8rem var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.section-index a:hover { color: var(--accent); }
+.section-index p { margin: 0; color: var(--ink-2); }
+
+@media (max-width: 34rem) {
+  .section-index li { grid-template-columns: 1fr; }
+}
+
 .page-head {
   max-width: 46rem;
   padding: 3.5rem 0 1rem;
@@ -383,23 +410,23 @@ img { max-width: 100%; height: auto; }
   vertical-align: 0.08em;
 }
 
-/* ---- Inquiries ----------------------------------------------------------- */
+/* ---- Topics -------------------------------------------------------------- */
 
-.inquiry-list { margin-top: 1.5rem; max-width: 44rem; }
-.tl + .inquiry-list { margin-top: 2.75rem; }
-.section-head + .inquiry-list { margin-top: 0; }
+.topic-list { margin-top: 1.5rem; max-width: 44rem; }
+.tl + .topic-list { margin-top: 2.75rem; }
+.section-head + .topic-list { margin-top: 0; }
 
-.inquiry-card {
+.topic-card {
   padding: 1.35rem 0;
   border-bottom: 1px solid var(--rule-2);
 }
 
-.inquiry-card:first-child { padding-top: 0.25rem; }
-.inquiry-card .meta-line { margin: 0 0 0.4rem; }
-.inquiry-title { font-size: 1.55rem; }
-.inquiry-title a { text-decoration: none; }
+.topic-card:first-child { padding-top: 0.25rem; }
+.topic-card .meta-line { margin: 0 0 0.4rem; }
+.topic-title { font-size: 1.55rem; }
+.topic-title a { text-decoration: none; }
 
-.inquiry-summary {
+.topic-summary {
   margin: 0.45rem 0 0;
   font-size: 1.04em;
   color: var(--ink-2);
@@ -542,7 +569,7 @@ img { max-width: 100%; height: auto; }
   .legend { padding-left: 15.5rem; }
 }
 
-/* ---- Inquiry trail (vertical timeline) ----------------------------------- */
+/* ---- Topic trail (vertical timeline) ------------------------------------- */
 
 .trail { list-style: none; margin: 0; padding: 0; }
 

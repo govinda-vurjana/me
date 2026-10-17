@@ -1,0 +1,27 @@
+# Books I am reading or have read. The page sorts them: reading first, then
+# finished books by year.
+#
+#   - title: The book's title
+#     author: Author One, Author Two
+#     status: reading            # reading | read
+#     started: 2026-09           # YYYY-MM or YYYY-MM-DD
+#     finished: 2026-10          # when status is read
+#     note: One or two lines on what stayed with me.
+#     link: /notebook/some-note/ # optional: my notes on it
+#
+# `draft: true` keeps a book out of the published site, like any draft.
+
+- title: Thinking, Fast and Slow
+  author: Daniel Kahneman
+  status: reading
+  started: 2026-09
+  note: (Example) Two systems, one fast and associative, one slow and deliberate. Is there anything like this inside a model?
+  draft: true
+
+- title: "Neuronal Dynamics: From Single Neurons to Networks and Models of Cognition"
+  author: Wulfram Gerstner, Werner M. Kistler, Richard Naud, Liam Paninski
+  status: read
+  started: 2026-07
+  finished: 2026-09
+  note: (Example) The chapters on attractor networks are the clearest account of associative memory as dynamics.
+  draft: true
