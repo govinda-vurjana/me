@@ -8,9 +8,6 @@ layout: layouts/base.njk
   <header class="page-head">
     <p class="eyebrow"><a href="/inquiries/">Inquiry</a><span class="sep">/</span><span class="status status--{{ status }}">{{ status | statusLabel }}</span>{% if draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
     <h1>{{ title }}</h1>
-    {%- if question %}
-    <p class="seed-question">{{ question }}</p>
-    {%- endif %}
     <dl class="facts">
       <div><dt>Period</dt><dd>{{ started | span(ended) }}</dd></div>
       {%- if started %}
@@ -56,9 +53,8 @@ layout: layouts/base.njk
           {%- if ev.entry.data.result %}
           <p class="entry-result"><span class="label">Result</span> {{ ev.entry.data.result }}</p>
           {%- endif %}
-          {%- elif ev.type == "question" %}
-          <p class="kind-line">The question</p>
-          <p class="trail-question">{{ ev.text }}</p>
+          {%- elif ev.type == "start" %}
+          <p class="kind-line">Started</p>
           {%- elif ev.type == "end" %}
           <p class="kind-line">Concluded</p>
           <p class="trail-text">{{ ev.text }}</p>

@@ -66,7 +66,7 @@ Set `status` to `exploring`, `paused`, `planned`, or `concluded`. To finish one,
 | `result` | experiments | The one-line finding, shown at the top and on the timeline |
 | `repo`, `notebook`, `dataset`, `demo` | entries | Links shown as buttons |
 | `authors`, `venue`, `abstract`, `pdf`, `arxiv` | papers | Paper details; a BibTeX entry is generated |
-| `question`, `started`, `ended`, `conclusion`, `log` | inquiries | See above |
+| `started`, `ended`, `conclusion`, `log` | inquiries | See above |
 | `draft: true` | anything | Visible in `npm run dev`, never published |
 
 ## Writing

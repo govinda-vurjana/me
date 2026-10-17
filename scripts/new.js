@@ -96,7 +96,7 @@ summary: One sentence on what you are testing.
 # notebook: https://colab.research.google.com/...
 ---
 
-## Question
+## Aim
 
 ## Setup
 
@@ -126,7 +126,6 @@ Notes on the paper: how it came about, what changed between drafts, what is stil
 
   inquiry: `---
 title: ${q(title)}
-question: The plain question this starts from?
 status: exploring        # exploring | paused | planned | concluded
 started: ${today}
 # ended: YYYY-MM-DD
@@ -137,7 +136,7 @@ log:
     text: Started.
 ---
 
-Why this question, and what I think going in.
+What this inquiry is about and why it matters.
 `,
 };
 

@@ -122,7 +122,7 @@ function timelineChart(inquiries, entries = []) {
 function inquiryEvents(inquiry, entries = []) {
   const d = inquiry.data;
   const events = [];
-  if (d.started && d.question) events.push({ date: toDate(d.started), type: "question", text: d.question });
+  if (d.started) events.push({ date: toDate(d.started), type: "start" });
   for (const item of d.log ?? []) {
     events.push({ date: toDate(item.date), type: "log", text: item.text, monthOnly: isMonthOnly(item.date) });
   }

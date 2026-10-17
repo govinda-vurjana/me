@@ -1,13 +1,13 @@
 ---
 layout: layouts/base.njk
 title: Inquiries
-description: Lines of research, each starting from one question, with a timeline of everything that happened along the way.
+description: Lines of research, each with a timeline of everything that happened along the way.
 permalink: /inquiries/
 ---
 {% import "macros.njk" as ui %}
 <header class="page-head">
   <h1>Inquiries</h1>
-  <p class="dek">An inquiry is a question I have decided to stay with. Each one has a start, sometimes an end, and a timeline of everything that happened in between: thoughts, notes, experiments, and results.</p>
+  <p class="dek">An inquiry is a line of research I stay with for weeks or months. Each one has a start, sometimes an end, and a timeline of everything that happened in between: thoughts, notes, experiments, and results.</p>
 </header>
 
 {%- set chart = collections.inquiries | timelineChart(collections.entries) %}

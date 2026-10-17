@@ -27,7 +27,7 @@
 </li>
 {% endmacro %}
 
-{# A line of inquiry: status, period, question. #}
+{# A line of inquiry: status, period, summary. #}
 {% macro inquiryCard(inq, entries) %}
 {%- set count = (entries | forInquiry(inq.fileSlug)).length %}
 <article class="inquiry-card">
@@ -37,8 +37,8 @@
     {%- if count %}<span class="sep">·</span>{{ count }} {{ "entry" if count == 1 else "entries" }}{% endif %}{{ draftTag(inq) }}
   </p>
   <h3 class="inquiry-title"><a href="{{ inq.url }}">{{ inq.data.title }}</a></h3>
-  {%- if inq.data.question %}
-  <p class="inquiry-question">{{ inq.data.question }}</p>
+  {%- if inq.data.summary %}
+  <p class="inquiry-summary">{{ inq.data.summary }}</p>
   {%- endif %}
 </article>
 {% endmacro %}

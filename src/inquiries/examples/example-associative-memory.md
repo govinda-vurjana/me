@@ -1,6 +1,5 @@
 ---
 title: "Example: Associative memory"
-question: Can a network store a memory as a place it falls into, and recall all of it from a fragment?
 status: exploring
 started: 2026-08-24
 summary: An example of an ongoing inquiry that overlaps another one.

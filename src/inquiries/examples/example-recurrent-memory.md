@@ -1,6 +1,5 @@
 ---
 title: "Example: Recurrent memory"
-question: What does a recurrent network's hidden state actually remember, and for how long?
 status: concluded
 started: 2026-07-06
 ended: 2026-09-04
@@ -13,6 +12,6 @@ log:
     text: Rewrote the training loop. Gradients were vanishing well before step 40.
 ---
 
-**This inquiry is an example.** It shows how a finished inquiry reads: the question, a short framing, and a timeline built from the `log` in this file plus every notebook entry that says `inquiry: example-recurrent-memory`.
+**This inquiry is an example.** It shows how a finished inquiry reads: a short framing and a timeline built from the `log` in this file plus every notebook entry that says `inquiry: example-recurrent-memory`.
 
 Delete the `src/inquiries/examples/` and `src/notebook/examples/` folders when you no longer need them. Drafts never appear on the published site.
