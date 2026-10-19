@@ -107,6 +107,10 @@ Loss functions are assembled from exactly these pieces.
 - Products appear wherever two quantities that both depend on the weights are multiplied, such as a gate multiplying a signal inside an LSTM.
 - The sigmoid $\dfrac{1}{1 + e^{-z}}$ and the softmax $\dfrac{e^{z_i}}{\sum_j e^{z_j}}$ are quotients. [Part 4](/notebook/exponentials-logarithms-and-sines/) differentiates the sigmoid.
 
+::: callout Hidden meaning
+Two of these rules describe how learning itself works. Because rates add, the gradient of the total loss is the sum of every example's gradient: each example casts a vote on how every weight should move, and a random mini-batch is a fair sample of that vote. That is what makes training on enormous datasets possible. And because of the product rule, a factor near zero blocks the gradient to whatever it multiplies. That is *gating*: when an LSTM gate is closed, the signal behind it gets almost no learning signal.
+:::
+
 ## Try it
 
 1. $x^3$

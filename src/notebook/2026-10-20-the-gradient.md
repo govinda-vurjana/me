@@ -106,6 +106,10 @@ Run the forward pass again: $u = 0.66 \cdot 2 + 0.08 = 1.40$, then $v = 1.96$, t
 
 That is one step of training, and every neural network trains with steps of this shape: a forward pass to get the loss, a backward pass to get the gradient, and a small move downhill. Real training estimates the gradient from a random batch of examples rather than the whole dataset, which is *stochastic* gradient descent, and optimisers such as Adam adjust the step for each weight separately. But all of them start from the gradient. In a large model the gradient has billions of entries, and it is still just a list of partial derivatives.
 
+::: callout Hidden meaning
+The gradient is the only direction the loss cares about right now. A step along a contour changes nothing, so a gradient step spends all of its length where it counts. It is also local and greedy: it knows which way is down from *here*, and nothing about where the deepest valley is. Everything a network learns is the accumulated result of these short-sighted steps, each one decided by the training examples voting together.
+:::
+
 ## Try it
 
 1. Find $\nabla z$ for $z = x^2 + 4y^2$.

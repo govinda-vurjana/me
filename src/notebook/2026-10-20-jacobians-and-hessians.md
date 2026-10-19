@@ -93,6 +93,10 @@ For $(1, 1)$ that is $2 + 6 + 2 = 10$, and for $(1, -1)$ it is $2 - 6 + 2 = -2$:
 
 That takes the series from the slope of a single curve to the curvature of a whole landscape.
 
+::: callout Hidden meaning
+A layer's Jacobian describes what the layer does to small changes: which directions of its input it stretches, which it squashes, and which it ignores. A layer that squashes some directions on the way forward also shrinks the learning signal on the way back, because backpropagation multiplies by the same matrix transposed, and a transposed matrix stretches and squashes by the same amounts. So one object decides both what information survives the forward pass and what learning signal survives the backward one. The Hessian then says what kind of place training has reached: a bowl, a saddle, a narrow ravine or a broad plain.
+:::
+
 ## Try it
 
 1. The Jacobian of $u = 3x + y$, $v = x + 2y$.

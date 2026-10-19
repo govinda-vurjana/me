@@ -68,6 +68,10 @@ so every step multiplies $w$ by $1 - \eta a$. Three things can happen:
 
 So a sharply curved loss demands a small learning rate: $\eta$ has to stay below $2 / L''$. In the [one-weight example](/math/calculus-for-ai/) on the topic page, $L'' = 8$, so any learning rate above $0.25$ would have made $w$ swing wider at every step. In a real network the curvature is different in every direction ([Part 9](/notebook/jacobians-and-hessians/)), and the most sharply curved direction sets the limit. This is why a learning rate that is too high makes the loss blow up instead of fall.
 
+::: callout Hidden meaning
+The first derivative says which way to go; the second says how far you can trust it. Where the curvature is high the slope changes quickly, so the straight-line picture behind every gradient step breaks down within a short distance. Curvature also says something about robustness: a minimum at the bottom of a sharp, narrow valley is sensitive to small changes in the weights, while one in a wide, flat valley is not. Whether flatter minima generalise better is an influential and still debated idea.[^1]
+:::
+
 ## Try it
 
 1. For $y = x^4$, find $y'$ and $y''$.
@@ -82,3 +86,5 @@ So a sharply curved loss demands a small learning rate: $\eta$ has to stay below
 3. $L'' = 10$, so $\eta$ must stay below $2/10 = 0.2$.
 
 </details>
+
+[^1]: Hochreiter & Schmidhuber (1997), “Flat minima”, *Neural Computation*, 9(1); Keskar et al. (2017), “On large-batch training for deep learning: generalization gap and sharp minima”, *ICLR*; Dinh et al. (2017), “Sharp minima can generalize for deep nets”, *ICML*.

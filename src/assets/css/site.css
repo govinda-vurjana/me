@@ -1020,6 +1020,16 @@ pre code { font-size: inherit; }
 
 .cheat-card .cheat-ai .label { color: var(--accent); }
 
+/* The hidden meaning: what the idea says about how a network learns. */
+.cheat-card .cheat-meaning {
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink);
+}
+
+.cheat-card .cheat-meaning .label { color: var(--accent); }
+
 .cheat-table { width: 100%; margin-top: 0.5rem; border-collapse: collapse; font-size: 0.95rem; }
 .cheat-table td { padding: 0.35rem 0; border-bottom: 1px solid var(--rule); }
 .cheat-table td:last-child { text-align: right; }
@@ -1078,6 +1088,7 @@ pre code { font-size: inherit; }
   .cheat-card h3 { font-size: 11pt; }
   .cheat-card .katex-display { margin: 0.3rem 0; }
   .cheat-card p { margin-top: 0.2rem; font-size: 8.4pt; line-height: 1.38; }
+  .cheat-card .cheat-meaning { margin-top: 0.35rem; padding-top: 0.3rem; }
   .cheat-table { font-size: 9pt; }
   .cheat-slips { max-width: none; font-size: 9pt; }
 }

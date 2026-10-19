@@ -61,6 +61,8 @@ A large language model runs this same loop over billions of weights at once. The
 8. [The gradient, and which way is downhill](/notebook/the-gradient/). Gradients, directional derivatives and gradient descent.
 9. [Jacobians and Hessians](/notebook/jacobians-and-hessians/). Derivatives of whole layers, and the shape of the loss landscape.
 
+Then read [The hidden meaning of the calculus](/notebook/the-hidden-meaning-of-the-calculus/), which reads every result in the series as a statement about how a network learns.
+
 ## How each part works
 
-Each part runs in the same order: the intuition first, then the definition, a derivation, worked examples, where the idea shows up in AI, and exercises. On the site the answers are folded away, so you can try first. Wherever possible a result is checked with plain numbers as well as algebra.
+Each part runs in the same order: the intuition first, then the definition, a derivation, worked examples, where the idea shows up in AI, and exercises. Each part also has a *hidden meaning*: what the result says about how a network learns. Anyone can learn to compute a derivative; knowing what it means is what makes it useful for AI. On the site the answers are folded away, so you can try first. Wherever possible a result is checked with plain numbers as well as algebra.

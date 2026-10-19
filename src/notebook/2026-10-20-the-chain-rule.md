@@ -126,6 +126,10 @@ The same product explains a famous problem. If each local rate in a 20-layer cha
 
 ![Products of 20 local rates on a log scale: 1.5 per layer explodes, 0.5 per layer vanishes](/assets/img/math/vanishing-gradients.svg "Figure 2. The product of the local rates as a gradient passes back through 20 layers, on a log scale. At 0.5 per layer it falls to about one millionth; at 1.5 it grows to about 3300.")
 
+::: callout Hidden meaning
+The chain rule is *credit assignment*. A weight deep inside a network never touches the loss; its share of the blame is the product of every local rate between it and the output. Influence multiplies rather than adds, so one weak link anywhere silences everything before it. Read this way, vanishing gradients are a statement about memory: in a recurrent network, an input from 100 steps ago can only shape learning if its influence survives 100 multiplications.
+:::
+
 ## Try it
 
 1. $(2x + 1)^3$

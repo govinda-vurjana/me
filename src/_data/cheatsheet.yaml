@@ -1,8 +1,9 @@
 # The cheat sheet at /math/cheat-sheet/, also printed to a PDF by `npm run pdf`.
 #
-# Each item has a concept, a formula (`tex`, TeX), the idea in a sentence, how it
-# is used in AI, and `part`: the file name of the note that explains it, without
-# the date. `idea` and `ai` are plain text and may hold $inline$ maths.
+# Each item has a concept, a formula (`tex`, TeX), the idea in a sentence, where it
+# is used in AI, its hidden meaning (what it says about how a network learns), and
+# `part`: the file name of the note that explains it, without the date. `idea`,
+# `ai` and `meaning` are plain text and may hold $inline$ maths.
 # Add a section here as new mathematics is covered.
 
 sections:
@@ -18,6 +19,9 @@ sections:
         ai: >-
           $\partial L / \partial w$ says whether nudging a weight raises or lowers the loss,
           and how fast. It is the one question training asks of every weight.
+        meaning: >-
+          A derivative is blame: how much of the error is this weight's doing. It is only true
+          nearby, which is why networks learn in small steps.
       - concept: A training step
         part: the-gradient
         tex: |-
@@ -28,6 +32,9 @@ sections:
         ai: >-
           Every neural network trains by repeating this: a forward pass for the loss, a
           backward pass for the gradient, then a small step downhill.
+        meaning: >-
+          Learning is not solving for the answer. It is many small corrections, each trusting
+          a straight-line picture of the loss for one short step.
 
   - title: Rules
     items:
@@ -39,6 +46,9 @@ sections:
           Works for any power, so rewrite first: $1/x^2 = x^{-2}$ and $\sqrt{x} = x^{1/2}$.
         ai: >-
           The squared error $(\hat y - y)^2$ and weight penalties like $\lambda w^2$ are powers.
+        meaning: >-
+          The slope of the squared error is $2(\hat y - y)$, proportional to the error itself:
+          big mistakes get big corrections, nearly right answers barely move.
       - concept: Sums and multiples
         part: the-derivative-rules
         tex: |-
@@ -48,6 +58,9 @@ sections:
         ai: >-
           A batch's loss is the average of each example's loss, so the batch gradient is the
           average of their gradients.
+        meaning: >-
+          Every example votes on how each weight should move, and the gradient is the tally. A
+          random mini-batch is a fair sample of the vote.
       - concept: Product rule
         part: the-derivative-rules
         tex: |-
@@ -57,6 +70,9 @@ sections:
           other. It is not $f'g'$.
         ai: >-
           Gates multiplying signals in an LSTM; attention weights multiplying value vectors.
+        meaning: >-
+          Multiplying is gating. A factor near zero blocks the gradient to whatever it
+          multiplies, so the network can choose what not to learn from.
       - concept: Quotient rule
         part: the-derivative-rules
         tex: |-
@@ -66,6 +82,9 @@ sections:
           squared.
         ai: >-
           The sigmoid and the softmax are both quotients.
+        meaning: >-
+          Dividing by a total ties the outputs together: raising one probability must lower the
+          others, so every score's gradient touches all of them.
       - concept: Chain rule
         part: the-chain-rule
         tex: |-
@@ -76,6 +95,9 @@ sections:
         ai: >-
           A network is a chain of layers. Backpropagation is the chain rule run backwards
           from the loss to every weight.
+        meaning: >-
+          Credit assignment. A weight's share of the blame is the product of every link between
+          it and the loss, and one weak link silences everything before it.
 
   - title: Functions inside networks
     items:
@@ -89,6 +111,9 @@ sections:
         ai: >-
           Softmax uses $e^z$ to turn any scores into positive numbers; the sigmoid is built
           from $e^{-z}$.
+        meaning: >-
+          Adding becomes multiplying: raise one score by 1 and its odds against every other
+          option are multiplied by $e$. A network's scores are log-odds.
       - concept: Logarithm
         part: exponentials-logarithms-and-sines
         tex: |-
@@ -99,6 +124,9 @@ sections:
         ai: >-
           Cross-entropy is $-\ln p$. Models add log-probabilities because multiplying many
           small probabilities underflows to zero.
+        meaning: >-
+          Multiplying becomes adding, so evidence adds up as log-probability. $-\ln p$ is
+          surprise: training makes a model less surprised by the truth.
       - concept: Sine and cosine
         part: exponentials-logarithms-and-sines
         tex: |-
@@ -112,6 +140,9 @@ sections:
         ai: >-
           Positional encodings in Transformers; rotary embeddings rotate queries and keys by
           an angle that grows with position.
+        meaning: >-
+          Position becomes an angle. With rotary embeddings, the attention between two tokens
+          depends on how far apart they are, not on where they sit.
       - concept: Sigmoid
         part: exponentials-logarithms-and-sines
         tex: |-
@@ -124,6 +155,9 @@ sections:
         ai: >-
           Probabilities and LSTM gates. Chains of slopes no bigger than $0.25$ make gradients
           vanish in deep stacks.
+        meaning: >-
+          A saturated unit is certain, and so it is deaf: far from zero its slope is almost 0,
+          and it stops learning.
       - concept: ReLU
         part: exponentials-logarithms-and-sines
         tex: |-
@@ -136,6 +170,9 @@ sections:
         ai: >-
           The default activation in deep networks: a slope of exactly 1 lets gradients pass
           back without shrinking.
+        meaning: >-
+          A switch. Units that are off pass no gradient, so each input trains only the part of
+          the network it switched on.
       - concept: Softmax with cross-entropy
         part: exponentials-logarithms-and-sines
         tex: |-
@@ -149,6 +186,9 @@ sections:
           otherwise).
         ai: >-
           The last layer of every language model, choosing the next token.
+        meaning: >-
+          The learning signal is belief minus truth. Confident and right gives almost no
+          gradient; confident and wrong gives a large one. Networks learn from surprise.
 
   - title: Many inputs, many outputs
     items:
@@ -161,6 +201,9 @@ sections:
         ai: >-
           How the loss responds to one weight while all the others stay fixed. For
           $L = (wx + b - y)^2$, the weight's gradient is error times input.
+        meaning: >-
+          "All else equal" is an assumption, true only for tiny moves. In a real step every
+          weight moves at once and their effects interact.
       - concept: Gradient
         part: the-gradient
         tex: |-
@@ -170,6 +213,9 @@ sections:
           is how steep the climb is.
         ai: >-
           One entry per weight, billions in a large model. Training steps along $-\nabla L$.
+        meaning: >-
+          Local and greedy: it knows which way is down from here, and nothing about where the
+          deepest valley is.
       - concept: Directional derivative
         part: the-gradient
         tex: |-
@@ -180,6 +226,9 @@ sections:
         ai: >-
           The reason $-\nabla L$ is the steepest way down, and so the direction gradient
           descent takes.
+        meaning: >-
+          Moving along a contour changes nothing, so a gradient step spends all of its length
+          where it counts.
       - concept: Jacobian
         part: jacobians-and-hessians
         tex: |-
@@ -190,6 +239,9 @@ sections:
         ai: >-
           The derivative of a layer. For a linear layer $\mathbf z = W\mathbf x$ it is $W$.
           Backpropagation multiplies by one layer's Jacobian at a time.
+        meaning: >-
+          One matrix decides what information survives the forward pass and what learning
+          signal survives the backward pass.
 
   - title: Curvature
     items:
@@ -202,6 +254,8 @@ sections:
           and $y'' < 0$ is a cap (a maximum).
         ai: >-
           The curvature of the loss, which limits how large a training step can safely be.
+        meaning: >-
+          The slope says which way to go; the curvature says how far you can trust it.
       - concept: Learning-rate limit
         part: the-second-derivative
         tex: |-
@@ -212,6 +266,9 @@ sections:
         ai: >-
           Why a learning rate that is too high makes the loss blow up. The most sharply curved
           direction sets the limit.
+        meaning: >-
+          The sharpest direction, not the typical one, sets the safe speed for the whole
+          network.
       - concept: Hessian
         part: jacobians-and-hessians
         tex: |-
@@ -222,6 +279,9 @@ sections:
         ai: >-
           The shape of the loss landscape. In high dimensions most flat points are saddles,
           not minima.
+        meaning: >-
+          It says what kind of place training has reached: a bowl, a saddle, a narrow ravine or
+          a broad plain. Whether flat minima generalise better is still debated.
       - concept: Newton's method
         part: jacobians-and-hessians
         tex: |-
@@ -231,6 +291,9 @@ sections:
         ai: >-
           Too costly for big models: $10^9$ weights would need a Hessian with $10^{18}$
           entries, so curvature is approximated instead.
+        meaning: >-
+          Gradient descent knows the direction but not the distance. Much of optimiser design
+          is about cheaply estimating the distance.
 
   - title: Inside training
     items:
@@ -244,6 +307,9 @@ sections:
         ai: >-
           One backward pass gives every gradient for about the cost of a forward pass. It is
           what loss.backward() runs.
+        meaning: >-
+          The forward pass run in reverse, carrying blame instead of values. A weight's update
+          is the signal coming in times the error coming back.
       - concept: Vanishing and exploding gradients
         part: the-chain-rule
         tex: |-
@@ -253,6 +319,9 @@ sections:
         ai: >-
           Why residual connections, LSTM gates and careful initialisation exist: to keep the
           product near 1.
+        meaning: >-
+          A statement about memory: an input from 100 steps ago can only shape learning if its
+          influence survives 100 multiplications.
       - concept: Implicit differentiation
         part: implicit-differentiation
         tex: |-
@@ -262,6 +331,9 @@ sections:
         ai: >-
           Gradients through fixed points, as in deep equilibrium models, without storing every
           step taken to reach them.
+        meaning: >-
+          An answer defined by a condition can be trained without its history. A memory that is
+          a fixed point can be learned at the fixed point itself.
 
 # The one-neuron example worked by hand (Parts 7 and 8).
 neuron:

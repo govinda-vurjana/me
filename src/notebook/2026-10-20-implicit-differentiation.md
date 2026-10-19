@@ -94,6 +94,10 @@ Some models define their output by an equation it has to satisfy rather than by 
 
 Fixed points matter for memory too. An associative memory such as a Hopfield network recalls a stored pattern by settling into a fixed point from a partial cue.
 
+::: callout Hidden meaning
+Some answers are defined by a condition rather than a recipe: *the state where the system stops changing*. Implicit differentiation says you can work out how such an answer moves when its inputs move without knowing, or storing, how the system got there. For memory this matters: a network that recalls by settling into a fixed point can be trained through that fixed point directly, an idea that goes back to recurrent backpropagation in the 1980s.[^2]
+:::
+
 ## Try it
 
 1. Find $\dfrac{d}{dx}\,y^3$.
@@ -110,3 +114,4 @@ Fixed points matter for memory too. An associative memory such as a Hopfield net
 </details>
 
 [^1]: Bai, Kolter & Koltun (2019), “Deep equilibrium models”, *NeurIPS*.
+[^2]: Pineda (1987), “Generalization of back-propagation to recurrent neural networks”, *Physical Review Letters*, 59(19); Almeida (1987), “A learning rule for asynchronous perceptrons with feedback in a combinatorial environment”, *IEEE First International Conference on Neural Networks*.

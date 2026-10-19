@@ -19,11 +19,11 @@ Calculus is one of several branches the field rests on:
 | Optimisation | The update rules that turn gradients into learning: SGD, momentum, Adam. |
 | Dynamical systems | Recurrent networks and associative memories, whose state evolves step by step. |
 
-I'm learning this mathematics from the ground up and writing it down as I go, so that anyone starting from zero can follow the same path. Each idea is derived rather than memorised, checked with plain numbers, and tied to the place it appears in a real network.
+I'm learning this mathematics from the ground up and writing it down as I go, so that anyone starting from zero can follow the same path. Each idea is derived rather than memorised, checked with plain numbers, and tied to the place it appears in a real network. Each one also gets its *hidden meaning*: what the result says about how a network learns. Computing a derivative is the easy part; knowing what it means is what makes it AI mathematics.
 
 **Start with [Calculus for AI, from scratch](/math/calculus-for-ai/)**: from what a derivative measures to gradients, Jacobians and Hessians.
 
-For a quick look, the [cheat sheet](/math/cheat-sheet/) puts every concept on one page: its formula, the idea in a sentence, and where it shows up in AI. Both are also available as PDFs.
+For a quick look, the [cheat sheet](/math/cheat-sheet/) puts every concept on one page: its formula, the idea in a sentence, where it shows up in AI, and its hidden meaning. [The hidden meaning of the calculus](/notebook/the-hidden-meaning-of-the-calculus/) reads the whole series that way. The cheat sheet and the series are also available as PDFs.
 
 <p class="resource-links">
   <a class="pill" href="/math/cheat-sheet/">Cheat sheet</a>

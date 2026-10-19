@@ -168,6 +168,10 @@ print(w.grad, b.grad)
 
 The framework records each step of the forward computation as a graph, then walks it backwards multiplying local derivatives, just as in the table above. It uses no calculus beyond what you have just done by hand.
 
+::: callout Hidden meaning
+"Hold everything else fixed" is an assumption, not a fact. It judges each weight as if it acted alone, which is only true for tiny moves. In a real step every weight moves at once and their effects interact, which is one more reason steps must stay small. The neuron's gradient also shows the shape of learning: the update to a weight is the signal coming in times the error coming back. That has the same form as Hebb's rule, popularly "cells that fire together wire together", with the error taking the place of the second cell's activity.
+:::
+
 ## Try it
 
 1. For $z = 4x^2 + 5xy + 3y^2$, find $\partial z / \partial x$ and $\partial z / \partial y$.

@@ -151,6 +151,10 @@ The exponential makes every score positive, and dividing by the sum makes them a
 
 **Sines and cosines.** The original Transformer told the network where each word sits in a sentence by adding sine and cosine waves of different frequencies to it.[^1] Many current language models use rotary position embeddings instead, which rotate pairs of components of each query and key vector by an angle that grows with position, and rotations are built from $\sin$ and $\cos$.[^2] Networks that use $\sin$ as their activation function can represent images, sound and 3D shapes as smooth functions.[^3] In all of these, training needs the derivatives above.
 
+::: callout Hidden meaning
+The exponential and the logarithm translate between two ways of thinking. The exponential turns adding into multiplying: raise one softmax score by 1 and its odds against every other option are multiplied by $e$, so a network's scores are really log-odds. The logarithm turns multiplying into adding, so evidence that multiplies as probability adds as log-probability, and $-\ln p$ measures *surprise*. Together they make the learning signal $p_i - y_i$, prediction minus truth: confident and right gives almost no gradient, confident and wrong gives a large one. Networks learn from being surprised.
+:::
+
 ## Try it
 
 1. $e^{2x}$

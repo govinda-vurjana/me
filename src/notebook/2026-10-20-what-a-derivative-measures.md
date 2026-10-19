@@ -108,6 +108,10 @@ A model's error, its *loss*, is a function of its weights. Write it $L(w)$. The 
 
 Training is nothing more than following that answer, a small step at a time, for every weight. The [topic page](/math/calculus-for-ai/) shows a one-weight model learning this way, and [Part 8](/notebook/the-gradient/) does it for many weights at once.
 
+::: callout Hidden meaning
+A derivative is a measure of responsibility. $\partial L / \partial w$ says how much of the current error is this weight's doing, and in which direction, so training is the work of assigning blame and correcting it. The answer is also only *local*: it treats the loss as a straight line near the current $w$, and a little further away that picture can be wrong. That is why a network learns by many small corrections rather than one leap to the answer.
+:::
+
 ## Try it
 
 1. Use the definition to find the derivative of $f(x) = 3x$.

@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: Math for AI, at a glance
-summary: Every idea from the calculus series on one page, each with its formula, the idea in a sentence, and where it shows up in a neural network.
+summary: Every idea from the calculus series on one page, with its formula, the idea in a sentence, where it shows up in a neural network, and its hidden meaning, which is what it says about how a network learns.
 permalink: /math/cheat-sheet/
 ---
 {#- The quick-look cheat sheet. Content lives in _data/cheatsheet.yaml. -#}
@@ -27,7 +27,10 @@ permalink: /math/cheat-sheet/
         <h3><a href="/notebook/{{ item.part }}/">{{ item.concept }}</a></h3>
         <div class="cheat-formula">{{ item.tex | tex(true) | safe }}</div>
         <p><span class="label">Idea</span>{{ item.idea | mathText | safe }}</p>
-        <p class="cheat-ai"><span class="label">In AI</span>{{ item.ai | mathText | safe }}</p>
+        <p><span class="label">In AI</span>{{ item.ai | mathText | safe }}</p>
+        {%- if item.meaning %}
+        <p class="cheat-meaning"><span class="label">Hidden meaning</span>{{ item.meaning | mathText | safe }}</p>
+        {%- endif %}
       </article>
       {%- endfor %}
     </div>
@@ -69,6 +72,7 @@ permalink: /math/cheat-sheet/
   </section>
 
   <footer class="entry-foot">
-    <p>Each card links to the part that derives it. <a href="/math/calculus-for-ai/">Start the series from the beginning →</a></p>
+    <p>Each card links to the part that derives it. <a href="/notebook/the-hidden-meaning-of-the-calculus/">Read the hidden meanings as one story →</a></p>
+    <p><a href="/math/calculus-for-ai/">Start the series from the beginning →</a></p>
   </footer>
 </article>
