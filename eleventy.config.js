@@ -144,7 +144,9 @@ function topicEvents(topic, entries = []) {
     events.push({ date: entry.date, type: entry.data.kind ?? "note", entry });
   }
   if (d.ended) events.push({ date: toDate(d.ended), type: "end", text: d.conclusion ?? "Topic closed." });
-  else if (d.started) events.push({ date: BUILT_AT, type: "now" });
+  // Dates are UTC, so a build in the early hours of a local day can come
+  // before that day's entries. "Now" still belongs at the end.
+  else if (d.started) events.push({ date: new Date(Math.max(BUILT_AT, ...events.map((e) => e.date))), type: "now" });
   events.sort((a, b) => a.date - b.date);
 
   // Make long silences visible: "3 weeks later", "2 months later".

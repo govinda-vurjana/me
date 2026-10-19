@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 300" width="620" height="300" font-family="IBM Plex Mono, ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" role="img">
+  <title>The product rule pictured as a rectangle of area f times g growing by two strips and a tiny corner</title>
+  <style>
+    text { fill: #8a8478; }
+    .axis { stroke: #8a8478; stroke-width: 1; opacity: 0.7; }
+    .grid { stroke: #8a8478; stroke-width: 1; opacity: 0.18; }
+    .curve { fill: none; stroke: #8a8478; stroke-width: 2.2; }
+    .thin { fill: none; stroke: #8a8478; stroke-width: 1.3; }
+    .dash { fill: none; stroke: #8a8478; stroke-width: 1.3; stroke-dasharray: 5 4; }
+    .hl { fill: none; stroke: #b4502f; stroke-width: 2.2; }
+    .hl-text { fill: #b4502f; }
+    .dot { fill: #8a8478; }
+    .hl-dot { fill: #b4502f; }
+    .hollow { fill: none; stroke: #8a8478; stroke-width: 1.5; }
+    .big { font-size: 16px; }
+    .small { font-size: 11px; }
+  </style>
+<rect x="70" y="95" width="260" height="170" fill="#8a8478" fill-opacity="0.14" stroke="#8a8478" stroke-width="1.5"/>
+<rect x="330" y="95" width="56" height="170" fill="#b4502f" fill-opacity="0.22" stroke="#b4502f" stroke-width="1.3"/>
+<rect x="70" y="55" width="260" height="40" fill="#b4502f" fill-opacity="0.22" stroke="#b4502f" stroke-width="1.3"/>
+<rect x="330" y="55" width="56" height="40" fill="#b4502f" fill-opacity="0.5" stroke="#b4502f" stroke-width="1.3"/>
+<text class="big" x="200" y="185" text-anchor="middle">f · g</text>
+<text class="hl-text" x="358" y="184" text-anchor="middle">g·Δf</text>
+<text class="hl-text" x="200" y="79" text-anchor="middle">f·Δg</text>
+<text class="hl-text small" x="358" y="79" text-anchor="middle">ΔfΔg</text>
+<text x="200" y="287" text-anchor="middle">f</text>
+<text class="hl-text" x="358" y="287" text-anchor="middle">Δf</text>
+<text x="56" y="184" text-anchor="end">g</text>
+<text class="hl-text" x="56" y="79" text-anchor="end">Δg</text>
+<text x="416" y="69">area = f · g</text>
+<text class="hl-text" x="416" y="109">nudge x and it gains</text>
+<text class="hl-text" x="416" y="129">two strips: g·Δf + f·Δg</text>
+<text x="416" y="169">plus a corner ΔfΔg,</text>
+<text x="416" y="189">a tiny × tiny that</text>
+<text x="416" y="209">vanishes as Δx → 0</text>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" width="640" height="240" font-family="IBM Plex Mono, ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" role="img">
+  <title>The chain rule: x changes u at rate 3, u changes y at rate 80, so x changes y at rate 240</title>
+  <style>
+    text { fill: #8a8478; }
+    .axis { stroke: #8a8478; stroke-width: 1; opacity: 0.7; }
+    .grid { stroke: #8a8478; stroke-width: 1; opacity: 0.18; }
+    .curve { fill: none; stroke: #8a8478; stroke-width: 2.2; }
+    .thin { fill: none; stroke: #8a8478; stroke-width: 1.3; }
+    .dash { fill: none; stroke: #8a8478; stroke-width: 1.3; stroke-dasharray: 5 4; }
+    .hl { fill: none; stroke: #b4502f; stroke-width: 2.2; }
+    .hl-text { fill: #b4502f; }
+    .dot { fill: #8a8478; }
+    .hl-dot { fill: #b4502f; }
+    .hollow { fill: none; stroke: #8a8478; stroke-width: 1.5; }
+    .big { font-size: 16px; }
+    .small { font-size: 11px; }
+  </style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a8478"/></marker><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b4502f"/></marker></defs>
+<circle class="hollow" cx="80" cy="86" r="27"/>
+<text class="big" x="80" y="92" text-anchor="middle">x</text>
+<circle class="hollow" cx="320" cy="86" r="27"/>
+<text class="big" x="320" y="92" text-anchor="middle">u</text>
+<circle class="hollow" cx="560" cy="86" r="27"/>
+<text class="big" x="560" y="92" text-anchor="middle">y</text>
+<text x="80" y="135" text-anchor="middle">x = 0</text>
+<text x="320" y="135" text-anchor="middle">u = 2</text>
+<text x="560" y="135" text-anchor="middle">y = 32</text>
+<line class="thin" x1="113" y1="86" x2="287" y2="86" marker-end="url(#a)"/>
+<line class="thin" x1="353" y1="86" x2="527" y2="86" marker-end="url(#a)"/>
+<text x="200" y="74" text-anchor="middle">u = 3x + 2</text>
+<text class="hl-text" x="200" y="108" text-anchor="middle">du/dx = 3</text>
+<text x="440" y="74" text-anchor="middle">y = u<tspan dy="-5" font-size="9">5</tspan></text>
+<text class="hl-text" x="440" y="108" text-anchor="middle">dy/du = 5u<tspan dy="-5" font-size="9">4</tspan><tspan dy="5"> = 80</tspan></text>
+<text class="small" x="20" y="176">nudge</text>
+<text x="80" y="176" text-anchor="middle">+0.001</text>
+<text x="320" y="176" text-anchor="middle">+0.003</text>
+<text class="hl-text" x="560" y="176" text-anchor="middle">≈ +0.240</text>
+<text class="small" x="200" y="176" text-anchor="middle">× 3</text>
+<text class="small" x="440" y="176" text-anchor="middle">× 80</text>
+<path class="hl" d="M80,198 L80,206 L560,206 L560,198" stroke-width="1.4"/>
+<text class="hl-text" x="320" y="228" text-anchor="middle">dy/dx = 3 × 80 = 240</text>
+</svg>

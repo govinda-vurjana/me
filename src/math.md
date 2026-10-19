@@ -5,3 +5,20 @@ section: math
 summary: Derivations, proofs, and worked notes, both the mathematics behind the work on memory and mathematics in its own right.
 permalink: /math/
 ---
+
+A common belief is that AI runs on data and computing power, and that the mathematics is optional. It isn't. A neural network is one large function with millions or billions of adjustable numbers inside it, its weights. Training it means asking, for every weight: *if this number moved a little, would the error go up or down, and by how much?* That question is a derivative. Backpropagation, the algorithm that trains every modern network, is the chain rule from calculus applied many millions of times.
+
+Calculus is one of several branches the field rests on:
+
+| Mathematics | Where it lives in AI |
+|---|---|
+| Calculus | Training. Backpropagation is the chain rule, and gradient descent follows the derivative downhill. |
+| Linear algebra | Every layer multiplies a vector by a matrix. Attention compares vectors with dot products. |
+| Probability | A language model's output is a probability distribution over the next token. |
+| Information theory | Cross-entropy, the loss most models train on, measures how surprised a model is by the right answer. |
+| Optimisation | The update rules that turn gradients into learning: SGD, momentum, Adam. |
+| Dynamical systems | Recurrent networks and associative memories, whose state evolves step by step. |
+
+I'm learning this mathematics from the ground up and writing it down as I go, so that anyone starting from zero can follow the same path. Each idea is derived rather than memorised, checked with plain numbers, and tied to the place it appears in a real network.
+
+**Start with [Calculus for AI, from scratch](/math/calculus-for-ai/)**: from what a derivative measures to gradients, Jacobians and Hessians.

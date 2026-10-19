@@ -916,6 +916,9 @@ img { max-width: 100%; height: auto; }
   color: var(--ink-3);
 }
 
+/* Uppercasing would change the maths: w is not W. */
+.prose th .katex { text-transform: none; font-size: 0.95rem; letter-spacing: 0; }
+
 .prose code, .cite code {
   font-family: var(--mono);
   font-size: 0.84em;
@@ -958,6 +961,25 @@ pre code { font-size: inherit; }
 }
 
 .callout--result { margin-top: 2.25rem; }
+
+/* Folded answers to exercises: <details><summary>Answers</summary> … </details> */
+.prose details {
+  margin: 1.25rem 0 1.75rem;
+  padding: 0.75rem 1.25rem;
+  border-left: 2px solid var(--rule);
+  background: var(--paper-2);
+}
+
+.prose summary {
+  cursor: pointer;
+  font: 500 0.68rem var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.prose details[open] > summary { margin-bottom: 0.75rem; }
+.prose details > :last-child { margin-bottom: 0; }
 
 .katex { font-size: 1.04em; }
 .katex-display { margin: 1.5rem 0; padding: 0.25rem 0; overflow-x: auto; overflow-y: hidden; }

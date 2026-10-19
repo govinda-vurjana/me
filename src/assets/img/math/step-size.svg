@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 256" width="660" height="256" font-family="IBM Plex Mono, ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" role="img">
+  <title>Gradient descent on a parabola with a small, a medium and a too-large step size</title>
+  <style>
+    text { fill: #8a8478; }
+    .axis { stroke: #8a8478; stroke-width: 1; opacity: 0.7; }
+    .grid { stroke: #8a8478; stroke-width: 1; opacity: 0.18; }
+    .curve { fill: none; stroke: #8a8478; stroke-width: 2.2; }
+    .thin { fill: none; stroke: #8a8478; stroke-width: 1.3; }
+    .dash { fill: none; stroke: #8a8478; stroke-width: 1.3; stroke-dasharray: 5 4; }
+    .hl { fill: none; stroke: #b4502f; stroke-width: 2.2; }
+    .hl-text { fill: #b4502f; }
+    .dot { fill: #8a8478; }
+    .hl-dot { fill: #b4502f; }
+    .hollow { fill: none; stroke: #8a8478; stroke-width: 1.5; }
+    .big { font-size: 16px; }
+    .small { font-size: 11px; }
+  </style>
+<text x="115" y="24" text-anchor="middle">ηL'' = 0.5</text>
+<line class="axis" x1="22.6" y1="200" x2="207.4" y2="200"/>
+<line class="grid" x1="115" y1="38" x2="115" y2="200"/>
+<polyline class="curve" points="22.6,50.1 25.7,59.9 28.8,69.4 31.8,78.5 34.9,87.4 38,95.9 41.1,104 44.2,111.9 47.2,119.4 50.3,126.5 53.4,133.4 56.5,139.9 59.6,146 62.6,151.9 65.7,157.4 68.8,162.5 71.9,167.3 75,171.8 78,176 81.1,179.8 84.2,183.3 87.3,186.5 90.4,189.3 93.4,191.8 96.5,194 99.6,195.8 102.7,197.3 105.8,198.5 108.8,199.3 111.9,199.8 115,200 118.1,199.8 121.2,199.3 124.2,198.5 127.3,197.3 130.4,195.8 133.5,194 136.6,191.8 139.6,189.3 142.7,186.5 145.8,183.3 148.9,179.8 152,176 155,171.8 158.1,167.3 161.2,162.5 164.3,157.4 167.4,151.9 170.4,146 173.5,139.9 176.6,133.4 179.7,126.5 182.8,119.4 185.8,111.9 188.9,104 192,95.9 195.1,87.4 198.2,78.5 201.2,69.4 204.3,59.9 207.4,50.1" stroke-width="1.6"/>
+<path class="hl" d="M194.2,89.8 L154.6,172.5 L134.8,193.1 L124.9,198.3 L120,199.6 L117.5,199.9" stroke-width="1.6"/>
+<circle class="dot" cx="194.2" cy="89.8" r="4"/>
+<circle class="hl-dot" cx="154.6" cy="172.5" r="3"/>
+<circle class="hl-dot" cx="134.8" cy="193.1" r="3"/>
+<circle class="hl-dot" cx="124.9" cy="198.3" r="3"/>
+<circle class="hl-dot" cx="120" cy="199.6" r="3"/>
+<circle class="hl-dot" cx="117.5" cy="199.9" r="3"/>
+<text x="115" y="222" text-anchor="middle">settles smoothly</text>
+<text x="330" y="24" text-anchor="middle">ηL'' = 1.6</text>
+<line class="axis" x1="237.6" y1="200" x2="422.4" y2="200"/>
+<line class="grid" x1="330" y1="38" x2="330" y2="200"/>
+<polyline class="curve" points="237.6,50.1 240.7,59.9 243.8,69.4 246.8,78.5 249.9,87.4 253,95.9 256.1,104 259.2,111.9 262.2,119.4 265.3,126.5 268.4,133.4 271.5,139.9 274.6,146 277.6,151.9 280.7,157.4 283.8,162.5 286.9,167.3 290,171.8 293,176 296.1,179.8 299.2,183.3 302.3,186.5 305.4,189.3 308.4,191.8 311.5,194 314.6,195.8 317.7,197.3 320.8,198.5 323.8,199.3 326.9,199.8 330,200 333.1,199.8 336.2,199.3 339.2,198.5 342.3,197.3 345.4,195.8 348.5,194 351.6,191.8 354.6,189.3 357.7,186.5 360.8,183.3 363.9,179.8 367,176 370,171.8 373.1,167.3 376.2,162.5 379.3,157.4 382.4,151.9 385.4,146 388.5,139.9 391.6,133.4 394.7,126.5 397.8,119.4 400.8,111.9 403.9,104 407,95.9 410.1,87.4 413.2,78.5 416.2,69.4 419.3,59.9 422.4,50.1" stroke-width="1.6"/>
+<path class="hl" d="M409.2,89.8 L282.5,160.3 L358.5,185.7 L312.9,194.9 L340.3,198.1 L323.8,199.3" stroke-width="1.6"/>
+<circle class="dot" cx="409.2" cy="89.8" r="4"/>
+<circle class="hl-dot" cx="282.5" cy="160.3" r="3"/>
+<circle class="hl-dot" cx="358.5" cy="185.7" r="3"/>
+<circle class="hl-dot" cx="312.9" cy="194.9" r="3"/>
+<circle class="hl-dot" cx="340.3" cy="198.1" r="3"/>
+<circle class="hl-dot" cx="323.8" cy="199.3" r="3"/>
+<text x="330" y="222" text-anchor="middle">overshoots, still settles</text>
+<text x="545" y="24" text-anchor="middle" class="hl-text">ηL'' = 2.2</text>
+<line class="axis" x1="452.6" y1="200" x2="637.4" y2="200"/>
+<line class="grid" x1="545" y1="38" x2="545" y2="200"/>
+<polyline class="curve" points="452.6,50.1 455.7,59.9 458.8,69.4 461.8,78.5 464.9,87.4 468,95.9 471.1,104 474.2,111.9 477.2,119.4 480.3,126.5 483.4,133.4 486.5,139.9 489.6,146 492.6,151.9 495.7,157.4 498.8,162.5 501.9,167.3 505,171.8 508,176 511.1,179.8 514.2,183.3 517.3,186.5 520.4,189.3 523.4,191.8 526.5,194 529.6,195.8 532.7,197.3 535.8,198.5 538.8,199.3 541.9,199.8 545,200 548.1,199.8 551.2,199.3 554.2,198.5 557.3,197.3 560.4,195.8 563.5,194 566.6,191.8 569.6,189.3 572.7,186.5 575.8,183.3 578.9,179.8 582,176 585,171.8 588.1,167.3 591.2,162.5 594.3,157.4 597.4,151.9 600.4,146 603.5,139.9 606.6,133.4 609.7,126.5 612.8,119.4 615.8,111.9 618.9,104 622,95.9 625.1,87.4 628.2,78.5 631.2,69.4 634.3,59.9 637.4,50.1" stroke-width="1.6"/>
+<path class="hl" d="M578,180.9 L505.4,172.5 L592.5,160.3 L488,142.9 L613.4,117.8 L462.9,81.6" stroke-width="1.6"/>
+<circle class="dot" cx="578" cy="180.9" r="4"/>
+<circle class="hl-dot" cx="505.4" cy="172.5" r="3"/>
+<circle class="hl-dot" cx="592.5" cy="160.3" r="3"/>
+<circle class="hl-dot" cx="488" cy="142.9" r="3"/>
+<circle class="hl-dot" cx="613.4" cy="117.8" r="3"/>
+<circle class="hl-dot" cx="462.9" cy="81.6" r="3"/>
+<text x="545" y="222" text-anchor="middle">every step lands farther out</text>
+<text class="small" x="20" y="244">grey dot: start. Each step multiplies w by (1 − ηL'').</text>
+</svg>
