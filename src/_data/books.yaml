@@ -11,6 +11,12 @@
 #
 # `draft: true` keeps a book out of the published site, like any draft.
 
+- title: The Alchemist
+  author: Paulo Coelho
+  status: reading
+  started: 2026-10
+  # note: add after reading, then set status: read and finished: YYYY-MM
+
 - title: Thinking, Fast and Slow
   author: Daniel Kahneman
   status: reading
