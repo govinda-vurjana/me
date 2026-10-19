@@ -863,13 +863,14 @@ img { max-width: 100%; height: auto; }
 }
 
 @media (min-width: 40rem) {
-  .about-head { grid-template-columns: 9rem 1fr; }
+  .about-head { grid-template-columns: 13rem 1fr; }
 }
 
+/* The whole photo, uncropped, at its own proportions. */
 .portrait {
-  width: 9rem;
-  aspect-ratio: 1;
-  object-fit: cover;
+  width: 13rem;
+  max-width: 100%;
+  height: auto;
   border-radius: 2px;
   filter: saturate(0.85);
 }
