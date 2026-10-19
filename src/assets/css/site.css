@@ -703,6 +703,22 @@ img { max-width: 100%; height: auto; }
 .kind-line a { color: var(--ink-3); text-decoration: none; }
 .kind-line a:hover { color: var(--accent); }
 
+/* Books with a cover: a small thumbnail beside the title. */
+.book-with-cover {
+  display: grid;
+  grid-template-columns: 4.75rem 1fr;
+  gap: 0 1.1rem;
+  align-items: start;
+}
+
+.book-thumb {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+}
+
 .entry-title { font-size: 1.3rem; line-height: 1.25; }
 .entry-title a { text-decoration: none; }
 .entry-title a:hover { text-decoration: underline; text-decoration-color: var(--accent); }

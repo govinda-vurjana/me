@@ -8,6 +8,7 @@
 #     finished: 2026-10          # when status is read
 #     note: One or two lines on what stayed with me.
 #     link: /notebook/some-note/ # optional: my notes on it
+#     cover: /assets/img/books/some-book.jpg   # optional: put the image in src/assets/img/books/
 #
 # `draft: true` keeps a book out of the published site, like any draft.
 
@@ -15,6 +16,7 @@
   author: Paulo Coelho
   status: reading
   started: 2026-10
+  cover: /assets/img/books/the-alchemist.jpg
   # note: add after reading, then set status: read and finished: YYYY-MM
 
 - title: Thinking, Fast and Slow

@@ -13,12 +13,17 @@ permalink: /books/
 {%- macro book(b, when) %}
 <li class="entry-row book">
   <span class="entry-date">{{ when }}</span>
-  <div class="entry-main">
-    <h3 class="entry-title book-title">{% if b.link %}<a href="{{ b.link }}">{{ b.title }}</a>{% else %}{{ b.title }}{% endif %}</h3>
-    <p class="kind-line"><span>{{ b.author }}</span>{% if b.draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
-    {%- if b.note %}
-    <p class="entry-summary">{{ b.note }}</p>
+  <div class="entry-main{% if b.cover %} book-with-cover{% endif %}">
+    {%- if b.cover %}
+    <img class="book-thumb" src="{{ b.cover }}" alt="Cover of {{ b.title }}" width="326" height="500" loading="lazy">
     {%- endif %}
+    <div>
+      <h3 class="entry-title book-title">{% if b.link %}<a href="{{ b.link }}">{{ b.title }}</a>{% else %}{{ b.title }}{% endif %}</h3>
+      <p class="kind-line"><span>{{ b.author }}</span>{% if b.draft %}<span class="draft-tag" title="Visible only in local preview">Draft</span>{% endif %}</p>
+      {%- if b.note %}
+      <p class="entry-summary">{{ b.note }}</p>
+      {%- endif %}
+    </div>
   </div>
 </li>
 {%- endmacro %}

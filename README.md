@@ -51,6 +51,7 @@ Add a book to `src/_data/books.yaml`:
   started: 2026-09
   finished: 2026-10
   note: One or two lines on what stayed with me.
+  cover: /assets/img/books/thinking-fast-and-slow.jpg   # optional, image in src/assets/img/books/
 ```
 
 ### A quick dated line, without a new file
