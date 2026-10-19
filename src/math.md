@@ -22,3 +22,11 @@ Calculus is one of several branches the field rests on:
 I'm learning this mathematics from the ground up and writing it down as I go, so that anyone starting from zero can follow the same path. Each idea is derived rather than memorised, checked with plain numbers, and tied to the place it appears in a real network.
 
 **Start with [Calculus for AI, from scratch](/math/calculus-for-ai/)**: from what a derivative measures to gradients, Jacobians and Hessians.
+
+For a quick look, the [cheat sheet](/math/cheat-sheet/) puts every concept on one page: its formula, the idea in a sentence, and where it shows up in AI. Both are also available as PDFs.
+
+<p class="resource-links">
+  <a class="pill" href="/math/cheat-sheet/">Cheat sheet</a>
+  <a class="pill" href="/assets/pdf/math-for-ai-cheat-sheet.pdf" download>Cheat sheet PDF</a>
+  <a class="pill" href="/assets/pdf/calculus-for-ai.pdf" download>Full series PDF</a>
+</p>

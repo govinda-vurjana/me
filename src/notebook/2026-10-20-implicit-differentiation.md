@@ -58,6 +58,8 @@ $$
 
 Check it at the point $(3, 4)$, where the slope is $-\tfrac34$. The radius from the centre to $(3, 4)$ has slope $\tfrac43$, and a tangent to a circle is perpendicular to its radius. Perpendicular slopes multiply to $-1$, and indeed $-\tfrac34 \times \tfrac43 = -1$. At the top of the circle, $(0, 5)$, the slope is $0$: flat, as it should be.
 
+![The circle of radius 5 with the radius and tangent at the point (3, 4)](/assets/img/math/circle-tangent.svg "Figure 1. The tangent at (3, 4) has slope −3/4, at right angles to the radius, whose slope is 4/3. Implicit differentiation found it without ever solving for y.")
+
 ## With a product
 
 For $x^2 + xy + y^2 = 7$, the middle term is a product of two things that both change with $x$, so it needs the product rule:

@@ -16,6 +16,13 @@ layout: layouts/base.njk
       {%- endif %}
       <div><dt>Entries</dt><dd>{{ entries.length }}</dd></div>
     </dl>
+    {%- if resources %}
+    <p class="resource-links">
+      {%- for r in resources %}
+      <a class="pill" href="{{ r.url }}"{% if r.url.endsWith(".pdf") %} download{% endif %}>{{ r.label }}</a>
+      {%- endfor %}
+    </p>
+    {%- endif %}
   </header>
 
   <div class="prose">

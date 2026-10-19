@@ -63,6 +63,18 @@ log:
     text: Read Hopfield (1982). The energy view is the clearest picture of recall I have seen.
 ```
 
+### The math cheat sheet and PDFs
+
+`/math/cheat-sheet/` is built from `src/_data/cheatsheet.yaml`: each concept with its formula, the idea in a sentence, and where it shows up in AI. Add a card or a section there as new mathematics is covered.
+
+The downloadable PDFs live in `src/assets/pdf/` and are committed. After changing the cheat sheet or the calculus series, print them again and commit the result:
+
+```sh
+npm run pdf      # builds the site, then prints both PDFs with headless Chrome
+```
+
+`math-for-ai-cheat-sheet.pdf` is printed from the cheat sheet page. `calculus-for-ai.pdf` is printed from `/math/calculus-for-ai/print/`, an unlinked page that puts the topic and all its parts in one document. Chrome or Edge must be installed; set `CHROME_PATH` if the script can't find it.
+
 ### Starting, pausing, and finishing a topic
 
 Set `status` to `exploring`, `paused`, or `concluded`. To finish one, add `ended: YYYY-MM-DD` and a one-line `conclusion:`. The duration (“2 months”) and its bar on the timeline follow automatically. A topic with `status: planned` stays out of the published site until you start it.
@@ -82,6 +94,7 @@ Set `status` to `exploring`, `paused`, or `concluded`. To finish one, add `ended
 | `repo`, `notebook`, `dataset`, `demo` | entries | Links shown as buttons |
 | `authors`, `venue`, `abstract`, `pdf`, `arxiv` | papers | Paper details; a BibTeX entry is generated |
 | `started`, `ended`, `conclusion`, `log` | topics | See above |
+| `resources` | topics | Links (`label`, `url`) shown as buttons on the topic page and on every entry in it |
 | `draft: true` | anything, books too | Visible in `npm run dev`, never published |
 
 ## Writing
@@ -119,6 +132,7 @@ src/
   assets/         css, js, images, papers
 eleventy.config.js   Markdown setup, sections, collections, timeline logic
 scripts/new.js       the `npm run new` command
+scripts/pdf.js       the `npm run pdf` command
 ```
 
 To publish somewhere else, such as a custom domain, change `url` in `src/_data/site.yaml`; every link follows it.

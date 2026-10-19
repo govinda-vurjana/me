@@ -22,6 +22,8 @@ $$
 
 Each row is the gradient of one output. Each entry says: nudge this input, and this output moves at this rate.
 
+![Inputs x and y each wired to outputs u and v, with the four rates collected in the Jacobian](/assets/img/math/jacobian-wiring.svg "Figure 1. Every input can move every output. The Jacobian lists the four rates: one row per output, one column per input. The first column is everything that nudging x does.")
+
 The Jacobian does the job the ordinary derivative did in [Part 1](/notebook/what-a-derivative-measures/), where $\Delta f \approx f'(x)\,\Delta x$. Now it is a matrix times a vector:
 
 $$
@@ -78,6 +80,8 @@ $$
 $$
 
 For $(1, 1)$ that is $2 + 6 + 2 = 10$, and for $(1, -1)$ it is $2 - 6 + 2 = -2$: exactly the second derivatives of $5x^2$ and $-x^2$. Compare $x^2 + y^2$, whose Hessian is $\begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix}$. It curves upward in every direction: a true bowl.
+
+![Contour maps of a bowl and a saddle, both flat at the centre](/assets/img/math/bowl-vs-saddle.svg "Figure 2. A bowl and a saddle seen from above. Both are flat at the centre, but the saddle rises along y = x and falls along y = −x.")
 
 ## Where this shows up in AI
 

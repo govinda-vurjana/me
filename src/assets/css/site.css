@@ -981,6 +981,107 @@ pre code { font-size: inherit; }
 .prose details[open] > summary { margin-bottom: 0.75rem; }
 .prose details > :last-child { margin-bottom: 0; }
 
+/* ---- Cheat sheet (/math/cheat-sheet/) ------------------------------------ */
+
+.cheat-section { margin-top: 3rem; }
+
+.cheat-section > .section-label {
+  margin: 0 0 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule);
+}
+
+.cheat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+  gap: 1rem;
+}
+
+.cheat-card {
+  padding: 1rem 1.15rem 1.1rem;
+  border-top: 2px solid var(--rule);
+  background: var(--paper-2);
+}
+
+.cheat-card h3 { font-size: 1.2rem; }
+.cheat-card h3 a { text-decoration: none; }
+.cheat-card h3 a:hover { color: var(--accent); }
+.cheat-card .katex-display { margin: 0.8rem 0; }
+.cheat-card p { margin: 0.45rem 0 0; font-size: 0.95rem; line-height: 1.5; color: var(--ink-2); }
+
+.cheat-card .label {
+  margin-right: 0.5em;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.cheat-card .cheat-ai .label { color: var(--accent); }
+
+.cheat-table { width: 100%; margin-top: 0.5rem; border-collapse: collapse; font-size: 0.95rem; }
+.cheat-table td { padding: 0.35rem 0; border-bottom: 1px solid var(--rule); }
+.cheat-table td:last-child { text-align: right; }
+
+.cheat-slips { max-width: var(--measure); margin: 0; padding-left: 1.2rem; }
+.cheat-slips li { margin: 0.45rem 0; }
+.cheat-slips li::marker { color: var(--accent); }
+
+.print-only { display: none; }
+
+/* ---- Print edition of a series (/math/calculus-for-ai/print/) ------------ */
+
+.book-part { margin-top: 6rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.book-intro { margin-top: 3rem; }
+
+/* ---- Print: what the PDFs are made from (npm run pdf) -------------------- */
+
+@page { size: A4; margin: 15mm 14mm 17mm; }
+
+@media print {
+  :root:not([data-print]), :root[data-theme] {
+    color-scheme: light;
+    --paper: #fff;
+    --paper-2: #f4f1ea;
+    --ink: #1b1a17;
+    --ink-2: #3f3b35;
+    --ink-3: #6b665c;
+    --rule: #d8d2c5;
+    --rule-2: #e6e1d6;
+    --accent: #993a20;
+  }
+
+  body { background: #fff; font-size: 10.5pt; line-height: 1.5; }
+  .wrap { max-width: none; padding: 0; }
+  .site-header, .site-footer, .skip, .resource-links, .pager, .entry-foot { display: none !important; }
+  .print-only { display: block; }
+  a { text-decoration: none; }
+
+  .page-head { max-width: none; padding: 0 0 0.5rem; }
+  .prose { max-width: none; }
+  h2, h3 { break-after: avoid; }
+  figure, table, pre, .callout, details, .katex-display, .cheat-card { break-inside: avoid; }
+  .katex-display { overflow: visible; }
+
+  .book-cover { padding-top: 70mm; break-after: page; }
+  .book-intro { margin-top: 0; }
+  .book-part { break-before: page; margin: 0; padding: 0; border: 0; }
+
+  .cheat .page-head h1 { font-size: 22pt; }
+  .cheat .dek { margin-top: 0.3rem; font-size: 11pt; }
+  .cheat-source { margin: 0.4rem 0 0; font: 7.5pt var(--mono); color: var(--ink-3); }
+  .cheat-section { margin-top: 0.9rem; }
+  .cheat-section > .section-label { margin-bottom: 0.45rem; padding-top: 0.4rem; font-size: 7.5pt; }
+  .cheat-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .cheat-card { padding: 0.5rem 0.65rem 0.55rem; }
+  .cheat-card h3 { font-size: 11pt; }
+  .cheat-card .katex-display { margin: 0.3rem 0; }
+  .cheat-card p { margin-top: 0.2rem; font-size: 8.4pt; line-height: 1.38; }
+  .cheat-table { font-size: 9pt; }
+  .cheat-slips { max-width: none; font-size: 9pt; }
+}
+
 .katex { font-size: 1.04em; }
 .katex-display { margin: 1.5rem 0; padding: 0.25rem 0; overflow-x: auto; overflow-y: hidden; }
 

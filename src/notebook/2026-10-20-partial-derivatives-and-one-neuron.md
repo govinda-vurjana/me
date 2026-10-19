@@ -137,6 +137,8 @@ Now put in numbers: the data are $x = 2$ and $y = 3$, and the starting guess is 
 | $\partial L / \partial b$ | $(-8) \cdot 1$ | −8 |
 | $\partial L / \partial w$ | $(-8) \cdot x$ | −16 |
 
+![The neuron as a computational graph, with values flowing forward and gradients flowing back](/assets/img/math/backprop-graph.svg "Figure 1. The same computation as a graph. Values flow forward to the loss; gradients start at the loss and flow back, each step multiplying by one local derivative.")
+
 Notice that $\partial L / \partial u = -8$ was computed once and used twice, for both $b$ and $w$. In a network with millions of weights, that reuse is the whole trick. One backward pass produces every gradient, at a cost comparable to one forward pass. That is **backpropagation**.
 
 Both gradients are negative, so increasing $w$ and $b$ will lower the loss. [Part 8](/notebook/the-gradient/) takes that step.

@@ -46,6 +46,8 @@ $$
 
 The reason is a picture. The graph of $\ln x$ is the graph of $e^x$ reflected in the line $y = x$. Reflecting swaps rise and run, so every slope turns into its reciprocal. The point $(x, \ln x)$ on the log curve matches the point $(\ln x, x)$ on the exponential curve, where the slope is $e^{\ln x} = x$. So the log curve's slope is $1/x$.
 
+![e to the x and ln x reflected in the line y = x, with tangents at matching points](/assets/img/math/exp-ln-mirror.svg "Figure 1. eˣ and ln x are mirror images in the line y = x. At (1, e) the exponential has slope e; at the matching point (e, 1) the logarithm has slope 1/e.")
+
 With the chain rule:
 
 $$
@@ -134,6 +136,8 @@ $$
 $$
 
 The tidy final form means a network that has already computed $\sigma$ gets its derivative almost for free. Its largest value is $0.25$, at $z = 0$. Stack many sigmoids and the chain rule multiplies many numbers no bigger than $0.25$, which is one reason deep stacks of sigmoids were hard to train ([Part 3](/notebook/the-chain-rule/)). Most modern networks use the ReLU, $\max(0, z)$, whose slope is exactly 1 for every positive input.
+
+![The sigmoid curve and its slope, which peaks at 0.25](/assets/img/math/sigmoid.svg "Figure 2. The sigmoid and its slope. The slope is never more than 0.25, and far from zero it is almost 0, so very little gradient gets through.")
 
 **Softmax.** A language model ends by scoring every possible next token, then turning the scores $z_i$ into probabilities:
 

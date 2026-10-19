@@ -1,0 +1,35 @@
+---
+layout: layouts/base.njk
+title: Calculus for AI, from scratch (print edition)
+permalink: /math/calculus-for-ai/print/
+eleventyExcludeFromCollections: true
+---
+{#- The whole series in one document, printed to a PDF by `npm run pdf`. Not linked
+    from the site. Links between parts become links inside the document, and the
+    exercise answers are printed open. -#}
+{%- set topic = collections.topics | findTopic("calculus-for-ai") %}
+{%- set parts = collections.entries | forTopic("calculus-for-ai") | reverse %}
+<article class="book">
+  <header class="page-head book-cover">
+    <p class="eyebrow">Math<span class="sep">/</span>Print edition</p>
+    <h1>{{ topic.data.title }}</h1>
+    <p class="dek">{{ topic.data.summary }}</p>
+    <p class="meta-line">{{ site.author }}<span class="sep">·</span>{{ topic.url | absUrl }}<span class="sep">·</span>{{ builtAt | month }}</p>
+  </header>
+
+  <section id="start" class="prose book-intro">
+    {{ topic.content | scopeIds("start") | bookLinks(topic, parts) | safe }}
+  </section>
+
+  {%- for part in parts %}
+  <section id="{{ part.fileSlug }}" class="book-part">
+    <header class="page-head">
+      <h1>{{ part.data.title }}</h1>
+      <p class="dek">{{ part.data.summary }}</p>
+    </header>
+    <div class="prose">
+      {{ part.content | scopeIds(part.fileSlug) | bookLinks(topic, parts) | replace("<details>", "<details open>") | safe }}
+    </div>
+  </section>
+  {%- endfor %}
+</article>

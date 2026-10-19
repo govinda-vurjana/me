@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 290" width="660" height="290" font-family="IBM Plex Mono, ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" role="img">
+  <title>Each input of the function affects each output; the Jacobian collects the four rates in a grid with one row per output and one column per input</title>
+  <style>
+    text { fill: #8a8478; }
+    .axis { stroke: #8a8478; stroke-width: 1; opacity: 0.7; }
+    .grid { stroke: #8a8478; stroke-width: 1; opacity: 0.18; }
+    .curve { fill: none; stroke: #8a8478; stroke-width: 2.2; }
+    .thin { fill: none; stroke: #8a8478; stroke-width: 1.3; }
+    .dash { fill: none; stroke: #8a8478; stroke-width: 1.3; stroke-dasharray: 5 4; }
+    .hl { fill: none; stroke: #b4502f; stroke-width: 2.2; }
+    .hl-thin { fill: none; stroke: #b4502f; stroke-width: 1.4; }
+    .hl-dash { fill: none; stroke: #b4502f; stroke-width: 1.4; stroke-dasharray: 5 4; }
+    .hl-text { fill: #b4502f; }
+    .dot { fill: #8a8478; }
+    .hl-dot { fill: #b4502f; }
+    .hollow { fill: none; stroke: #8a8478; stroke-width: 1.5; }
+    .box { fill: #8a8478; fill-opacity: 0.08; stroke: #8a8478; stroke-width: 1.3; }
+    .big { font-size: 15px; }
+    .small { font-size: 11px; }
+  </style>
+<defs><marker id="j" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a8478"/></marker><marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b4502f"/></marker></defs>
+<circle class="hollow" cx="70" cy="85" r="22"/>
+<text class="big" x="70" y="90" text-anchor="middle">x</text>
+<circle class="hollow" cx="70" cy="215" r="22"/>
+<text class="big" x="70" y="220" text-anchor="middle">y</text>
+<circle class="hollow" cx="330" cy="85" r="22"/>
+<text class="big" x="330" y="90" text-anchor="middle">u</text>
+<circle class="hollow" cx="330" cy="215" r="22"/>
+<text class="big" x="330" y="220" text-anchor="middle">v</text>
+<text x="70" y="34" text-anchor="middle">inputs</text>
+<text x="330" y="34" text-anchor="middle">outputs</text>
+<line class="hl-thin" x1="96" y1="85" x2="303" y2="85" marker-end="url(#k)"/>
+<line class="hl-thin" x1="93.3" y1="96.6" x2="305.9" y2="202.9" marker-end="url(#k)"/>
+<line class="thin" x1="93.3" y1="203.4" x2="305.9" y2="97.1" marker-end="url(#j)"/>
+<line class="thin" x1="96" y1="215" x2="303" y2="215" marker-end="url(#j)"/>
+<text class="hl-text" x="200" y="76" text-anchor="middle">∂u/∂x = 2x</text>
+<text class="hl-text" x="235" y="205" text-anchor="middle">∂v/∂x = y</text>
+<text x="235" y="103" text-anchor="middle">∂u/∂y = 1</text>
+<text x="200" y="238" text-anchor="middle">∂v/∂y = x</text>
+<text x="540" y="65" text-anchor="middle">J</text>
+<text class="hl-text small" x="505" y="87" text-anchor="middle">x</text>
+<text class="small" x="575" y="87" text-anchor="middle">y</text>
+<text class="small" x="458" y="125" text-anchor="end">u</text>
+<text class="small" x="458" y="177" text-anchor="end">v</text>
+<rect x="470" y="95" width="70" height="104" fill="#b4502f" fill-opacity="0.12" stroke="none"/>
+<path class="thin" d="M476,95 h-6 v104 h6 M604,95 h6 v104 h-6"/>
+<text class="big hl-text" x="505" y="126" text-anchor="middle">2x</text>
+<text class="big" x="575" y="126" text-anchor="middle">1</text>
+<text class="big hl-text" x="505" y="178" text-anchor="middle">y</text>
+<text class="big" x="575" y="178" text-anchor="middle">x</text>
+<text class="small" x="540" y="225" text-anchor="middle">row = output, column = input</text>
+<text class="small hl-text" x="540" y="241" text-anchor="middle">column x: what nudging x does</text>
+</svg>

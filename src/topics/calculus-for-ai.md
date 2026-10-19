@@ -4,6 +4,14 @@ section: math
 status: exploring
 started: 2026-10-20
 summary: Differentiation from first principles up to gradients, Jacobians and Hessians, with every idea tied to the place it shows up in a neural network.
+# Shown as buttons on this page and on every part. Rebuild the PDFs with `npm run pdf`.
+resources:
+  - label: Cheat sheet
+    url: /math/cheat-sheet/
+  - label: Cheat sheet PDF
+    url: /assets/pdf/math-for-ai-cheat-sheet.pdf
+  - label: Full series PDF
+    url: /assets/pdf/calculus-for-ai.pdf
 log:
   - date: 2026-10-20
     text: Worked from first principles through to the Hessian, and wrote it up in nine parts.
@@ -35,6 +43,8 @@ Start from a bad guess, $w = 1$, and repeat one rule: move $w$ a small step agai
 | 3 | 2.57 | 5.14 | 0.75 | −3.46 |
 | 4 | 2.74 | 5.48 | 0.27 | −2.07 |
 
+![The one-weight model taking steps down its loss curve toward w = 3](/assets/img/math/descent-one-weight.svg "Figure 1. The same steps on the loss curve. Each one moves against the slope, and because the slope flattens near the bottom, the steps shrink on their own.")
+
 The derivative is negative, which says "increasing $w$ lowers the loss", so $w$ goes up. As the error shrinks the derivative shrinks with it, and the steps get shorter on their own. The weight closes in on $w = 3$, where the prediction is exactly right.
 
 A large language model runs this same loop over billions of weights at once. The optimiser is more refined and the arithmetic is enormous, but every step still needs the derivative of the loss with respect to every weight, and the chain rule is what supplies it.
@@ -53,4 +63,4 @@ A large language model runs this same loop over billions of weights at once. The
 
 ## How each part works
 
-Each part runs in the same order: the intuition first, then the definition, a derivation, worked examples, where the idea shows up in AI, and exercises. The answers are folded away so you can try first. Wherever possible a result is checked with plain numbers as well as algebra.
+Each part runs in the same order: the intuition first, then the definition, a derivation, worked examples, where the idea shows up in AI, and exercises. On the site the answers are folded away, so you can try first. Wherever possible a result is checked with plain numbers as well as algebra.

@@ -21,7 +21,8 @@ layout: layouts/base.njk
       {%- if status %}<span class="sep">·</span><span class="status status--{{ status }}">{{ status }}</span>{% endif %}
       {%- if topicItem %}<span class="sep">·</span>Part of <a href="{{ topicItem.url }}">{{ topicItem.data.title }}</a>{% endif %}
     </p>
-    {%- if pdf or arxiv or repo or notebook or dataset or demo %}
+    {%- set topicResources = topicItem.data.resources if topicItem else [] %}
+    {%- if pdf or arxiv or repo or notebook or dataset or demo or topicResources.length %}
     <p class="resource-links">
       {%- if pdf %}<a class="pill" href="{{ pdf }}">PDF</a>{% endif %}
       {%- if arxiv %}<a class="pill" href="{{ arxiv }}">arXiv ↗</a>{% endif %}
@@ -29,6 +30,7 @@ layout: layouts/base.njk
       {%- if notebook %}<a class="pill" href="{{ notebook }}">Jupyter ↗</a>{% endif %}
       {%- if dataset %}<a class="pill" href="{{ dataset }}">Data ↗</a>{% endif %}
       {%- if demo %}<a class="pill" href="{{ demo }}">Demo ↗</a>{% endif %}
+      {%- for r in topicResources %}<a class="pill" href="{{ r.url }}"{% if r.url.endsWith(".pdf") %} download{% endif %}>{{ r.label }}</a>{% endfor %}
     </p>
     {%- endif %}
   </header>

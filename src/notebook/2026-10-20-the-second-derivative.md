@@ -29,6 +29,8 @@ This settles what kind of flat point you are at. Where $y' = 0$:
 - if $y'' < 0$, you are at the top of a cap, a **maximum**;
 - if $y'' = 0$, the second derivative can't tell. For $y = x^3$ at $x = 0$, both derivatives are zero and the point is neither: the curve flattens for a moment, then keeps rising.
 
+![A cup, a cap and the curve x cubed, each with a flat tangent at its centre](/assets/img/math/curvature-shapes.svg "Figure 1. Three flat points. The second derivative tells them apart: a cup is a minimum, a cap is a maximum, and x³ is neither.")
+
 ## Second derivatives use every rule
 
 For $y = e^{x^2}$, the chain rule gives $y' = 2x\,e^{x^2}$. That is a product, so the second derivative needs the product rule and the chain rule again:
@@ -62,7 +64,7 @@ so every step multiplies $w$ by $1 - \eta a$. Three things can happen:
 - $1 < \eta a < 2$: each step overshoots to the other side, but lands closer, so it still settles.
 - $\eta a > 2$: each step lands farther out than the last, and training *diverges*.
 
-![Gradient descent on a parabola with three step sizes](/assets/img/math/step-size.svg "Figure 1. Gradient descent on L = w² with three step sizes. Each step multiplies w by (1 − ηL''). Below 1 it settles smoothly, between 1 and 2 it zig-zags in, above 2 it flies off.")
+![Gradient descent on a parabola with three step sizes](/assets/img/math/step-size.svg "Figure 2. Gradient descent on L = w² with three step sizes. Each step multiplies w by (1 − ηL''). Below 1 it settles smoothly, between 1 and 2 it zig-zags in, above 2 it flies off.")
 
 So a sharply curved loss demands a small learning rate: $\eta$ has to stay below $2 / L''$. In the [one-weight example](/math/calculus-for-ai/) on the topic page, $L'' = 8$, so any learning rate above $0.25$ would have made $w$ swing wider at every step. In a real network the curvature is different in every direction ([Part 9](/notebook/jacobians-and-hessians/)), and the most sharply curved direction sets the limit. This is why a learning rate that is too high makes the loss blow up instead of fall.
 

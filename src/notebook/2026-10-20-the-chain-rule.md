@@ -124,6 +124,8 @@ The curly $\partial$ is used when a function has more than one input, which [Par
 
 The same product explains a famous problem. If each local rate in a 20-layer chain is about $0.5$, the product is $0.5^{20} \approx 0.000001$: the gradient *vanishes*, and the early layers barely learn. If each rate is about $1.5$, the product is $1.5^{20} \approx 3300$, and the gradient *explodes*.[^1] Much of modern network design, including residual connections, the gates of an LSTM and careful weight initialisation, exists to keep that product close to 1.
 
+![Products of 20 local rates on a log scale: 1.5 per layer explodes, 0.5 per layer vanishes](/assets/img/math/vanishing-gradients.svg "Figure 2. The product of the local rates as a gradient passes back through 20 layers, on a log scale. At 0.5 per layer it falls to about one millionth; at 1.5 it grows to about 3300.")
+
 ## Try it
 
 1. $(2x + 1)^3$

@@ -1,0 +1,74 @@
+---
+layout: layouts/base.njk
+title: Math for AI, at a glance
+summary: Every idea from the calculus series on one page, each with its formula, the idea in a sentence, and where it shows up in a neural network.
+permalink: /math/cheat-sheet/
+---
+{#- The quick-look cheat sheet. Content lives in _data/cheatsheet.yaml. -#}
+<article class="cheat">
+  <header class="page-head">
+    <p class="eyebrow"><a href="/math/">Math</a><span class="sep">/</span>Cheat sheet</p>
+    <h1>{{ title }}</h1>
+    <p class="dek">{{ summary }}</p>
+    <p class="resource-links">
+      <a class="pill" href="/assets/pdf/math-for-ai-cheat-sheet.pdf" download>Download this as a PDF</a>
+      <a class="pill" href="/assets/pdf/calculus-for-ai.pdf" download>Full series PDF</a>
+      <a class="pill" href="/math/calculus-for-ai/">Read the series</a>
+    </p>
+    <p class="print-only cheat-source">{{ site.author }} · {{ page.url | absUrl }} · {{ builtAt | month }}</p>
+  </header>
+
+  {%- for section in cheatsheet.sections %}
+  <section class="cheat-section">
+    <h2 class="section-label">{{ section.title }}</h2>
+    <div class="cheat-grid">
+      {%- for item in section.items %}
+      <article class="cheat-card">
+        <h3><a href="/notebook/{{ item.part }}/">{{ item.concept }}</a></h3>
+        <div class="cheat-formula">{{ item.tex | tex(true) | safe }}</div>
+        <p><span class="label">Idea</span>{{ item.idea | mathText | safe }}</p>
+        <p class="cheat-ai"><span class="label">In AI</span>{{ item.ai | mathText | safe }}</p>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endfor %}
+
+  {%- set n = cheatsheet.neuron %}
+  <section class="cheat-section">
+    <h2 class="section-label">One neuron, by hand</h2>
+    <div class="cheat-grid">
+      <article class="cheat-card">
+        <h3><a href="/notebook/partial-derivatives-and-one-neuron/">Forward pass</a></h3>
+        <div class="cheat-formula">{{ n.setup | tex(true) | safe }}</div>
+        <table class="cheat-table">
+          {%- for row in n.forward %}
+          <tr><td>{{ row[0] | tex | safe }}</td><td>{{ row[1] | tex | safe }}</td></tr>
+          {%- endfor %}
+        </table>
+      </article>
+      <article class="cheat-card">
+        <h3><a href="/notebook/the-gradient/">Backward pass, then one step</a></h3>
+        <table class="cheat-table">
+          {%- for row in n.backward %}
+          <tr><td>{{ row[0] | tex | safe }}</td><td>{{ row[1] | tex | safe }}</td></tr>
+          {%- endfor %}
+        </table>
+        <p class="cheat-ai"><span class="label">Step</span>{{ n.step | mathText | safe }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="cheat-section">
+    <h2 class="section-label">Easy slips</h2>
+    <ul class="cheat-slips">
+      {%- for slip in cheatsheet.slips %}
+      <li>{{ slip | mathText | safe }}</li>
+      {%- endfor %}
+    </ul>
+  </section>
+
+  <footer class="entry-foot">
+    <p>Each card links to the part that derives it. <a href="/math/calculus-for-ai/">Start the series from the beginning →</a></p>
+  </footer>
+</article>

@@ -7,6 +7,7 @@ import markdownItAnchor from "markdown-it-anchor";
 import markdownItContainer from "markdown-it-container";
 import markdownItFootnote from "markdown-it-footnote";
 import markdownItKatexModule from "@vscode/markdown-it-katex";
+import katex from "katex";
 
 const markdownItKatex = markdownItKatexModule.default ?? markdownItKatexModule;
 const site = loadYaml(fs.readFileSync("src/_data/site.yaml", "utf8"));
@@ -318,6 +319,27 @@ export default function (eleventyConfig) {
     return groups;
   });
   eleventyConfig.addFilter("hasMath", (html) => String(html ?? "").includes('class="katex'));
+  // Maths in data files (the cheat sheet): `tex` renders one formula, `mathText`
+  // renders plain text with $inline$ maths in it.
+  const renderTex = (tex, displayMode) => katex.renderToString(String(tex ?? ""), { displayMode, throwOnError: false });
+  eleventyConfig.addFilter("tex", (tex, display = false) => renderTex(tex, display));
+  eleventyConfig.addFilter("mathText", (text) =>
+    String(text ?? "")
+      .split(/(\$[^$]+\$)/)
+      .map((part) => (/^\$[^$]+\$$/.test(part) ? renderTex(part.slice(1, -1), false) : escapeHtml(part)))
+      .join("")
+  );
+  // The print edition puts several pages into one document. `scopeIds` keeps
+  // their ids (headings, footnotes) unique, and `bookLinks` turns links to pages
+  // inside the document into links to their sections.
+  eleventyConfig.addFilter("scopeIds", (html, prefix) =>
+    String(html ?? "").replace(/\b(id="|href="#)([^"]+)"/g, (_, attr, id) => `${attr}${prefix}-${id}"`)
+  );
+  // The topic's own page becomes #start; each entry becomes #<its slug>.
+  eleventyConfig.addFilter("bookLinks", (html, topic, entries) => {
+    const anchors = new Map([[topic.url, "start"], ...entries.map((e) => [e.url, e.fileSlug])]);
+    return String(html ?? "").replace(/href="(\/[^"#]*)"/g, (link, url) => (anchors.has(url) ? `href="#${anchors.get(url)}"` : link));
+  });
   eleventyConfig.addFilter("kindLabel", (kind) => KIND_LABELS[kind] ?? kind);
   eleventyConfig.addFilter("statusLabel", (status) => STATUS_LABELS[status] ?? status);
   // Entries are newest first, so "older" is the next item and "newer" the previous.

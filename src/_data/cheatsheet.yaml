@@ -1,0 +1,297 @@
+# The cheat sheet at /math/cheat-sheet/, also printed to a PDF by `npm run pdf`.
+#
+# Each item has a concept, a formula (`tex`, TeX), the idea in a sentence, how it
+# is used in AI, and `part`: the file name of the note that explains it, without
+# the date. `idea` and `ai` are plain text and may hold $inline$ maths.
+# Add a section here as new mathematics is covered.
+
+sections:
+  - title: The core idea
+    items:
+      - concept: Derivative
+        part: what-a-derivative-measures
+        tex: |-
+          f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
+        idea: >-
+          The slope at one point: how much the output moves per unit of input.
+          Near $x$, a small nudge gives $\Delta f \approx f'(x)\,\Delta x$.
+        ai: >-
+          $\partial L / \partial w$ says whether nudging a weight raises or lowers the loss,
+          and how fast. It is the one question training asks of every weight.
+      - concept: A training step
+        part: the-gradient
+        tex: |-
+          w \leftarrow w - \eta\,\frac{\partial L}{\partial w}
+        idea: >-
+          Move each weight a small step against its slope. The learning rate $\eta$ sets
+          the size of the step.
+        ai: >-
+          Every neural network trains by repeating this: a forward pass for the loss, a
+          backward pass for the gradient, then a small step downhill.
+
+  - title: Rules
+    items:
+      - concept: Power rule
+        part: the-derivative-rules
+        tex: |-
+          \frac{d}{dx}\,x^n = n\,x^{n-1}
+        idea: >-
+          Works for any power, so rewrite first: $1/x^2 = x^{-2}$ and $\sqrt{x} = x^{1/2}$.
+        ai: >-
+          The squared error $(\hat y - y)^2$ and weight penalties like $\lambda w^2$ are powers.
+      - concept: Sums and multiples
+        part: the-derivative-rules
+        tex: |-
+          \big(a f + b g\big)' = a f' + b g'
+        idea: >-
+          Rates add, and scaling a function scales its slope.
+        ai: >-
+          A batch's loss is the average of each example's loss, so the batch gradient is the
+          average of their gradients.
+      - concept: Product rule
+        part: the-derivative-rules
+        tex: |-
+          (fg)' = f'g + fg'
+        idea: >-
+          Both factors change at once, and each one's change is scaled by the size of the
+          other. It is not $f'g'$.
+        ai: >-
+          Gates multiplying signals in an LSTM; attention weights multiplying value vectors.
+      - concept: Quotient rule
+        part: the-derivative-rules
+        tex: |-
+          \left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2}
+        idea: >-
+          Bottom times derivative of top, minus top times derivative of bottom, over bottom
+          squared.
+        ai: >-
+          The sigmoid and the softmax are both quotients.
+      - concept: Chain rule
+        part: the-chain-rule
+        tex: |-
+          \frac{dy}{dx} = \frac{dy}{du}\cdot\frac{du}{dx}
+        idea: >-
+          For a function inside a function, multiply the rates along the chain: differentiate
+          the outside, keep the inside, times the derivative of the inside.
+        ai: >-
+          A network is a chain of layers. Backpropagation is the chain rule run backwards
+          from the loss to every weight.
+
+  - title: Functions inside networks
+    items:
+      - concept: Exponential
+        part: exponentials-logarithms-and-sines
+        tex: |-
+          \frac{d}{dx}\,e^{u} = e^{u}\,\frac{du}{dx}
+        idea: >-
+          $e^x$ is its own slope. With an exponent, the base stays $e$ and the exponent's
+          derivative comes out in front.
+        ai: >-
+          Softmax uses $e^z$ to turn any scores into positive numbers; the sigmoid is built
+          from $e^{-z}$.
+      - concept: Logarithm
+        part: exponentials-logarithms-and-sines
+        tex: |-
+          \frac{d}{dx}\,\ln u = \frac{1}{u}\,\frac{du}{dx}
+        idea: >-
+          The mirror image of $e^x$, so slopes flip to reciprocals. Logs turn products into
+          sums.
+        ai: >-
+          Cross-entropy is $-\ln p$. Models add log-probabilities because multiplying many
+          small probabilities underflows to zero.
+      - concept: Sine and cosine
+        part: exponentials-logarithms-and-sines
+        tex: |-
+          \begin{gathered}
+          \frac{d}{dx}\sin x = \cos x \\
+          \frac{d}{dx}\cos x = -\sin x
+          \end{gathered}
+        idea: >-
+          The height of a point turning on a circle changes fastest as it crosses the middle,
+          and not at all at the top.
+        ai: >-
+          Positional encodings in Transformers; rotary embeddings rotate queries and keys by
+          an angle that grows with position.
+      - concept: Sigmoid
+        part: exponentials-logarithms-and-sines
+        tex: |-
+          \begin{gathered}
+          \sigma(z) = \frac{1}{1 + e^{-z}} \\
+          \sigma'(z) = \sigma(z)\,\big(1 - \sigma(z)\big)
+          \end{gathered}
+        idea: >-
+          Squashes any number into the range 0 to 1. Its slope is never more than $0.25$.
+        ai: >-
+          Probabilities and LSTM gates. Chains of slopes no bigger than $0.25$ make gradients
+          vanish in deep stacks.
+      - concept: ReLU
+        part: exponentials-logarithms-and-sines
+        tex: |-
+          \begin{gathered}
+          \operatorname{ReLU}(z) = \max(0, z) \\
+          \text{slope} = \begin{cases} 1 & z > 0 \\ 0 & z < 0 \end{cases}
+          \end{gathered}
+        idea: >-
+          Passes positive inputs through unchanged and blocks negative ones.
+        ai: >-
+          The default activation in deep networks: a slope of exactly 1 lets gradients pass
+          back without shrinking.
+      - concept: Softmax with cross-entropy
+        part: exponentials-logarithms-and-sines
+        tex: |-
+          \begin{gathered}
+          p_i = \frac{e^{z_i}}{\sum_j e^{z_j}} \\
+          \frac{\partial L}{\partial z_i} = p_i - y_i
+          \end{gathered}
+        idea: >-
+          Exponentiate the scores and divide by their sum. With $L = -\ln p_{\text{right}}$,
+          the gradient is simply prediction minus target ($y_i$ is 1 for the right answer, 0
+          otherwise).
+        ai: >-
+          The last layer of every language model, choosing the next token.
+
+  - title: Many inputs, many outputs
+    items:
+      - concept: Partial derivative
+        part: partial-derivatives-and-one-neuron
+        tex: |-
+          \frac{\partial}{\partial x}\big(x^2 + 3xy\big) = 2x + 3y
+        idea: >-
+          Change one input and hold every other one still.
+        ai: >-
+          How the loss responds to one weight while all the others stay fixed. For
+          $L = (wx + b - y)^2$, the weight's gradient is error times input.
+      - concept: Gradient
+        part: the-gradient
+        tex: |-
+          \nabla f = \begin{bmatrix} \partial f / \partial x \\ \partial f / \partial y \end{bmatrix}
+        idea: >-
+          All the partial derivatives in one arrow. It points straight uphill, and its length
+          is how steep the climb is.
+        ai: >-
+          One entry per weight, billions in a large model. Training steps along $-\nabla L$.
+      - concept: Directional derivative
+        part: the-gradient
+        tex: |-
+          D_{\hat{\mathbf u}} f = \nabla f \cdot \hat{\mathbf u} = \lVert \nabla f \rVert \cos\theta
+        idea: >-
+          The slope in any direction, using a vector of length 1. Largest along the gradient,
+          zero along a contour line.
+        ai: >-
+          The reason $-\nabla L$ is the steepest way down, and so the direction gradient
+          descent takes.
+      - concept: Jacobian
+        part: jacobians-and-hessians
+        tex: |-
+          J = \begin{bmatrix} \partial u / \partial x & \partial u / \partial y \\ \partial v / \partial x & \partial v / \partial y \end{bmatrix}
+        idea: >-
+          Many outputs and many inputs: one row per output, one column per input. A small
+          change moves the outputs by about $J\,\Delta\mathbf{x}$.
+        ai: >-
+          The derivative of a layer. For a linear layer $\mathbf z = W\mathbf x$ it is $W$.
+          Backpropagation multiplies by one layer's Jacobian at a time.
+
+  - title: Curvature
+    items:
+      - concept: Second derivative
+        part: the-second-derivative
+        tex: |-
+          y'' = \frac{d^2 y}{dx^2}
+        idea: >-
+          How fast the slope itself changes. At a flat point, $y'' > 0$ is a cup (a minimum)
+          and $y'' < 0$ is a cap (a maximum).
+        ai: >-
+          The curvature of the loss, which limits how large a training step can safely be.
+      - concept: Learning-rate limit
+        part: the-second-derivative
+        tex: |-
+          \eta < \frac{2}{L''}
+        idea: >-
+          Each step multiplies the distance to the minimum by $1 - \eta L''$. Above 2 the
+          steps overshoot by more every time.
+        ai: >-
+          Why a learning rate that is too high makes the loss blow up. The most sharply curved
+          direction sets the limit.
+      - concept: Hessian
+        part: jacobians-and-hessians
+        tex: |-
+          H = \begin{bmatrix} \partial^2 f / \partial x^2 & \partial^2 f / \partial x\,\partial y \\ \partial^2 f / \partial y\,\partial x & \partial^2 f / \partial y^2 \end{bmatrix}
+        idea: >-
+          Every second partial derivative: the curvature in every direction. It is symmetric,
+          and it tells a bowl from a saddle.
+        ai: >-
+          The shape of the loss landscape. In high dimensions most flat points are saddles,
+          not minima.
+      - concept: Newton's method
+        part: jacobians-and-hessians
+        tex: |-
+          w \leftarrow w - \frac{L'(w)}{L''(w)}
+        idea: >-
+          Divide the slope by the curvature to jump straight to the bottom of a bowl.
+        ai: >-
+          Too costly for big models: $10^9$ weights would need a Hessian with $10^{18}$
+          entries, so curvature is approximated instead.
+
+  - title: Inside training
+    items:
+      - concept: Backpropagation
+        part: partial-derivatives-and-one-neuron
+        tex: |-
+          \frac{\partial L}{\partial w} = \frac{\partial L}{\partial a_3}\,\frac{\partial a_3}{\partial a_2}\,\frac{\partial a_2}{\partial a_1}\,\frac{\partial a_1}{\partial w}
+        idea: >-
+          Multiply the local rates from the loss back to the weight, computing the shared part
+          of the product once.
+        ai: >-
+          One backward pass gives every gradient for about the cost of a forward pass. It is
+          what loss.backward() runs.
+      - concept: Vanishing and exploding gradients
+        part: the-chain-rule
+        tex: |-
+          0.5^{20} \approx 10^{-6}, \qquad 1.5^{20} \approx 3300
+        idea: >-
+          A long product of rates below 1 shrinks to nothing; above 1 it blows up.
+        ai: >-
+          Why residual connections, LSTM gates and careful initialisation exist: to keep the
+          product near 1.
+      - concept: Implicit differentiation
+        part: implicit-differentiation
+        tex: |-
+          \frac{d}{dx}\,y^2 = 2y\,\frac{dy}{dx}
+        idea: >-
+          When $y$ depends on $x$ without a formula, every $y$-term carries a $dy/dx$.
+        ai: >-
+          Gradients through fixed points, as in deep equilibrium models, without storing every
+          step taken to reach them.
+
+# The one-neuron example worked by hand (Parts 7 and 8).
+neuron:
+  setup: |-
+    x = 2,\; y = 3,\; w = 0.5,\; b = 0
+  forward:
+    - [ 'u = wx + b', '1' ]
+    - [ 'v = u^2', '1' ]
+    - [ 'L = (v - y)^2', '4' ]
+  backward:
+    - [ '\partial L / \partial v = 2(v - y)', '-4' ]
+    - [ '\partial L / \partial u = -4 \cdot 2u', '-8' ]
+    - [ '\partial L / \partial w = -8 \cdot x', '-16' ]
+    - [ '\partial L / \partial b = -8 \cdot 1', '-8' ]
+  step: >-
+    One step with $\eta = 0.01$ moves $w$ to 0.66 and $b$ to 0.08. The loss falls from 4 to
+    about 1.08.
+
+# Mistakes that are easy to make.
+slips:
+  - >-
+    In the chain rule the power drops by one; it doesn't vanish. $(2x + 5)^4$ gives
+    $8(2x + 5)^3$, not $8(2x + 5)$.
+  - >-
+    $\frac{d}{dx}e^{2x} = 2e^{2x}$. The base stays $e$; the 2 comes from the exponent.
+  - >-
+    $(fg)' \neq f'g'$. Use $f'g + fg'$.
+  - >-
+    $\partial(xy)/\partial y = x$: the other variable stays as a multiplier.
+  - >-
+    A directional derivative needs a unit vector: divide $(1, 1)$ by $\sqrt{2}$ first.
+  - >-
+    $\ln x$ only exists for $x > 0$; $\ln\lvert x\rvert$ works on both sides of zero.
