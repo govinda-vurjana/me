@@ -711,10 +711,13 @@ img { max-width: 100%; height: auto; }
   align-items: start;
 }
 
+/* Any photo or scan works: it is shown at book proportions, cropped to fit. */
 .book-thumb {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
   border-radius: 2px;
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
 }

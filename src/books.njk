@@ -15,7 +15,7 @@ permalink: /books/
   <span class="entry-date">{{ when }}</span>
   <div class="entry-main{% if b.cover %} book-with-cover{% endif %}">
     {%- if b.cover %}
-    <img class="book-thumb" src="{{ b.cover }}" alt="Cover of {{ b.title }}" width="326" height="500" loading="lazy">
+    <img class="book-thumb" src="{{ b.cover }}" alt="Cover of {{ b.title }}" width="400" height="600" loading="lazy">
     {%- endif %}
     <div>
       <h3 class="entry-title book-title">{% if b.link %}<a href="{{ b.link }}">{{ b.title }}</a>{% else %}{{ b.title }}{% endif %}</h3>
